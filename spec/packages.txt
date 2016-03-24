@@ -1,0 +1,26 @@
+	-> application			contains the objects responsible for interaction with clients
+
+		-> rest				describes the interaction with clients via REST endpoints
+
+		-> ...				might be added other ways for interaction (soap, web)
+
+	-> domain				incapsulates all the business logic of the application (it shouldn't include the details of implementation like protocols,
+							encryption, technologies, etc)
+
+		-> shared			contains common components or modules
+
+		-> model			contains a list of domain objects which describes the system
+
+		-> services			contains the implementation of domain(!) services
+
+		-> interfaces		contains a list of interfaces for domain
+
+	-> infrastructure		contains the code responsible for solving technical tasks (encryption, communication, database interactions)
+
+		-> data				describes a set of classes which are responsible to fetch data from sources
+
+		-> query			contains the code for advanced parsing input queries
+
+		-> persistence		contains the code responsible for saving data
+
+		-> ...
