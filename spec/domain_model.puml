@@ -1,11 +1,12 @@
 @startuml
 
 object match {
-    name?
+    name
 }
 object exercise {
     number
-    targets?
+}
+object target {
 }
 object passing {
     alphas
@@ -22,6 +23,7 @@ object shooter {
 
 match "1" *-- "N" exercise
 exercise "1" *-right- "N" passing
+exercise "1" *-down- "N" target
 shooter "1" -down- "N" passing
 
 @enduml
