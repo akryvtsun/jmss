@@ -1,9 +1,24 @@
 @startuml
 
-object match
-object shooter
-object exercise
-object passing
+object match {
+    name?
+}
+object exercise {
+    number
+    targets?
+}
+object passing {
+    alphas
+    charlies
+    deltas
+    misses
+    penalties
+    time
+}
+object shooter {
+    name
+    surname
+}
 
 match "1" *-- "N" exercise
 exercise "1" *-right- "N" passing
