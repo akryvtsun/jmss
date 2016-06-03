@@ -1,20 +1,23 @@
 @startuml
 
-o -> (Enter passings)
-
 left to right direction
 
-actor Admin as a
-actor Operator as o
+actor Administrator as a
+actor "Match Director" as d
+actor Helper as h
 
-a -> (Enter shooters)
+a -- (Enter Shooters)
 
-rectangle Match {
-  a -> (Create)
-  a -> (Add exercises)
-  a -> (Add participants)
-  a -> (Print score sheets)
-  a -> (Generate PDF results)
+rectangle Preparation {
+    d -- (Create Match)
+    d -- (Add Exercises)
+    d -- (Add Participants)
+    d -- (Generate Score Sheets)
+}
+
+rectangle Processing {
+    d -- (Generate Results)
+    (Enter Passings) - h
 }
 
 @enduml
