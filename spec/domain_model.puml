@@ -1,0 +1,12 @@
+@startuml
+
+object match
+object shooter
+object exercise
+object passing
+
+match "1" *-- "N" exercise
+exercise "1" *-right- "N" passing
+shooter "1" -down- "N" passing
+
+@enduml
