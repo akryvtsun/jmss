@@ -1,0 +1,19 @@
+@startuml
+
+class Shooter {
+    String name
+    String surname
+    sex
+    Date dateOfBirth
+}
+
+class Target
+class MetalTarget
+class PagerTarget {
+    int minMits
+}
+
+Target <|- PagerTarget
+Target <|-- MetalTarget
+
+@enduml

@@ -19,6 +19,8 @@ object passing {
 object shooter {
     name
     surname
+    sex
+    date of birth
 }
 
 match "1" *-- "N" exercise

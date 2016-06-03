@@ -1,0 +1,18 @@
+@startuml
+
+o -> (Enter passings)
+
+left to right direction
+
+actor Admin as a
+actor Operator as o
+
+a -> (Enter shooters)
+
+rectangle Match {
+  a -> (Create match)
+  a -> (Print score sheets)
+  a -> (Generate results)
+}
+
+@enduml
