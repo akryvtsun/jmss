@@ -1,8 +1,6 @@
 package com.jmms.application;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -22,13 +20,7 @@ public class Launcher extends Application {
 
         Button btn = new Button();
         btn.setText("Shooters");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Hello World!");
-            }
-        });
+        btn.setOnAction(e -> System.out.println("Hello World!"));
 
         Button btn2 = new Button("Match");
 
