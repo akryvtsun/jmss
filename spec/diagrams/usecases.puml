@@ -10,9 +10,11 @@ actor Operator as o
 a -> (Enter shooters)
 
 rectangle Match {
-  a -> (Create match)
+  a -> (Create)
+  a -> (Add exercises)
+  a -> (Add participants)
   a -> (Print score sheets)
-  a -> (Generate results)
+  a -> (Generate PDF results)
 }
 
 @enduml
