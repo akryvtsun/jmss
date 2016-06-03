@@ -8,8 +8,4 @@ public final class Match {
         this.name = name;
         this.exercises = exercises;
     }
-
-    public String getName() {
-        return name;
-    }
 }
