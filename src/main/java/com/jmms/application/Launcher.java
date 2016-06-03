@@ -3,9 +3,11 @@ package com.jmms.application;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Orientation;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
+import javafx.scene.control.ToolBar;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 public class Launcher extends Application {
@@ -19,7 +21,7 @@ public class Launcher extends Application {
         primaryStage.setTitle("Hello World!");
 
         Button btn = new Button();
-        btn.setText("Say 'Hello World'");
+        btn.setText("Shooters");
         btn.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
@@ -28,8 +30,15 @@ public class Launcher extends Application {
             }
         });
 
-        StackPane root = new StackPane();
-        root.getChildren().add(btn);
+        Button btn2 = new Button("Match");
+
+        ToolBar toolBar = new ToolBar();
+        toolBar.setOrientation(Orientation.HORIZONTAL);
+        toolBar.getItems().add(btn);
+        toolBar.getItems().add(btn2);
+
+        BorderPane root = new BorderPane();
+        root.setTop(toolBar);
         primaryStage.setScene(new Scene(root, 300, 250));
         primaryStage.show();
     }
