@@ -8,6 +8,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.util.Optional;
+
 public class Launcher extends Application {
 
     public static void main(String[] args) {
@@ -17,6 +19,7 @@ public class Launcher extends Application {
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Hello World!");
+        //primaryStage.initStyle(StageStyle.UTILITY);
 
         BorderPane root = new BorderPane();
         VBox topContainer = new VBox();
@@ -43,11 +46,31 @@ public class Launcher extends Application {
         Button membersBtn = new Button("Members");
         membersBtn.setGraphic(new ImageView("/members.png"));
         membersBtn.setContentDisplay(ContentDisplay.TOP);
+        membersBtn.setOnAction(e -> {
+//            Stage dialog = new Stage();
+//            dialog.initStyle(StageStyle.UTILITY);
+//            Scene scene = new Scene(new Group(new Text(25, 25, "Hello World!")));
+//            dialog.setScene(scene);
+//            dialog.show();
 
-        membersBtn.setOnAction(e -> System.out.println("Hello World!"));
+            ButtonType loginButtonType = new ButtonType("Login", ButtonBar.ButtonData.OK_DONE);
+            Dialog<String> dialog = new Dialog<>();
+            dialog.getDialogPane().getButtonTypes().add(loginButtonType);
+            boolean disabled = false; // computed based on content of text fields, for example
+            dialog.getDialogPane().lookupButton(loginButtonType).setDisable(disabled);
+            Optional<String> optional = dialog.showAndWait();
+        });
+
         Button matchesBtn = new Button("Matches");
+        matchesBtn.setGraphic(new ImageView("/matches.png"));
+        matchesBtn.setContentDisplay(ContentDisplay.TOP);
+        matchesBtn.setOnAction(e -> System.out.println("Hello World!"));
 
-        toolBar.getItems().addAll(membersBtn, matchesBtn);
+        Button scoringBtn = new Button("Scoring");
+        scoringBtn.setGraphic(new ImageView("/scoring.png"));
+        scoringBtn.setContentDisplay(ContentDisplay.TOP);
+
+        toolBar.getItems().addAll(membersBtn, matchesBtn, scoringBtn);
 
         ////
 
