@@ -1,12 +1,9 @@
 package com.jmms.application;
 
 import javafx.application.Application;
-import javafx.geometry.Orientation;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.ToolBar;
+import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -21,29 +18,43 @@ public class Launcher extends Application {
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Hello World!");
 
-        Button btn = new Button();
-        btn.setText("Shooters");
-        btn.setOnAction(e -> System.out.println("Hello World!"));
+        BorderPane root = new BorderPane();
+        VBox topContainer = new VBox();
 
-        Button btn2 = new Button("Match");
+        //// create menu
+
+        MenuBar mainMenu = new MenuBar();
+
+        Menu file = new Menu("File");
+        MenuItem exitApp = new MenuItem("Exit");
+        file.getItems().addAll(exitApp);
+
+        Menu help = new Menu("Help");
+        MenuItem aboutDlg = new MenuItem("About");
+        help.getItems().addAll(aboutDlg);
+
+        mainMenu.getMenus().addAll(file, help);
+
+        //// create toolbar
 
         ToolBar toolBar = new ToolBar();
-        toolBar.setOrientation(Orientation.HORIZONTAL);
-        toolBar.getItems().add(btn);
-        toolBar.getItems().add(btn2);
 
-        MenuBar menuBar = new MenuBar();
+        Button membersBtn = new Button("Members");
+        membersBtn.setGraphic(new ImageView("/members.png"));
 
-        Menu menuFile = new Menu("File");
-        Menu menuHelp = new Menu("Help");
+        membersBtn.setOnAction(e -> System.out.println("Hello World!"));
+        Button matchesBtn = new Button("Matches");
 
-        menuBar.getMenus().addAll(menuFile, menuHelp);
+        toolBar.getItems().addAll(membersBtn, matchesBtn);
 
-        BorderPane root = new BorderPane();
-        //root.setTop(toolBar);
-        Scene scene = new Scene(/*root*/new VBox(), 300, 250);
+        ////
 
-        ((VBox)scene.getRoot()).getChildren().addAll(menuBar);
+        topContainer.getChildren().add(mainMenu);
+        topContainer.getChildren().add(toolBar);
+
+        root.setTop(topContainer);
+
+        Scene scene = new Scene(root, 300, 250);
 
         primaryStage.setScene(scene);
         primaryStage.show();
