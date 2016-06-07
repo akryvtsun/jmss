@@ -27,6 +27,7 @@ public class Launcher extends Application {
 
         Menu file = new Menu("File");
         MenuItem exitApp = new MenuItem("Exit");
+        exitApp.setOnAction(e -> System.exit(0));
         file.getItems().addAll(exitApp);
 
         Menu help = new Menu("Help");
@@ -41,6 +42,7 @@ public class Launcher extends Application {
 
         Button membersBtn = new Button("Members");
         membersBtn.setGraphic(new ImageView("/members.png"));
+        membersBtn.setContentDisplay(ContentDisplay.TOP);
 
         membersBtn.setOnAction(e -> System.out.println("Hello World!"));
         Button matchesBtn = new Button("Matches");
