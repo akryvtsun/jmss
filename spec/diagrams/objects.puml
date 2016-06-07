@@ -3,7 +3,7 @@
 object match {
     name
 }
-object exercise {
+object stage {
     number
 }
 object target {
@@ -23,9 +23,9 @@ object shooter {
     date of birth
 }
 
-match "1" *-- "N" exercise
-exercise "1" *-right- "N" passing
-exercise "1" *-down- "N" target
+match "1" *-- "N" stage
+stage "1" *-right- "N" passing
+stage "1" *-down- "N" target
 shooter "1" -down- "N" passing
 
 @enduml

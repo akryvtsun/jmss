@@ -11,10 +11,10 @@ public class MatchTest {
 
     @Test
     public void match_creation() throws Exception {
-        Match demo = new Match("demo", new Exercise[]{
-                new Exercise(1, 2),
-                new Exercise(2, 2),
-                new Exercise(3, 2)
+        Match demo = new Match("demo", new Stage[]{
+                new Stage(1, 2),
+                new Stage(2, 2),
+                new Stage(3, 2)
         });
 
         assertNotNull(demo);
@@ -25,13 +25,13 @@ public class MatchTest {
         Shooter A = new Shooter("A", "A");
         Shooter B = new Shooter("B", "B");
 
-        Exercise exercise = new Exercise(1, 2);
+        Stage stage = new Stage(1, 2);
 
-        Match demo = new Match("demo", new Exercise[]{
-                exercise
+        Match demo = new Match("demo", new Stage[]{
+                stage
         });
-        demo.add(exercise, A, new Passing(2, 0, 0, 0, 0, 10.5));
-        demo.add(exercise, B, new Passing(0, 1, 1, 0, 0, 5.5));
+        demo.add(stage, A, new Passing(2, 0, 0, 0, 0, 10.5));
+        demo.add(stage, B, new Passing(0, 1, 1, 0, 0, 5.5));
 
         Map<Shooter, Double> result = demo.overall();
 
