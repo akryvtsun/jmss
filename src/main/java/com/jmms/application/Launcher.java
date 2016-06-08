@@ -1,16 +1,17 @@
 package com.jmms.application;
 
 import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-
-import java.util.Optional;
 
 public class Launcher extends Application {
 
@@ -69,18 +70,47 @@ public class Launcher extends Application {
         membersBtn.setGraphic(new ImageView("/members.png"));
         membersBtn.setContentDisplay(ContentDisplay.TOP);
         membersBtn.setOnAction(e -> {
-//            Stage dialog = new Stage();
-//            dialog.initStyle(StageStyle.UTILITY);
-//            Scene scene = new Scene(new Group(new Text(25, 25, "Hello World!")));
-//            dialog.setScene(scene);
-//            dialog.show();
+            Stage dialog = new Stage();
 
-            ButtonType loginButtonType = new ButtonType("Login", ButtonBar.ButtonData.OK_DONE);
-            Dialog<String> dialog = new Dialog<>();
-            dialog.getDialogPane().getButtonTypes().add(loginButtonType);
-            boolean disabled = false; // computed based on content of text fields, for example
-            dialog.getDialogPane().lookupButton(loginButtonType).setDisable(disabled);
-            Optional<String> optional = dialog.showAndWait();
+            TabPane tabPane = new TabPane();
+
+            Tab memberTab = new Tab("Member");
+            HBox hbox = new HBox();
+            hbox.getChildren().add(new Label("Tab 1"));
+            hbox.setAlignment(Pos.CENTER);
+            memberTab.setContent(hbox);
+
+            /////
+
+            Tab membersTab = new Tab("Members");
+
+            TableView table = new TableView();
+            table.setEditable(true);
+
+            TableColumn firstNameCol = new TableColumn("First Name");
+            TableColumn lastNameCol = new TableColumn("Last Name");
+
+            table.getColumns().addAll(firstNameCol, lastNameCol);
+
+            final VBox vbox = new VBox();
+            vbox.setSpacing(5);
+            vbox.setPadding(new Insets(10, 10, 10, 10));
+            vbox.getChildren().addAll(table);
+            membersTab.setContent(vbox);
+
+            tabPane.getTabs().add(memberTab);
+            tabPane.getTabs().add(membersTab);
+
+            Scene scene = new Scene(tabPane);
+            dialog.setScene(scene);
+            dialog.show();
+
+//            ButtonType loginButtonType = new ButtonType("Login", ButtonBar.ButtonData.OK_DONE);
+//            Dialog<String> dialog = new Dialog<>();
+//            dialog.getDialogPane().getButtonTypes().add(loginButtonType);
+//            boolean disabled = false; // computed based on content of text fields, for example
+//            dialog.getDialogPane().lookupButton(loginButtonType).setDisable(disabled);
+//            Optional<String> optional = dialog.showAndWait();
         });
         return membersBtn;
     }
