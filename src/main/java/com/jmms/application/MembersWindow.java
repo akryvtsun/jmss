@@ -30,23 +30,6 @@ public class MembersWindow extends BorderPane {
         setRight(createButtonPanel());
     }
 
-    private Node createButtonPanel() {
-        final VBox vbox = new VBox();
-        vbox.setSpacing(5);
-        vbox.setPadding(new Insets(5, 5, 5, 5));
-        Button aNew = new Button("New");
-        aNew.setOnAction(e -> {
-            data.add(new Person("Name 1", "Surname 1"));
-        });
-        Button delete = new Button("Delete");
-        delete.setOnAction(e -> {
-            int focusedIndex = table.getSelectionModel().getFocusedIndex();
-            data.remove(focusedIndex);
-        });
-        vbox.getChildren().addAll(aNew, delete);
-        return vbox;
-    }
-
     private TabPane createTabPane() {
         TabPane tabPane = new TabPane();
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
@@ -78,13 +61,35 @@ public class MembersWindow extends BorderPane {
 
         final VBox vbox = new VBox();
         vbox.setSpacing(5);
-        vbox.setPadding(new Insets(10, 10, 10, 10));
+        vbox.setPadding(new Insets(10, 0, 10, 10));
         vbox.getChildren().addAll(table);
         membersTab.setContent(vbox);
 
         tabPane.getTabs().add(memberTab);
         tabPane.getTabs().add(membersTab);
         return tabPane;
+    }
+
+    private Node createButtonPanel() {
+        final VBox vbox = new VBox();
+        vbox.setSpacing(5);
+        vbox.setPadding(new Insets(30, 10, 10, 10));
+
+        Button aNew = new Button("New");
+        aNew.setMaxWidth(Double.MAX_VALUE);
+        aNew.setOnAction(e -> {
+            data.add(new Person("Name 1", "Surname 1"));
+        });
+
+        Button delete = new Button("Delete");
+        delete.setMaxWidth(Double.MAX_VALUE);
+        delete.setOnAction(e -> {
+            int focusedIndex = table.getSelectionModel().getFocusedIndex();
+            data.remove(focusedIndex);
+        });
+
+        vbox.getChildren().addAll(aNew, delete);
+        return vbox;
     }
 
     public static class Person {
