@@ -9,18 +9,20 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class MembersWindow extends BorderPane {
 
-    final ObservableList<Person> data = FXCollections.observableArrayList(
+    final static ObservableList<Person> data = FXCollections.observableArrayList(
             new Person("Jacob", "Smith"),
             new Person("Isabella", "Johnson"),
             new Person("Ethan", "Williams"),
             new Person("Emma", "Jones"),
             new Person("Michael", "Brown")
     );
+
+    final TextField addFirstName = new TextField();
+    final TextField addLastName = new TextField();
 
     TableView<Person> table = new TableView<Person>();
 
@@ -35,8 +37,16 @@ public class MembersWindow extends BorderPane {
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
         Tab memberTab = new Tab("Member");
-        HBox hbox = new HBox();
-        hbox.getChildren().add(new Label("Tab 1"));
+        VBox hbox = new VBox();
+
+        addFirstName.setPromptText("First Name");
+        //addFirstName.setMaxWidth(firstNameCol.getPrefWidth());
+        //addLastName.setMaxWidth(lastNameCol.getPrefWidth());
+        addLastName.setPromptText("Last Name");
+
+        hbox.getChildren().add(addFirstName);
+        hbox.getChildren().add(addLastName);
+
         hbox.setAlignment(Pos.CENTER);
         memberTab.setContent(hbox);
 
@@ -78,7 +88,9 @@ public class MembersWindow extends BorderPane {
         Button aNew = new Button("New");
         aNew.setMaxWidth(Double.MAX_VALUE);
         aNew.setOnAction(e -> {
-            data.add(new Person("Name 1", "Surname 1"));
+            data.add(new Person(addFirstName.getText(), addLastName.getText()));
+            addFirstName.clear();
+            addLastName.clear();
         });
 
         Button delete = new Button("Delete");
