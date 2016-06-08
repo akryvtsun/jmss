@@ -1,11 +1,13 @@
 package com.jmms.application;
 
 import javafx.application.Application;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.util.Optional;
@@ -23,21 +25,6 @@ public class Launcher extends Application {
 
         BorderPane root = new BorderPane();
         VBox topContainer = new VBox();
-
-        //// create menu
-
-        MenuBar mainMenu = new MenuBar();
-
-        Menu file = new Menu("File");
-        MenuItem exitApp = new MenuItem("Exit");
-        exitApp.setOnAction(e -> System.exit(0));
-        file.getItems().addAll(exitApp);
-
-        Menu help = new Menu("Help");
-        MenuItem aboutDlg = new MenuItem("About");
-        help.getItems().addAll(aboutDlg);
-
-        mainMenu.getMenus().addAll(file, help);
 
         //// create toolbar
 
@@ -70,16 +57,26 @@ public class Launcher extends Application {
         scoringBtn.setGraphic(new ImageView("/scoring.png"));
         scoringBtn.setContentDisplay(ContentDisplay.TOP);
 
-        toolBar.getItems().addAll(membersBtn, matchesBtn, scoringBtn);
+        Button reportingBtn = new Button("Reporting");
+        reportingBtn.setGraphic(new ImageView("/reporting.png"));
+        reportingBtn.setContentDisplay(ContentDisplay.TOP);
+
+        toolBar.getItems().addAll(membersBtn, matchesBtn, scoringBtn, reportingBtn);
 
         ////
 
-        topContainer.getChildren().add(mainMenu);
         topContainer.getChildren().add(toolBar);
 
         root.setTop(topContainer);
 
-        Scene scene = new Scene(root, 300, 250);
+        double width = 640;
+        double height = 480;
+
+        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+        primaryStage.setX((screenBounds.getWidth() - width) / 2);
+        primaryStage.setY((screenBounds.getHeight() - height) / 2);
+
+        Scene scene = new Scene(root, width, height);
 
         primaryStage.setScene(scene);
         primaryStage.show();
