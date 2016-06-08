@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
@@ -91,8 +92,12 @@ public class Launcher extends Application {
         return membersBtn;
     }
 
-    private Button createButtonPanel() {
-        return new Button("New");
+    private Node createButtonPanel() {
+        final VBox vbox = new VBox();
+        vbox.setSpacing(5);
+        vbox.setPadding(new Insets(5, 5, 5, 5));
+        vbox.getChildren().addAll(new Button("New"), new Button("Delete"));
+        return vbox;
     }
 
     private TabPane createTabPane() {
