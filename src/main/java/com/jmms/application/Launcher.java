@@ -20,16 +20,51 @@ public class Launcher extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("Hello World!");
-        //primaryStage.initStyle(StageStyle.UTILITY);
+        primaryStage.setTitle("JMMS v0.1");
+        primaryStage.setResizable(false);
 
         BorderPane root = new BorderPane();
+
         VBox topContainer = new VBox();
+        ToolBar toolBar = createToolBar();
+        topContainer.getChildren().add(toolBar);
 
-        //// create toolbar
+        root.setTop(topContainer);
 
+        double width = 320;
+        double height = 240;
+
+        centerStage(primaryStage, width, height);
+
+        Scene scene = new Scene(root, width, height);
+
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+    private ToolBar createToolBar() {
         ToolBar toolBar = new ToolBar();
 
+        Button membersBtn = createMembersButton();
+
+        Button matchesBtn = new Button("Matches");
+        matchesBtn.setGraphic(new ImageView("/matches.png"));
+        matchesBtn.setContentDisplay(ContentDisplay.TOP);
+        matchesBtn.setOnAction(e -> System.out.println("Hello World!"));
+
+        Button scoringBtn = new Button("Scoring");
+        scoringBtn.setGraphic(new ImageView("/scoring.png"));
+        scoringBtn.setContentDisplay(ContentDisplay.TOP);
+
+        Button reportingBtn = new Button("Reporting");
+        reportingBtn.setGraphic(new ImageView("/reporting.png"));
+        reportingBtn.setContentDisplay(ContentDisplay.TOP);
+
+        toolBar.getItems().addAll(membersBtn, matchesBtn, scoringBtn, reportingBtn);
+        return toolBar;
+    }
+
+    private Button createMembersButton() {
         Button membersBtn = new Button("Members");
         membersBtn.setGraphic(new ImageView("/members.png"));
         membersBtn.setContentDisplay(ContentDisplay.TOP);
@@ -47,38 +82,12 @@ public class Launcher extends Application {
             dialog.getDialogPane().lookupButton(loginButtonType).setDisable(disabled);
             Optional<String> optional = dialog.showAndWait();
         });
+        return membersBtn;
+    }
 
-        Button matchesBtn = new Button("Matches");
-        matchesBtn.setGraphic(new ImageView("/matches.png"));
-        matchesBtn.setContentDisplay(ContentDisplay.TOP);
-        matchesBtn.setOnAction(e -> System.out.println("Hello World!"));
-
-        Button scoringBtn = new Button("Scoring");
-        scoringBtn.setGraphic(new ImageView("/scoring.png"));
-        scoringBtn.setContentDisplay(ContentDisplay.TOP);
-
-        Button reportingBtn = new Button("Reporting");
-        reportingBtn.setGraphic(new ImageView("/reporting.png"));
-        reportingBtn.setContentDisplay(ContentDisplay.TOP);
-
-        toolBar.getItems().addAll(membersBtn, matchesBtn, scoringBtn, reportingBtn);
-
-        ////
-
-        topContainer.getChildren().add(toolBar);
-
-        root.setTop(topContainer);
-
-        double width = 640;
-        double height = 480;
-
+    private void centerStage(Stage primaryStage, double width, double height) {
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
         primaryStage.setX((screenBounds.getWidth() - width) / 2);
         primaryStage.setY((screenBounds.getHeight() - height) / 2);
-
-        Scene scene = new Scene(root, width, height);
-
-        primaryStage.setScene(scene);
-        primaryStage.show();
     }
 }
