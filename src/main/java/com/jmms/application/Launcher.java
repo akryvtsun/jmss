@@ -128,6 +128,7 @@ public class Launcher extends Application {
 
     private TabPane createTabPane() {
         TabPane tabPane = new TabPane();
+        tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
         Tab memberTab = new Tab("Member");
         HBox hbox = new HBox();
