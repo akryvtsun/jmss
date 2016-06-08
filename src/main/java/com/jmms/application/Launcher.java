@@ -72,36 +72,12 @@ public class Launcher extends Application {
         membersBtn.setOnAction(e -> {
             Stage dialog = new Stage();
 
-            TabPane tabPane = new TabPane();
+            BorderPane bPane = new BorderPane();
+            //bPane.setPadding(new Insets(10, 10, 10, 10));
+            bPane.setCenter(createTabPane());
+            bPane.setRight(createButtonPanel());
 
-            Tab memberTab = new Tab("Member");
-            HBox hbox = new HBox();
-            hbox.getChildren().add(new Label("Tab 1"));
-            hbox.setAlignment(Pos.CENTER);
-            memberTab.setContent(hbox);
-
-            /////
-
-            Tab membersTab = new Tab("Members");
-
-            TableView table = new TableView();
-            table.setEditable(true);
-
-            TableColumn firstNameCol = new TableColumn("First Name");
-            TableColumn lastNameCol = new TableColumn("Last Name");
-
-            table.getColumns().addAll(firstNameCol, lastNameCol);
-
-            final VBox vbox = new VBox();
-            vbox.setSpacing(5);
-            vbox.setPadding(new Insets(10, 10, 10, 10));
-            vbox.getChildren().addAll(table);
-            membersTab.setContent(vbox);
-
-            tabPane.getTabs().add(memberTab);
-            tabPane.getTabs().add(membersTab);
-
-            Scene scene = new Scene(tabPane);
+            Scene scene = new Scene(bPane);
             dialog.setScene(scene);
             dialog.show();
 
@@ -113,6 +89,42 @@ public class Launcher extends Application {
 //            Optional<String> optional = dialog.showAndWait();
         });
         return membersBtn;
+    }
+
+    private Button createButtonPanel() {
+        return new Button("New");
+    }
+
+    private TabPane createTabPane() {
+        TabPane tabPane = new TabPane();
+
+        Tab memberTab = new Tab("Member");
+        HBox hbox = new HBox();
+        hbox.getChildren().add(new Label("Tab 1"));
+        hbox.setAlignment(Pos.CENTER);
+        memberTab.setContent(hbox);
+
+        /////
+
+        Tab membersTab = new Tab("Member List");
+
+        TableView table = new TableView();
+        table.setEditable(true);
+
+        TableColumn firstNameCol = new TableColumn("First Name");
+        TableColumn lastNameCol = new TableColumn("Last Name");
+
+        table.getColumns().addAll(firstNameCol, lastNameCol);
+
+        final VBox vbox = new VBox();
+        vbox.setSpacing(5);
+        vbox.setPadding(new Insets(10, 10, 10, 10));
+        vbox.getChildren().addAll(table);
+        membersTab.setContent(vbox);
+
+        tabPane.getTabs().add(memberTab);
+        tabPane.getTabs().add(membersTab);
+        return tabPane;
     }
 
     private void centerStage(Stage primaryStage, double width, double height) {
