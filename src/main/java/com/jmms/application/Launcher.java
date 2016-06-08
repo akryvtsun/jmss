@@ -1,12 +1,16 @@
 package com.jmms.application;
 
 import javafx.application.Application;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -15,6 +19,16 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class Launcher extends Application {
+
+    final ObservableList<Person> data = FXCollections.observableArrayList(
+            new Person("Jacob", "Smith"),
+            new Person("Isabella", "Johnson"),
+            new Person("Ethan", "Williams"),
+            new Person("Emma", "Jones"),
+            new Person("Michael", "Brown")
+    );
+
+    TableView<Person> table = new TableView<Person>();
 
     public static void main(String[] args) {
         launch(args);
@@ -96,7 +110,19 @@ public class Launcher extends Application {
         final VBox vbox = new VBox();
         vbox.setSpacing(5);
         vbox.setPadding(new Insets(5, 5, 5, 5));
-        vbox.getChildren().addAll(new Button("New"), new Button("Delete"));
+        Button aNew = new Button("New");
+        aNew.setOnAction(e -> {
+            data.add(new Person(
+                    "Name 1",
+                    "Surname 1"
+            ));
+        });
+        Button delete = new Button("Delete");
+        delete.setOnAction(e -> {
+            int focusedIndex = table.getSelectionModel().getFocusedIndex();
+            data.remove(focusedIndex);
+        });
+        vbox.getChildren().addAll(aNew, delete);
         return vbox;
     }
 
@@ -113,12 +139,19 @@ public class Launcher extends Application {
 
         Tab membersTab = new Tab("Member List");
 
-        TableView table = new TableView();
+        TableColumn firstNameCol = new TableColumn("First Name");
+        firstNameCol.setMinWidth(100);
+        firstNameCol.setCellValueFactory(
+                new PropertyValueFactory<Person, String>("firstName"));
+
+        TableColumn lastNameCol = new TableColumn("Last Name");
+        lastNameCol.setMinWidth(100);
+        lastNameCol.setCellValueFactory(
+                new PropertyValueFactory<Person, String>("lastName"));
+
         table.setEditable(true);
 
-        TableColumn firstNameCol = new TableColumn("First Name");
-        TableColumn lastNameCol = new TableColumn("Last Name");
-
+        table.setItems(data);
         table.getColumns().addAll(firstNameCol, lastNameCol);
 
         final VBox vbox = new VBox();
@@ -136,5 +169,31 @@ public class Launcher extends Application {
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
         primaryStage.setX((screenBounds.getWidth() - width) / 2);
         primaryStage.setY((screenBounds.getHeight() - height) / 2);
+    }
+
+    public static class Person {
+        private final SimpleStringProperty firstName;
+        private final SimpleStringProperty lastName;
+
+        private Person(String fName, String lName) {
+            this.firstName = new SimpleStringProperty(fName);
+            this.lastName = new SimpleStringProperty(lName);
+        }
+
+        public String getFirstName() {
+            return firstName.get();
+        }
+
+        public void setFirstName(String fName) {
+            firstName.set(fName);
+        }
+
+        public String getLastName() {
+            return lastName.get();
+        }
+
+        public void setLastName(String fName) {
+            lastName.set(fName);
+        }
     }
 }
