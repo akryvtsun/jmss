@@ -17,14 +17,15 @@ import javafx.scene.layout.*;
 
 import java.time.LocalDate;
 
+// TODO disable Delete button if table is empty
 public class MatchesWindow extends BorderPane {
 
-    final static ObservableList<Match> data = FXCollections.observableArrayList();
+    static ObservableList<Match> data = FXCollections.observableArrayList();
 
-    final TabPane tabPane = new TabPane();
+    private final TabPane tabPane = new TabPane();
 
-    final TextField matchNameField = new TextField();
-    final DatePicker dateField = new DatePicker();
+    private final TextField matchNameField = new TextField();
+    private final DatePicker dateField = new DatePicker();
 
     TableView<Match> table = new TableView<>();
 

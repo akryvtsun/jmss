@@ -13,14 +13,15 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 
+// TODO disable Delete button if table is empty
 public class MembersWindow extends BorderPane {
 
-    final static ObservableList<Person> data = FXCollections.observableArrayList();
+    static ObservableList<Person> data = FXCollections.observableArrayList();
 
-    final TabPane tabPane = new TabPane();
+    private final TabPane tabPane = new TabPane();
 
-    final TextField firstNameField = new TextField();
-    final TextField lastNameField = new TextField();
+    private final TextField firstNameField = new TextField();
+    private final TextField lastNameField = new TextField();
 
     TableView<Person> table = new TableView<>();
 
