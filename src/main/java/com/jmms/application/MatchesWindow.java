@@ -94,6 +94,7 @@ public class MatchesWindow extends BorderPane {
         pane.setHgap(5);
 
         Label label1 = new Label("Match Name:");
+        label1.setMinWidth(80);    // TODO make more accurate
         GridPane.setConstraints(label1, 0, 0);
         pane.getChildren().add(label1);
 
