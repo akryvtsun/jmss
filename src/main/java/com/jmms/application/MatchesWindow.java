@@ -51,24 +51,24 @@ public class MatchesWindow extends BorderPane {
     }
 
     private TabPane createTabPane() {
-        Tab memberTab = new Tab("Match");
-        memberTab.setContent(createMatchTab());
+        Tab matchTab = new Tab("Match");
+        matchTab.setContent(createMatchTab());
 
-        Tab membersTab = new Tab("Match List");
-        membersTab.setContent(createMatchListTab());
+        Tab matchListTab = new Tab("Match List");
+        matchListTab.setContent(createMatchListTab());
 
         tabPane.getSelectionModel().selectedItemProperty().addListener(
                 new ChangeListener<Tab>() {
                     @Override
-                    public void changed(ObservableValue<? extends Tab> ov, Tab t, Tab t1) {
+                    public void changed(ObservableValue<? extends Tab> observable, Tab oldValue, Tab newValue) {
                         TableView.TableViewSelectionModel<Match> tableSelectionModel = table.getSelectionModel();
                         int index = tableSelectionModel.getSelectedIndex();
                         if (index >= 0) {
-                            if ("Match List".equals(t1.getText())) {
+                            if (matchListTab.equals(newValue)) {
                                 Match match = new Match(matchNameField.getText(), dateField.getValue());
 
                                 data.set(index, match);
-                            } else if ("Match".equals(t1.getText())) {
+                            } else if (matchTab.equals(newValue)) {
                                 Match match = data.get(index);
 
                                 matchNameField.setText(match.getName());
@@ -81,8 +81,8 @@ public class MatchesWindow extends BorderPane {
         );
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
-        tabPane.getTabs().add(memberTab);
-        tabPane.getTabs().add(membersTab);
+        tabPane.getTabs().add(matchTab);
+        tabPane.getTabs().add(matchListTab);
 
         return tabPane;
     }

@@ -34,21 +34,21 @@ public class MembersWindow extends BorderPane {
         Tab memberTab = new Tab("Member");
         memberTab.setContent(createMemberTab());
 
-        Tab membersTab = new Tab("Member List");
-        membersTab.setContent(createMemberListTab());
+        Tab memberListTab = new Tab("Member List");
+        memberListTab.setContent(createMemberListTab());
 
         tabPane.getSelectionModel().selectedItemProperty().addListener(
                 new ChangeListener<Tab>() {
                     @Override
-                    public void changed(ObservableValue<? extends Tab> ov, Tab t, Tab t1) {
+                    public void changed(ObservableValue<? extends Tab> observable, Tab oldValue, Tab newValue) {
                         TableView.TableViewSelectionModel<Person> tableSelectionModel = table.getSelectionModel();
                         int index = tableSelectionModel.getSelectedIndex();
                         if (index >= 0) {
-                            if ("Member List".equals(t1.getText())) {
+                            if (memberListTab.equals(newValue)) {
                                 Person person = new Person(firstNameField.getText(), lastNameField.getText());
 
                                 data.set(index, person);
-                            } else if ("Members".equals(t1.getText())) {
+                            } else if (memberTab.equals(newValue)) {
                                 Person person = data.get(index);
 
                                 firstNameField.setText(person.getFirstName());
@@ -61,7 +61,7 @@ public class MembersWindow extends BorderPane {
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
         tabPane.getTabs().add(memberTab);
-        tabPane.getTabs().add(membersTab);
+        tabPane.getTabs().add(memberListTab);
 
         return tabPane;
     }
