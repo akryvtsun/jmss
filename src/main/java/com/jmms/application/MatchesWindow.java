@@ -20,14 +20,14 @@ import java.time.LocalDate;
 // TODO disable Delete button if table is empty
 public class MatchesWindow extends BorderPane {
 
-    static ObservableList<Match> data = FXCollections.observableArrayList();
+    static ObservableList<Match> Data = FXCollections.observableArrayList();
 
     private final TabPane tabPane = new TabPane();
 
     private final TextField matchNameField = new TextField();
     private final DatePicker dateField = new DatePicker();
 
-    TableView<Match> table = new TableView<>();
+    private final TableView<Match> table = new TableView<>();
 
     public MatchesWindow() {
         setTop(createToolBarPane());
@@ -67,9 +67,9 @@ public class MatchesWindow extends BorderPane {
                             if (matchListTab.equals(newValue)) {
                                 Match match = new Match(matchNameField.getText(), dateField.getValue());
 
-                                data.set(index, match);
+                                Data.set(index, match);
                             } else if (matchTab.equals(newValue)) {
-                                Match match = data.get(index);
+                                Match match = Data.get(index);
 
                                 matchNameField.setText(match.getName());
                                 // TODO make field clean here
@@ -127,7 +127,7 @@ public class MatchesWindow extends BorderPane {
                     TableView.TableViewSelectionModel<Match> tableSelectionModel = table.getSelectionModel();
                     int index = tableSelectionModel.getSelectedIndex();
                     if (index >= 0) {
-                        Match match = data.get(index);
+                        Match match = Data.get(index);
 
                         dateField.setValue(match.getDate());
                         matchNameField.setText(match.getName());
@@ -139,7 +139,7 @@ public class MatchesWindow extends BorderPane {
             }
         });
 
-        table.setItems(data);
+        table.setItems(Data);
         table.getColumns().addAll(firstNameCol, lastNameCol);
 
         GridPane pane = new GridPane();
@@ -162,7 +162,7 @@ public class MatchesWindow extends BorderPane {
         aNew.setOnAction(e -> {
             Match match = new Match(matchNameField.getText(), dateField.getValue());
 
-            data.add(match);
+            Data.add(match);
 
             matchNameField.clear();
             dateField.setValue(LocalDate.now());
@@ -173,7 +173,7 @@ public class MatchesWindow extends BorderPane {
         delete.setOnAction(e -> {
             int focusedIndex = table.getSelectionModel().getFocusedIndex();
             if (focusedIndex >= 0)
-                data.remove(focusedIndex);
+                Data.remove(focusedIndex);
         });
 
         pane.getChildren().addAll(aNew, delete);
