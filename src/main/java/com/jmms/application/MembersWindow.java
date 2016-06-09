@@ -7,10 +7,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 
 public class MembersWindow extends BorderPane {
 
@@ -25,7 +22,7 @@ public class MembersWindow extends BorderPane {
     final TextField firstNameField = new TextField();
     final TextField lastNameField = new TextField();
 
-    TableView<Person> table = new TableView<Person>();
+    TableView<Person> table = new TableView<>();
 
     public MembersWindow() {
         //bPane.setPadding(new Insets(10, 10, 10, 10));
@@ -75,24 +72,23 @@ public class MembersWindow extends BorderPane {
     private Pane createMemberListTab() {
         TableColumn firstNameCol = new TableColumn("First Name");
         firstNameCol.setMinWidth(100);
-        firstNameCol.setCellValueFactory(
-                new PropertyValueFactory<Person, String>("firstName"));
+        firstNameCol.setCellValueFactory(new PropertyValueFactory<Person, String>("firstName"));
 
         TableColumn lastNameCol = new TableColumn("Last Name");
         lastNameCol.setMinWidth(100);
-        lastNameCol.setCellValueFactory(
-                new PropertyValueFactory<Person, String>("lastName"));
+        lastNameCol.setCellValueFactory(new PropertyValueFactory<Person, String>("lastName"));
 
         table.setEditable(true);
 
         table.setItems(data);
         table.getColumns().addAll(firstNameCol, lastNameCol);
 
-        final VBox vbox = new VBox();
-        vbox.setSpacing(5);
-        vbox.setPadding(new Insets(10, 0, 10, 10));
-        vbox.getChildren().addAll(table);
-        return vbox;
+        GridPane pane = new GridPane();
+        pane.setPadding(new Insets(10, 0, 10, 10));
+        GridPane.setHgrow(table, Priority.ALWAYS);
+        GridPane.setVgrow(table, Priority.ALWAYS);
+        pane.getChildren().addAll(table);
+        return pane;
     }
 
     private Node createButtonPanel() {
