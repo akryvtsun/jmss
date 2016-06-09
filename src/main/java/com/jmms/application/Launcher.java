@@ -32,7 +32,7 @@ public class Launcher extends Application {
         topContainer.getChildren().add(toolBar);
 
         root.setTop(topContainer);
-        Label label = new Label("jMatch Scoring System\n(c) Andriy Kryvtsun");
+        Label label = new Label("jMatch Scoring System\n(c) 2016");
         label.setTextAlignment(TextAlignment.CENTER);
         root.setCenter(label);
 
