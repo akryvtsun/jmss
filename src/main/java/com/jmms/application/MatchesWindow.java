@@ -1,5 +1,6 @@
 package com.jmms.application;
 
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -14,6 +15,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 
+import java.time.LocalDate;
+
 public class MatchesWindow extends BorderPane {
 
     final static ObservableList<Match> data = FXCollections.observableArrayList();
@@ -21,7 +24,7 @@ public class MatchesWindow extends BorderPane {
     final TabPane tabPane = new TabPane();
 
     final TextField matchNameField = new TextField();
-    final TextField dateField = new TextField();
+    final DatePicker dateField = new DatePicker();
 
     TableView<Match> table = new TableView<>();
 
@@ -59,16 +62,17 @@ public class MatchesWindow extends BorderPane {
                     public void changed(ObservableValue<? extends Tab> ov, Tab t, Tab t1) {
                         TableView.TableViewSelectionModel<Match> tableSelectionModel = table.getSelectionModel();
                         int index = tableSelectionModel.getSelectedIndex();
-                        if (index > 0) {
+                        if (index >= 0) {
                             if ("Match List".equals(t1.getText())) {
-                                Match match = new Match(matchNameField.getText(), dateField.getText());
+                                Match match = new Match(matchNameField.getText(), dateField.getValue());
 
                                 data.set(index, match);
                             } else if ("Match".equals(t1.getText())) {
                                 Match match = data.get(index);
 
                                 matchNameField.setText(match.getName());
-                                dateField.setText(match.getDate());
+                                // TODO make field clean here
+                                dateField.setValue(match.getDate());
                             }
                         }
                     }
@@ -108,11 +112,11 @@ public class MatchesWindow extends BorderPane {
     private Pane createMatchListTab() {
         TableColumn firstNameCol = new TableColumn("Date");
         firstNameCol.setMinWidth(100);
-        firstNameCol.setCellValueFactory(new PropertyValueFactory<MembersWindow.Person, String>("date"));
+        firstNameCol.setCellValueFactory(new PropertyValueFactory<Match, LocalDate>("date"));
 
         TableColumn lastNameCol = new TableColumn("Match Name");
         lastNameCol.setMinWidth(100);
-        lastNameCol.setCellValueFactory(new PropertyValueFactory<MembersWindow.Person, String>("name"));
+        lastNameCol.setCellValueFactory(new PropertyValueFactory<Match, String>("name"));
 
         table.setEditable(true);
         table.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -124,7 +128,7 @@ public class MatchesWindow extends BorderPane {
                     if (index >= 0) {
                         Match match = data.get(index);
 
-                        dateField.setText(match.getDate());
+                        dateField.setValue(match.getDate());
                         matchNameField.setText(match.getName());
 
                         SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
@@ -155,12 +159,12 @@ public class MatchesWindow extends BorderPane {
         Button aNew = new Button("New");
         aNew.setMaxWidth(Double.MAX_VALUE);
         aNew.setOnAction(e -> {
-            Match match = new Match(matchNameField.getText(), dateField.getText());
+            Match match = new Match(matchNameField.getText(), dateField.getValue());
 
             data.add(match);
 
             matchNameField.clear();
-            dateField.clear();
+            dateField.setValue(LocalDate.now());
         });
 
         Button delete = new Button("Delete");
@@ -177,11 +181,11 @@ public class MatchesWindow extends BorderPane {
 
     public static class Match {
         private final SimpleStringProperty name;
-        private final SimpleStringProperty date;
+        private final SimpleObjectProperty<LocalDate> date;
 
-        private Match(String name, String date) {
+        private Match(String name, LocalDate date) {
             this.name = new SimpleStringProperty(name);
-            this.date = new SimpleStringProperty(date);
+            this.date = new SimpleObjectProperty<>(date);
         }
 
         public String getName() {
@@ -192,11 +196,11 @@ public class MatchesWindow extends BorderPane {
             this.name.set(name);
         }
 
-        public String getDate() {
+        public LocalDate getDate() {
             return date.get();
         }
 
-        public void setDate(String date) {
+        public void setDate(LocalDate date) {
             this.date.set(date);
         }
     }

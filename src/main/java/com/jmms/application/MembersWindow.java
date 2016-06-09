@@ -42,7 +42,7 @@ public class MembersWindow extends BorderPane {
                     public void changed(ObservableValue<? extends Tab> ov, Tab t, Tab t1) {
                         TableView.TableViewSelectionModel<Person> tableSelectionModel = table.getSelectionModel();
                         int index = tableSelectionModel.getSelectedIndex();
-                        if (index > 0) {
+                        if (index >= 0) {
                             if ("Member List".equals(t1.getText())) {
                                 Person person = new Person(firstNameField.getText(), lastNameField.getText());
 
