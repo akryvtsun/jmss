@@ -46,11 +46,7 @@ public class Launcher extends Application {
         ToolBar toolBar = new ToolBar();
 
         Button membersBtn = createMembersButton();
-
-        Button matchesBtn = new Button("Matches");
-        matchesBtn.setGraphic(new ImageView("/matches.png"));
-        matchesBtn.setContentDisplay(ContentDisplay.TOP);
-        matchesBtn.setOnAction(e -> System.out.println("Hello World!"));
+        Button matchesBtn = createMatchesButton();
 
         Button scoringBtn = new Button("Scoring");
         scoringBtn.setGraphic(new ImageView("/scoring.png"));
@@ -65,27 +61,32 @@ public class Launcher extends Application {
     }
 
     private Button createMembersButton() {
-        Button membersBtn = new Button("Members");
-        membersBtn.setGraphic(new ImageView("/members.png"));
-        membersBtn.setContentDisplay(ContentDisplay.TOP);
-        membersBtn.setOnAction(e -> {
-            Stage dialog = new Stage();
-
+        Button button = new Button("Members");
+        button.setGraphic(new ImageView("/members.png"));
+        button.setContentDisplay(ContentDisplay.TOP);
+        button.setOnAction(e -> {
+            Stage stage = new Stage();
+            stage.setTitle("Membership Administration");
             Scene scene = new Scene(new MembersWindow());
-            dialog.setScene(scene);
-            dialog.show();
-
-//            ButtonType loginButtonType = new ButtonType("Login", ButtonBar.ButtonData.OK_DONE);
-//            Dialog<String> dialog = new Dialog<>();
-//            dialog.getDialogPane().getButtonTypes().add(loginButtonType);
-//            boolean disabled = false; // computed based on content of text fields, for example
-//            dialog.getDialogPane().lookupButton(loginButtonType).setDisable(disabled);
-//            Optional<String> optional = dialog.showAndWait();
+            stage.setScene(scene);
+            stage.show();
         });
-        return membersBtn;
+        return button;
     }
 
-
+    private Button createMatchesButton() {
+        Button button = new Button("Matches");
+        button.setGraphic(new ImageView("/matches.png"));
+        button.setContentDisplay(ContentDisplay.TOP);
+        button.setOnAction(e -> {
+            Stage stage = new Stage();
+            stage.setTitle("Match Administration");
+            Scene scene = new Scene(new MatchesWindow());
+            stage.setScene(scene);
+            stage.show();
+        });
+        return button;
+    }
 
     private void centerStage(Stage primaryStage, double width, double height) {
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
