@@ -18,6 +18,7 @@ public class MembersWindow extends BorderPane {
     final static ObservableList<Person> data = FXCollections.observableArrayList();
 
     final TabPane tabPane = new TabPane();
+
     final TextField firstNameField = new TextField();
     final TextField lastNameField = new TextField();
 
@@ -25,7 +26,7 @@ public class MembersWindow extends BorderPane {
 
     public MembersWindow() {
         setCenter(createTabPane());
-        setRight(createButtonPanel());
+        setRight(createButtonPane());
     }
 
     private TabPane createTabPane() {
@@ -131,7 +132,7 @@ public class MembersWindow extends BorderPane {
         return pane;
     }
 
-    private Node createButtonPanel() {
+    private Node createButtonPane() {
         final VBox pane = new VBox();
         pane.setSpacing(5);
         pane.setPadding(new Insets(40, 10, 10, 10));
