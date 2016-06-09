@@ -34,11 +34,9 @@ public class Launcher extends Application {
         double width = 320;
         double height = 240;
 
-        centerStage(primaryStage, width, height);
-
         Scene scene = new Scene(root, width, height);
-
         primaryStage.setScene(scene);
+        centerStage(primaryStage, width, height);
         primaryStage.show();
     }
 
@@ -69,6 +67,8 @@ public class Launcher extends Application {
             stage.setTitle("Membership Administration");
             Scene scene = new Scene(new MembersWindow());
             stage.setScene(scene);
+            // TODO make centering
+            //centerStage(stage, stage.getWidth(), stage.getHeight());
             stage.show();
         });
         return button;
@@ -83,14 +83,16 @@ public class Launcher extends Application {
             stage.setTitle("Match Administration");
             Scene scene = new Scene(new MatchesWindow());
             stage.setScene(scene);
+            // TODO make centering
+            //centerStage(stage, stage.getWidth(), stage.getHeight());
             stage.show();
         });
         return button;
     }
 
-    private void centerStage(Stage primaryStage, double width, double height) {
+    private void centerStage(Stage stage, double width, double height) {
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-        primaryStage.setX((screenBounds.getWidth() - width) / 2);
-        primaryStage.setY((screenBounds.getHeight() - height) / 2);
+        stage.setX((screenBounds.getWidth() - width) / 2);
+        stage.setY((screenBounds.getHeight() - height) / 2);
     }
 }
