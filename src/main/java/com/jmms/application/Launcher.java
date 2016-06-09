@@ -81,7 +81,10 @@ public class Launcher extends Application {
 
     private Button createMatchesButton() {
         Button button = new Button("Matches");
-        button.setGraphic(new ImageView("/matches.png"));
+        ImageView value = new ImageView("/matches.png");
+        value.setFitHeight(50);
+        value.setFitWidth(50);
+        button.setGraphic(value);
         button.setContentDisplay(ContentDisplay.TOP);
         button.setOnAction(e -> {
             Stage stage = new Stage();
