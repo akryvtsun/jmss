@@ -37,18 +37,18 @@ public class MembersWindow extends BorderPane {
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
         Tab memberTab = new Tab("Member");
-        VBox hbox = new VBox();
+        VBox vBox = new VBox();
 
-        addFirstName.setPromptText("First Name");
-        //addFirstName.setMaxWidth(firstNameCol.getPrefWidth());
-        //addLastName.setMaxWidth(lastNameCol.getPrefWidth());
-        addLastName.setPromptText("Last Name");
+        Label label1 = new Label("First Name:");
+        Label label2 = new Label("Last Name");
 
-        hbox.getChildren().add(addFirstName);
-        hbox.getChildren().add(addLastName);
+        vBox.getChildren().add(label1);
+        vBox.getChildren().add(addFirstName);
+        vBox.getChildren().add(label2);
+        vBox.getChildren().add(addLastName);
 
-        hbox.setAlignment(Pos.CENTER);
-        memberTab.setContent(hbox);
+        vBox.setAlignment(Pos.CENTER);
+        memberTab.setContent(vBox);
 
         /////
 
