@@ -33,14 +33,19 @@ public class Launcher extends Application {
 
         root.setTop(topContainer);
         Label label = new Label("jMatch Scoring System\n(c) 2016");
+        //label.setMinHeight(200);
         label.setTextAlignment(TextAlignment.CENTER);
         root.setCenter(label);
 
-        double width = 320;
+        double width = 300;
         double height = 240;
+
 
         Scene scene = new Scene(root, width, height);
         primaryStage.setScene(scene);
+        // TODO make scene width equal to toolbar width
+        //primaryStage.sizeToScene();
+        //primaryStage.centerOnScreen();
         centerStage(primaryStage, width, height);
         primaryStage.show();
     }
@@ -59,7 +64,10 @@ public class Launcher extends Application {
         scoringBtn.setContentDisplay(ContentDisplay.TOP);
 
         Button reportingBtn = new Button("Reporting");
-        reportingBtn.setGraphic(new ImageView("/reporting.png"));
+        ImageView value1 = new ImageView("/reporting.png");
+        value1.setFitHeight(50);
+        value1.setFitWidth(50);
+        reportingBtn.setGraphic(value1);
         reportingBtn.setContentDisplay(ContentDisplay.TOP);
 
         toolBar.getItems().addAll(membersBtn, matchesBtn, scoringBtn, reportingBtn);
