@@ -1,31 +1,29 @@
 package com.jmms.application;
 
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 
 public class MembersWindow extends BorderPane {
 
-    final static ObservableList<Person> data = FXCollections.observableArrayList(
-            new Person("Jacob", "Smith"),
-            new Person("Isabella", "Johnson"),
-            new Person("Ethan", "Williams"),
-            new Person("Emma", "Jones"),
-            new Person("Michael", "Brown")
-    );
+    final static ObservableList<Person> data = FXCollections.observableArrayList();
 
+    final TabPane tabPane = new TabPane();
     final TextField firstNameField = new TextField();
     final TextField lastNameField = new TextField();
 
     TableView<Person> table = new TableView<>();
 
     public MembersWindow() {
-        //bPane.setPadding(new Insets(10, 10, 10, 10));
         setCenter(createTabPane());
         setRight(createButtonPanel());
     }
@@ -37,7 +35,27 @@ public class MembersWindow extends BorderPane {
         Tab membersTab = new Tab("Member List");
         membersTab.setContent(createMemberListTab());
 
-        TabPane tabPane = new TabPane();
+        tabPane.getSelectionModel().selectedItemProperty().addListener(
+                new ChangeListener<Tab>() {
+                    @Override
+                    public void changed(ObservableValue<? extends Tab> ov, Tab t, Tab t1) {
+                        TableView.TableViewSelectionModel<Person> tableSelectionModel = table.getSelectionModel();
+                        int index = tableSelectionModel.getSelectedIndex();
+                        if (index > 0) {
+                            if ("Member List".equals(t1.getText())) {
+                                Person person = new Person(firstNameField.getText(), lastNameField.getText());
+
+                                data.set(index, person);
+                            } else if ("Members".equals(t1.getText())) {
+                                Person person = data.get(index);
+
+                                firstNameField.setText(person.getFirstName());
+                                lastNameField.setText(person.getLastName());
+                            }
+                        }
+                    }
+                }
+        );
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
         tabPane.getTabs().add(memberTab);
@@ -79,22 +97,44 @@ public class MembersWindow extends BorderPane {
         lastNameCol.setCellValueFactory(new PropertyValueFactory<Person, String>("lastName"));
 
         table.setEditable(true);
+        table.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (event.getClickCount() > 1) {
+                    TableView.TableViewSelectionModel<Person> tableSelectionModel = table.getSelectionModel();
+                    int index = tableSelectionModel.getSelectedIndex();
+                    if (index >= 0) {
+                        Person person = data.get(index);
+
+                        firstNameField.setText(person.getFirstName());
+                        lastNameField.setText(person.getLastName());
+
+                        SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
+                        selectionModel.select(0);
+                    }
+                }
+            }
+        });
 
         table.setItems(data);
-        table.getColumns().addAll(firstNameCol, lastNameCol);
+        table.getColumns().
+
+        addAll(firstNameCol, lastNameCol);
 
         GridPane pane = new GridPane();
+
         pane.setPadding(new Insets(10, 0, 10, 10));
         GridPane.setHgrow(table, Priority.ALWAYS);
         GridPane.setVgrow(table, Priority.ALWAYS);
         pane.getChildren().addAll(table);
+
         return pane;
     }
 
     private Node createButtonPanel() {
-        final VBox vbox = new VBox();
-        vbox.setSpacing(5);
-        vbox.setPadding(new Insets(40, 10, 10, 10));
+        final VBox pane = new VBox();
+        pane.setSpacing(5);
+        pane.setPadding(new Insets(40, 10, 10, 10));
 
         Button aNew = new Button("New");
         aNew.setMaxWidth(Double.MAX_VALUE);
@@ -111,11 +151,12 @@ public class MembersWindow extends BorderPane {
         delete.setMaxWidth(Double.MAX_VALUE);
         delete.setOnAction(e -> {
             int focusedIndex = table.getSelectionModel().getFocusedIndex();
-            data.remove(focusedIndex);
+            if (focusedIndex >= 0)
+                data.remove(focusedIndex);
         });
 
-        vbox.getChildren().addAll(aNew, delete);
-        return vbox;
+        pane.getChildren().addAll(aNew, delete);
+        return pane;
     }
 
     public static class Person {
