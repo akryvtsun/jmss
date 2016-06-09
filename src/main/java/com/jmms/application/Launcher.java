@@ -52,7 +52,10 @@ public class Launcher extends Application {
         Button matchesBtn = createMatchesButton();
 
         Button scoringBtn = new Button("Scoring");
-        scoringBtn.setGraphic(new ImageView("/scoring.png"));
+        ImageView value = new ImageView("/scoring.png");
+        value.setFitHeight(50);
+        value.setFitWidth(50);
+        scoringBtn.setGraphic(value);
         scoringBtn.setContentDisplay(ContentDisplay.TOP);
 
         Button reportingBtn = new Button("Reporting");
