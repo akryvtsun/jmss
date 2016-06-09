@@ -48,7 +48,7 @@ public class MembersWindow extends BorderPane {
 
     private Pane createMemberTab() {
         GridPane pane = new GridPane();
-        pane.setPadding(new Insets(20, 10, 10, 10));
+        pane.setPadding(new Insets(10, 10, 10, 10));
         pane.setVgap(5);
         pane.setHgap(5);
 
@@ -94,7 +94,7 @@ public class MembersWindow extends BorderPane {
     private Node createButtonPanel() {
         final VBox vbox = new VBox();
         vbox.setSpacing(5);
-        vbox.setPadding(new Insets(30, 10, 10, 10));
+        vbox.setPadding(new Insets(40, 10, 10, 10));
 
         Button aNew = new Button("New");
         aNew.setMaxWidth(Double.MAX_VALUE);
