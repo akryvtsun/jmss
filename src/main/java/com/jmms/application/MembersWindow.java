@@ -4,11 +4,12 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 public class MembersWindow extends BorderPane {
@@ -21,8 +22,8 @@ public class MembersWindow extends BorderPane {
             new Person("Michael", "Brown")
     );
 
-    final TextField addFirstName = new TextField();
-    final TextField addLastName = new TextField();
+    final TextField firstNameField = new TextField();
+    final TextField lastNameField = new TextField();
 
     TableView<Person> table = new TableView<Person>();
 
@@ -33,27 +34,45 @@ public class MembersWindow extends BorderPane {
     }
 
     private TabPane createTabPane() {
+        Tab memberTab = new Tab("Member");
+        memberTab.setContent(createMemberTab());
+
+        Tab membersTab = new Tab("Member List");
+        membersTab.setContent(createMemberListTab());
+
         TabPane tabPane = new TabPane();
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
-        Tab memberTab = new Tab("Member");
-        VBox vBox = new VBox();
+        tabPane.getTabs().add(memberTab);
+        tabPane.getTabs().add(membersTab);
+
+        return tabPane;
+    }
+
+    private Pane createMemberTab() {
+        GridPane pane = new GridPane();
+        pane.setPadding(new Insets(20, 10, 10, 10));
+        pane.setVgap(5);
+        pane.setHgap(5);
 
         Label label1 = new Label("First Name:");
-        Label label2 = new Label("Last Name");
+        GridPane.setConstraints(label1, 0, 0);
+        pane.getChildren().add(label1);
 
-        vBox.getChildren().add(label1);
-        vBox.getChildren().add(addFirstName);
-        vBox.getChildren().add(label2);
-        vBox.getChildren().add(addLastName);
+        GridPane.setConstraints(firstNameField, 1, 0);
+        pane.getChildren().add(firstNameField);
 
-        vBox.setAlignment(Pos.CENTER);
-        memberTab.setContent(vBox);
+        Label label2 = new Label("Last Name:");
+        GridPane.setConstraints(label2, 0, 1);
+        pane.getChildren().add(label2);
 
-        /////
+        GridPane.setConstraints(lastNameField, 1, 1);
+        pane.getChildren().add(lastNameField);
 
-        Tab membersTab = new Tab("Member List");
+        return pane;
+    }
 
+    private Pane createMemberListTab() {
         TableColumn firstNameCol = new TableColumn("First Name");
         firstNameCol.setMinWidth(100);
         firstNameCol.setCellValueFactory(
@@ -73,11 +92,7 @@ public class MembersWindow extends BorderPane {
         vbox.setSpacing(5);
         vbox.setPadding(new Insets(10, 0, 10, 10));
         vbox.getChildren().addAll(table);
-        membersTab.setContent(vbox);
-
-        tabPane.getTabs().add(memberTab);
-        tabPane.getTabs().add(membersTab);
-        return tabPane;
+        return vbox;
     }
 
     private Node createButtonPanel() {
@@ -88,9 +103,12 @@ public class MembersWindow extends BorderPane {
         Button aNew = new Button("New");
         aNew.setMaxWidth(Double.MAX_VALUE);
         aNew.setOnAction(e -> {
-            data.add(new Person(addFirstName.getText(), addLastName.getText()));
-            addFirstName.clear();
-            addLastName.clear();
+            Person person = new Person(firstNameField.getText(), lastNameField.getText());
+
+            data.add(person);
+
+            firstNameField.clear();
+            lastNameField.clear();
         });
 
         Button delete = new Button("Delete");
