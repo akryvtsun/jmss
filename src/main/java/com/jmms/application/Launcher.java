@@ -5,10 +5,12 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.Label;
 import javafx.scene.control.ToolBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -30,6 +32,9 @@ public class Launcher extends Application {
         topContainer.getChildren().add(toolBar);
 
         root.setTop(topContainer);
+        Label label = new Label("jMatch Scoring System\n(c) Andriy Kryvtsun");
+        label.setTextAlignment(TextAlignment.CENTER);
+        root.setCenter(label);
 
         double width = 320;
         double height = 240;
