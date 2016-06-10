@@ -92,11 +92,9 @@ public class MembersWindow extends BorderPane {
 
     private Pane createMemberListTab() {
         TableColumn firstNameCol = new TableColumn("First Name");
-        firstNameCol.setMinWidth(Control.USE_PREF_SIZE);
         firstNameCol.setCellValueFactory(new PropertyValueFactory<Member, String>("firstName"));
 
         TableColumn lastNameCol = new TableColumn("Last Name");
-        lastNameCol.setMinWidth(Control.USE_PREF_SIZE);
         lastNameCol.setCellValueFactory(new PropertyValueFactory<Member, String>("lastName"));
 
         table.setEditable(true);

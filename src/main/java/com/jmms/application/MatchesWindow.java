@@ -1,7 +1,6 @@
 package com.jmms.application;
 
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
+import com.jmms.domain.Match;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -113,13 +112,11 @@ public class MatchesWindow extends BorderPane {
     }
 
     private Pane createMatchListTab() {
-        TableColumn firstNameCol = new TableColumn("Date");
-        firstNameCol.setMinWidth(Control.USE_PREF_SIZE);
-        firstNameCol.setCellValueFactory(new PropertyValueFactory<Match, LocalDate>("date"));
+        TableColumn nameCol = new TableColumn("Match Name");
+        nameCol.setCellValueFactory(new PropertyValueFactory<Match, String>("name"));
 
-        TableColumn lastNameCol = new TableColumn("Match Name");
-        lastNameCol.setMinWidth(Control.USE_PREF_SIZE);
-        lastNameCol.setCellValueFactory(new PropertyValueFactory<Match, String>("name"));
+        TableColumn dateCol = new TableColumn("Date");
+        dateCol.setCellValueFactory(new PropertyValueFactory<Match, LocalDate>("date"));
 
         table.setEditable(true);
         table.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -142,7 +139,7 @@ public class MatchesWindow extends BorderPane {
         });
 
         table.setItems(Data);
-        table.getColumns().addAll(firstNameCol, lastNameCol);
+        table.getColumns().addAll(dateCol, nameCol);
 
         GridPane pane = new GridPane();
 
@@ -180,31 +177,5 @@ public class MatchesWindow extends BorderPane {
 
         pane.getChildren().addAll(aNew, delete);
         return pane;
-    }
-
-    public static class Match {
-        private final SimpleStringProperty name;
-        private final SimpleObjectProperty<LocalDate> date;
-
-        private Match(String name, LocalDate date) {
-            this.name = new SimpleStringProperty(name);
-            this.date = new SimpleObjectProperty<>(date);
-        }
-
-        public String getName() {
-            return name.get();
-        }
-
-        public void setName(String name) {
-            this.name.set(name);
-        }
-
-        public LocalDate getDate() {
-            return date.get();
-        }
-
-        public void setDate(LocalDate date) {
-            this.date.set(date);
-        }
     }
 }

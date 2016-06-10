@@ -7,11 +7,11 @@ import java.util.Map;
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-public class MatchTest {
+public class OldMatchTest {
 
     @Test
     public void match_creation() throws Exception {
-        Match demo = new Match("demo", new Stage[]{
+        OldMatch demo = new OldMatch("demo", new Stage[]{
                 new Stage(1, 2),
                 new Stage(2, 2),
                 new Stage(3, 2)
@@ -27,7 +27,7 @@ public class MatchTest {
 
         Stage stage = new Stage(1, 2);
 
-        Match demo = new Match("demo", new Stage[]{
+        OldMatch demo = new OldMatch("demo", new Stage[]{
                 stage
         });
         demo.add(stage, A, new Passing(2, 0, 0, 0, 0, 10.5));
