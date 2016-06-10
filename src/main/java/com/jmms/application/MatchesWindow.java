@@ -8,11 +8,13 @@ import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.stage.Stage;
 
 import java.time.LocalDate;
 
@@ -39,8 +41,20 @@ public class MatchesWindow extends BorderPane {
         ToolBar toolBar = new ToolBar();
 
         Button stages = new Button("Stages");
-        stages.setGraphic(new ImageView("/stages.png"));
+        ImageView value = new ImageView("/stages.png");
+        value.setFitHeight(50);
+        value.setFitWidth(50);
+        stages.setGraphic(value);
         stages.setContentDisplay(ContentDisplay.TOP);
+        stages.setOnAction(e -> {
+            Stage stage = new Stage();
+            stage.setTitle("Stage Administration");
+            Scene scene = new Scene(new StagesWindow());
+            stage.setScene(scene);
+            // TODO make centering
+            //centerStage(stage, stage.getWidth(), stage.getHeight());
+            stage.show();
+        });
 
         Button competitors = new Button("Competitors");
         competitors.setGraphic(new ImageView("/competitors.png"));
