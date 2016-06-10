@@ -8,7 +8,7 @@ import java.util.Collections;
 
 import static org.junit.Assert.assertNotNull;
 
-public class MembersWindowTest {
+public class CompetitorsWindowTest {
 
     @Before
     public void setUp() throws Exception {
@@ -17,7 +17,7 @@ public class MembersWindowTest {
 
     @Test
     public void window_creation() throws Exception {
-        MembersWindow window = new MembersWindow(Collections.emptyList());
+        CompetitorsWindow window = new CompetitorsWindow(Collections.emptyList(), Collections.emptyList());
         assertNotNull(window);
     }
 }

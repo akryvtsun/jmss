@@ -1,6 +1,7 @@
 package com.jmms.application;
 
 import com.jmms.domain.Match;
+import com.jmms.domain.Member;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -17,13 +18,15 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import java.time.LocalDate;
+import java.util.List;
 
 // TODO disable Delete button if table is empty
 // TODO disable make whole window smaller (or even remove resize ability at all)
 // TODO disable toolbar buttons if no match was selected
 public class MatchesWindow extends BorderPane {
 
-    static ObservableList<Match> Data = FXCollections.observableArrayList();
+    private final List<Member> members;
+    private final ObservableList<Match> data;
 
     private final TabPane tabPane = new TabPane();
 
@@ -32,7 +35,10 @@ public class MatchesWindow extends BorderPane {
 
     private final TableView<Match> table = new TableView<>();
 
-    public MatchesWindow() {
+    public MatchesWindow(List<Member> members, List<Match> matches) {
+        this.members = members;
+        data = FXCollections.observableList(matches);
+
         setTop(createToolBarPane());
         setCenter(createTabPane());
         setRight(createButtonPane());
@@ -61,13 +67,15 @@ public class MatchesWindow extends BorderPane {
 
             TableView.TableViewSelectionModel<Match> tableSelectionModel = table.getSelectionModel();
             int index = tableSelectionModel.getSelectedIndex();
-            Match match = Data.get(index);
+            if (index >= 0) {
+                Match match = data.get(index);
 
-            Scene scene = new Scene(new StagesWindow(match.getStages()));
-            stage.setScene(scene);
-            // TODO make centering
-            //centerStage(stage, stage.getWidth(), stage.getHeight());
-            stage.show();
+                Scene scene = new Scene(new StagesWindow(match.getStages()));
+                stage.setScene(scene);
+                // TODO make centering
+                //centerStage(stage, stage.getWidth(), stage.getHeight());
+                stage.show();
+            }
         });
         return button;
     }
@@ -85,13 +93,16 @@ public class MatchesWindow extends BorderPane {
 
             TableView.TableViewSelectionModel<Match> tableSelectionModel = table.getSelectionModel();
             int index = tableSelectionModel.getSelectedIndex();
-            Match match = Data.get(index);
+            if (index >= 0) {
+                Match match = data.get(index);
+                List<Member> competitors = match.getCompetitors();
 
-            Scene scene = new Scene(new CompetitorsWindow());
-            stage.setScene(scene);
-            // TODO make centering
-            //centerStage(stage, stage.getWidth(), stage.getHeight());
-            stage.show();
+                Scene scene = new Scene(new CompetitorsWindow(members, competitors));
+                stage.setScene(scene);
+                // TODO make centering
+                //centerStage(stage, stage.getWidth(), stage.getHeight());
+                stage.show();
+            }
         });
         return button;
     }
@@ -113,9 +124,9 @@ public class MatchesWindow extends BorderPane {
                             if (matchListTab.equals(newValue)) {
                                 Match match = new Match(matchNameField.getText(), dateField.getValue());
 
-                                Data.set(index, match);
+                                data.set(index, match);
                             } else if (matchTab.equals(newValue)) {
-                                Match match = Data.get(index);
+                                Match match = data.get(index);
 
                                 matchNameField.setText(match.getName());
                                 // TODO make field clean here
@@ -172,7 +183,7 @@ public class MatchesWindow extends BorderPane {
                     TableView.TableViewSelectionModel<Match> tableSelectionModel = table.getSelectionModel();
                     int index = tableSelectionModel.getSelectedIndex();
                     if (index >= 0) {
-                        Match match = Data.get(index);
+                        Match match = data.get(index);
 
                         dateField.setValue(match.getDate());
                         matchNameField.setText(match.getName());
@@ -184,7 +195,7 @@ public class MatchesWindow extends BorderPane {
             }
         });
 
-        table.setItems(Data);
+        table.setItems(data);
         table.getColumns().addAll(dateCol, nameCol);
 
         GridPane pane = new GridPane();
@@ -207,7 +218,7 @@ public class MatchesWindow extends BorderPane {
         aNew.setOnAction(e -> {
             Match match = new Match(matchNameField.getText(), dateField.getValue());
 
-            Data.add(match);
+            data.add(match);
 
             matchNameField.clear();
             dateField.setValue(LocalDate.now());
@@ -218,7 +229,7 @@ public class MatchesWindow extends BorderPane {
         delete.setOnAction(e -> {
             int focusedIndex = table.getSelectionModel().getFocusedIndex();
             if (focusedIndex >= 0)
-                Data.remove(focusedIndex);
+                data.remove(focusedIndex);
         });
 
         pane.getChildren().addAll(aNew, delete);

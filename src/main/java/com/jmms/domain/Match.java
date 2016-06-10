@@ -8,11 +8,13 @@ public final class Match {
     private final String name;
     private final LocalDate date;
     private final List<Stage> stages;
+    private final List<Member> competitors;
 
     public Match(String name, LocalDate date) {
         this.name = name;
         this.date = date;
         stages = new ArrayList<>();
+        competitors = new ArrayList<>();
     }
 
     public String getName() {
@@ -23,8 +25,11 @@ public final class Match {
         return date;
     }
 
-
     public List<Stage> getStages() {
         return stages;
+    }
+
+    public List<Member> getCompetitors() {
+        return competitors;
     }
 }

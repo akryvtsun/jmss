@@ -4,7 +4,7 @@ import javafx.embed.swing.JFXPanel;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
+import java.util.Collections;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -17,7 +17,7 @@ public class StagesWindowTest {
 
     @Test
     public void window_creation() throws Exception {
-        StagesWindow window = new StagesWindow(new ArrayList<>());
+        StagesWindow window = new StagesWindow(Collections.emptyList());
         assertNotNull(window);
     }
 }

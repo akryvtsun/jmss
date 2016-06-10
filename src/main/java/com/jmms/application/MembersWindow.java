@@ -13,11 +13,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 
+import java.util.List;
+
 // TODO disable Delete button if table is empty
 // TODO disable make whole window smaller (or even remove resize ability at all)
 public class MembersWindow extends BorderPane {
 
-    static ObservableList<Member> Data = FXCollections.observableArrayList();
+    private final ObservableList<Member> data;
 
     private final TabPane tabPane = new TabPane();
 
@@ -26,7 +28,9 @@ public class MembersWindow extends BorderPane {
 
     private final TableView<Member> table = new TableView<>();
 
-    public MembersWindow() {
+    public MembersWindow(List<Member> members) {
+        data = FXCollections.observableList(members);
+
         setCenter(createTabPane());
         setRight(createButtonPane());
     }
@@ -48,9 +52,9 @@ public class MembersWindow extends BorderPane {
                             if (memberListTab.equals(newValue)) {
                                 Member member = new Member(firstNameField.getText(), lastNameField.getText());
 
-                                Data.set(index, member);
+                                data.set(index, member);
                             } else if (memberTab.equals(newValue)) {
-                                Member member = Data.get(index);
+                                Member member = data.get(index);
 
                                 firstNameField.setText(member.getFirstName());
                                 lastNameField.setText(member.getLastName());
@@ -105,7 +109,7 @@ public class MembersWindow extends BorderPane {
                     TableView.TableViewSelectionModel<Member> tableSelectionModel = table.getSelectionModel();
                     int index = tableSelectionModel.getSelectedIndex();
                     if (index >= 0) {
-                        Member member = Data.get(index);
+                        Member member = data.get(index);
 
                         firstNameField.setText(member.getFirstName());
                         lastNameField.setText(member.getLastName());
@@ -117,10 +121,8 @@ public class MembersWindow extends BorderPane {
             }
         });
 
-        table.setItems(Data);
-        table.getColumns().
-
-        addAll(firstNameCol, lastNameCol);
+        table.setItems(data);
+        table.getColumns().addAll(firstNameCol, lastNameCol);
 
         GridPane pane = new GridPane();
 
@@ -142,7 +144,7 @@ public class MembersWindow extends BorderPane {
         aNew.setOnAction(e -> {
             Member match = new Member(firstNameField.getText(), lastNameField.getText());
 
-            Data.add(match);
+            data.add(match);
 
             firstNameField.clear();
             lastNameField.clear();
@@ -153,7 +155,7 @@ public class MembersWindow extends BorderPane {
         delete.setOnAction(e -> {
             int focusedIndex = table.getSelectionModel().getFocusedIndex();
             if (focusedIndex >= 0)
-                Data.remove(focusedIndex);
+                data.remove(focusedIndex);
         });
 
         pane.getChildren().addAll(aNew, delete);

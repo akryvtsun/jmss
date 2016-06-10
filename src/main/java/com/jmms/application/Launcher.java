@@ -1,5 +1,7 @@
 package com.jmms.application;
 
+import com.jmms.domain.Match;
+import com.jmms.domain.Member;
 import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
@@ -14,7 +16,13 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Launcher extends Application {
+
+    private List<Member> members = new ArrayList();
+    private List<Match> matches = new ArrayList();
 
     public static void main(String[] args) {
         launch(args);
@@ -80,7 +88,7 @@ public class Launcher extends Application {
         button.setOnAction(e -> {
             Stage stage = new Stage();
             stage.setTitle("Membership Administration");
-            Scene scene = new Scene(new MembersWindow());
+            Scene scene = new Scene(new MembersWindow(members));
             stage.setScene(scene);
             // TODO make centering
             //centerStage(stage, stage.getWidth(), stage.getHeight());
@@ -99,7 +107,7 @@ public class Launcher extends Application {
         button.setOnAction(e -> {
             Stage stage = new Stage();
             stage.setTitle("Match Administration");
-            Scene scene = new Scene(new MatchesWindow());
+            Scene scene = new Scene(new MatchesWindow(members, matches));
             stage.setScene(scene);
             // TODO make centering
             //centerStage(stage, stage.getWidth(), stage.getHeight());
