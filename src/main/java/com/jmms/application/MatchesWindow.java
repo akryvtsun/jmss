@@ -20,6 +20,7 @@ import java.time.LocalDate;
 
 // TODO disable Delete button if table is empty
 // TODO disable make whole window smaller (or even remove resize ability at all)
+// TODO disable toolbar buttons if no match was selected
 public class MatchesWindow extends BorderPane {
 
     static ObservableList<Match> Data = FXCollections.observableArrayList();
@@ -40,13 +41,21 @@ public class MatchesWindow extends BorderPane {
     private ToolBar createToolBarPane() {
         ToolBar toolBar = new ToolBar();
 
-        Button stages = new Button("Stages");
+        Button stages = createStagesButton();
+        Button competitors = createCompetitorsButton();
+
+        toolBar.getItems().addAll(stages, competitors);
+        return toolBar;
+    }
+
+    private Button createStagesButton() {
+        Button button = new Button("Stages");
         ImageView value = new ImageView("/stages.png");
         value.setFitHeight(50);
         value.setFitWidth(50);
-        stages.setGraphic(value);
-        stages.setContentDisplay(ContentDisplay.TOP);
-        stages.setOnAction(e -> {
+        button.setGraphic(value);
+        button.setContentDisplay(ContentDisplay.TOP);
+        button.setOnAction(e -> {
             Stage stage = new Stage();
             stage.setTitle("Stage Administration");
 
@@ -60,13 +69,31 @@ public class MatchesWindow extends BorderPane {
             //centerStage(stage, stage.getWidth(), stage.getHeight());
             stage.show();
         });
+        return button;
+    }
 
-        Button competitors = new Button("Competitors");
-        competitors.setGraphic(new ImageView("/competitors.png"));
-        competitors.setContentDisplay(ContentDisplay.TOP);
+    private Button createCompetitorsButton() {
+        Button button = new Button("Competitors");
+        ImageView value = new ImageView("/competitors.png");
+        value.setFitHeight(50);
+        value.setFitWidth(50);
+        button.setGraphic(value);
+        button.setContentDisplay(ContentDisplay.TOP);
+        button.setOnAction(e -> {
+            Stage stage = new Stage();
+            stage.setTitle("Competitors Administration");
 
-        toolBar.getItems().addAll(stages, competitors);
-        return toolBar;
+            TableView.TableViewSelectionModel<Match> tableSelectionModel = table.getSelectionModel();
+            int index = tableSelectionModel.getSelectedIndex();
+            Match match = Data.get(index);
+
+            Scene scene = new Scene(new CompetitorsWindow());
+            stage.setScene(scene);
+            // TODO make centering
+            //centerStage(stage, stage.getWidth(), stage.getHeight());
+            stage.show();
+        });
+        return button;
     }
 
     private TabPane createTabPane() {

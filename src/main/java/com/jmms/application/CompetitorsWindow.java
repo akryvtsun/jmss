@@ -13,9 +13,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 
-// TODO disable Delete button if table is empty
-// TODO disable make whole window smaller (or even remove resize ability at all)
-public class MembersWindow extends BorderPane {
+public class CompetitorsWindow extends BorderPane {
 
     static ObservableList<Member> Data = FXCollections.observableArrayList();
 
@@ -26,7 +24,7 @@ public class MembersWindow extends BorderPane {
 
     private final TableView<Member> table = new TableView<>();
 
-    public MembersWindow() {
+    public CompetitorsWindow() {
         setCenter(createTabPane());
         setRight(createButtonPane());
     }
@@ -120,7 +118,7 @@ public class MembersWindow extends BorderPane {
         table.setItems(Data);
         table.getColumns().
 
-        addAll(firstNameCol, lastNameCol);
+                addAll(firstNameCol, lastNameCol);
 
         GridPane pane = new GridPane();
 
