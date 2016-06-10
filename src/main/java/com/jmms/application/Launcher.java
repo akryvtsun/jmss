@@ -37,9 +37,8 @@ public class Launcher extends Application {
         label.setTextAlignment(TextAlignment.CENTER);
         root.setCenter(label);
 
-        double width = 300;
+        double width = 340;
         double height = 240;
-
 
         Scene scene = new Scene(root, width, height);
         primaryStage.setScene(scene);
