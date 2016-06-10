@@ -14,6 +14,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 
 // TODO disable Delete button if table is empty
+// TODO disable make whole window smaller (or even remove resize ability at all)
 public class MembersWindow extends BorderPane {
 
     static ObservableList<Person> Data = FXCollections.observableArrayList();

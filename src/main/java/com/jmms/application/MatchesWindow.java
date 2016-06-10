@@ -18,6 +18,7 @@ import javafx.scene.layout.*;
 import java.time.LocalDate;
 
 // TODO disable Delete button if table is empty
+// TODO disable make whole window smaller (or even remove resize ability at all)
 public class MatchesWindow extends BorderPane {
 
     static ObservableList<Match> Data = FXCollections.observableArrayList();
@@ -94,7 +95,7 @@ public class MatchesWindow extends BorderPane {
         pane.setHgap(5);
 
         Label label1 = new Label("Match Name:");
-        label1.setMinWidth(80);    // TODO make more accurate
+        label1.setMinWidth(Control.USE_PREF_SIZE);
         GridPane.setConstraints(label1, 0, 0);
         pane.getChildren().add(label1);
 
