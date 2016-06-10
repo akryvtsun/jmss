@@ -1,6 +1,6 @@
 package com.jmms.application;
 
-import javafx.beans.property.SimpleStringProperty;
+import com.jmms.domain.Member;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -17,14 +17,14 @@ import javafx.scene.layout.*;
 // TODO disable make whole window smaller (or even remove resize ability at all)
 public class MembersWindow extends BorderPane {
 
-    static ObservableList<Person> Data = FXCollections.observableArrayList();
+    static ObservableList<Member> Data = FXCollections.observableArrayList();
 
     private final TabPane tabPane = new TabPane();
 
     private final TextField firstNameField = new TextField();
     private final TextField lastNameField = new TextField();
 
-    private final TableView<Person> table = new TableView<>();
+    private final TableView<Member> table = new TableView<>();
 
     public MembersWindow() {
         setCenter(createTabPane());
@@ -42,15 +42,15 @@ public class MembersWindow extends BorderPane {
                 new ChangeListener<Tab>() {
                     @Override
                     public void changed(ObservableValue<? extends Tab> observable, Tab oldValue, Tab newValue) {
-                        TableView.TableViewSelectionModel<Person> tableSelectionModel = table.getSelectionModel();
+                        TableView.TableViewSelectionModel<Member> tableSelectionModel = table.getSelectionModel();
                         int index = tableSelectionModel.getSelectedIndex();
                         if (index >= 0) {
                             if (memberListTab.equals(newValue)) {
-                                Person person = new Person(firstNameField.getText(), lastNameField.getText());
+                                Member person = new Member(firstNameField.getText(), lastNameField.getText());
 
                                 Data.set(index, person);
                             } else if (memberTab.equals(newValue)) {
-                                Person person = Data.get(index);
+                                Member person = Data.get(index);
 
                                 firstNameField.setText(person.getFirstName());
                                 lastNameField.setText(person.getLastName());
@@ -93,21 +93,21 @@ public class MembersWindow extends BorderPane {
     private Pane createMemberListTab() {
         TableColumn firstNameCol = new TableColumn("First Name");
         firstNameCol.setMinWidth(Control.USE_PREF_SIZE);
-        firstNameCol.setCellValueFactory(new PropertyValueFactory<Person, String>("firstName"));
+        firstNameCol.setCellValueFactory(new PropertyValueFactory<Member, String>("firstName"));
 
         TableColumn lastNameCol = new TableColumn("Last Name");
         lastNameCol.setMinWidth(Control.USE_PREF_SIZE);
-        lastNameCol.setCellValueFactory(new PropertyValueFactory<Person, String>("lastName"));
+        lastNameCol.setCellValueFactory(new PropertyValueFactory<Member, String>("lastName"));
 
         table.setEditable(true);
         table.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 if (event.getClickCount() > 1) {
-                    TableView.TableViewSelectionModel<Person> tableSelectionModel = table.getSelectionModel();
+                    TableView.TableViewSelectionModel<Member> tableSelectionModel = table.getSelectionModel();
                     int index = tableSelectionModel.getSelectedIndex();
                     if (index >= 0) {
-                        Person person = Data.get(index);
+                        Member person = Data.get(index);
 
                         firstNameField.setText(person.getFirstName());
                         lastNameField.setText(person.getLastName());
@@ -142,7 +142,7 @@ public class MembersWindow extends BorderPane {
         Button aNew = new Button("New");
         aNew.setMaxWidth(Double.MAX_VALUE);
         aNew.setOnAction(e -> {
-            Person person = new Person(firstNameField.getText(), lastNameField.getText());
+            Member person = new Member(firstNameField.getText(), lastNameField.getText());
 
             Data.add(person);
 
@@ -160,31 +160,5 @@ public class MembersWindow extends BorderPane {
 
         pane.getChildren().addAll(aNew, delete);
         return pane;
-    }
-
-    public static class Person {
-        private final SimpleStringProperty firstName;
-        private final SimpleStringProperty lastName;
-
-        private Person(String fName, String lName) {
-            this.firstName = new SimpleStringProperty(fName);
-            this.lastName = new SimpleStringProperty(lName);
-        }
-
-        public String getFirstName() {
-            return firstName.get();
-        }
-
-        public void setFirstName(String fName) {
-            firstName.set(fName);
-        }
-
-        public String getLastName() {
-            return lastName.get();
-        }
-
-        public void setLastName(String fName) {
-            lastName.set(fName);
-        }
     }
 }

@@ -22,8 +22,8 @@ public class MatchTest {
 
     @Test
     public void match_calculation() throws Exception {
-        Shooter A = new Shooter("A", "A");
-        Shooter B = new Shooter("B", "B");
+        Member A = new Member("A", "A");
+        Member B = new Member("B", "B");
 
         Stage stage = new Stage(1, 2);
 
@@ -33,7 +33,7 @@ public class MatchTest {
         demo.add(stage, A, new Passing(2, 0, 0, 0, 0, 10.5));
         demo.add(stage, B, new Passing(0, 1, 1, 0, 0, 5.5));
 
-        Map<Shooter, Double> result = demo.overall();
+        Map<Member, Double> result = demo.overall();
 
         assertEquals(10.5, result.get(A));
         assertEquals(11.5, result.get(B));

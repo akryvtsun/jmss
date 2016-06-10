@@ -6,7 +6,7 @@ import java.util.Map;
 public final class Match {
     private final String name;
     private final Stage[] stages;
-    private final Map<Stage, Map<Shooter, Passing>> results;
+    private final Map<Stage, Map<Member, Passing>> results;
 
     public Match(String name, Stage[] stages) {
         this.name = name;
@@ -14,8 +14,8 @@ public final class Match {
         results = new HashMap<>();
     }
 
-    public void add(Stage stage, Shooter participant, Passing result) {
-        Map<Shooter, Passing> passingMap = results.get(stage);
+    public void add(Stage stage, Member participant, Passing result) {
+        Map<Member, Passing> passingMap = results.get(stage);
         if (passingMap == null) {
             passingMap = new HashMap<>();
             results.put(stage, passingMap);
@@ -23,20 +23,20 @@ public final class Match {
         passingMap.put(participant, result);
     }
 
-    public Map<Shooter, Double> result(Stage stage) {
-        Map<Shooter, Passing> passingMap = results.get(stage);
-        Map<Shooter, Double> result = new HashMap<>();
-        for (Map.Entry<Shooter, Passing> entry: passingMap.entrySet()) {
+    public Map<Member, Double> result(Stage stage) {
+        Map<Member, Passing> passingMap = results.get(stage);
+        Map<Member, Double> result = new HashMap<>();
+        for (Map.Entry<Member, Passing> entry: passingMap.entrySet()) {
             result.put(entry.getKey(), entry.getValue().result());
         }
         return result;
     }
 
-    public Map<Shooter, Double> overall() {
-        Map<Shooter, Double> result = new HashMap<>();
+    public Map<Member, Double> overall() {
+        Map<Member, Double> result = new HashMap<>();
         for (Stage stage : stages) {
-            Map<Shooter, Double> map = result(stage);
-            for (Map.Entry<Shooter, Double> entry: map.entrySet()) {
+            Map<Member, Double> map = result(stage);
+            for (Map.Entry<Member, Double> entry: map.entrySet()) {
                 Double aDouble = result.get(entry.getKey());
                 if (aDouble == null) {
                     aDouble = Double.valueOf(0);
