@@ -1,6 +1,7 @@
 package com.jmms.application;
 
 import com.jmms.domain.Member;
+import com.jmms.domain.Stage;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -13,18 +14,23 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 
+import java.util.List;
+
+// TODO add number fields protection (spinner?)
 public class StagesWindow extends BorderPane {
 
-    static ObservableList<Member> Data = FXCollections.observableArrayList();
+    private final ObservableList<Stage> data;
 
     private final TabPane tabPane = new TabPane();
 
-    private final TextField firstNameField = new TextField();
-    private final TextField lastNameField = new TextField();
+    private final TextField numberField = new TextField();
+    private final TextField targetsField = new TextField();
 
-    private final TableView<Member> table = new TableView<>();
+    private final TableView<Stage> table = new TableView<>();
 
-    public StagesWindow() {
+    public StagesWindow(List<Stage> stages) {
+        data = FXCollections.observableList(stages);
+
         setCenter(createTabPane());
         setRight(createButtonPane());
     }
@@ -40,18 +46,20 @@ public class StagesWindow extends BorderPane {
                 new ChangeListener<Tab>() {
                     @Override
                     public void changed(ObservableValue<? extends Tab> observable, Tab oldValue, Tab newValue) {
-                        TableView.TableViewSelectionModel<Member> tableSelectionModel = table.getSelectionModel();
+                        TableView.TableViewSelectionModel<Stage> tableSelectionModel = table.getSelectionModel();
                         int index = tableSelectionModel.getSelectedIndex();
                         if (index >= 0) {
                             if (memberListTab.equals(newValue)) {
-                                Member person = new Member(firstNameField.getText(), lastNameField.getText());
+                                String number = numberField.getText();
+                                String targets = targetsField.getText();
+                                Stage stage = new Stage(Integer.valueOf(number), Integer.valueOf(targets));
 
-                                Data.set(index, person);
+                                data.set(index, stage);
                             } else if (memberTab.equals(newValue)) {
-                                Member person = Data.get(index);
+                                Stage stage = data.get(index);
 
-                                firstNameField.setText(person.getFirstName());
-                                lastNameField.setText(person.getLastName());
+                                numberField.setText(String.valueOf(stage.getNumber()));
+                                targetsField.setText(String.valueOf(stage.getTargets()));
                             }
                         }
                     }
@@ -71,42 +79,42 @@ public class StagesWindow extends BorderPane {
         pane.setVgap(5);
         pane.setHgap(5);
 
-        Label label1 = new Label("First Name:");
+        Label label1 = new Label("Number:");
         GridPane.setConstraints(label1, 0, 0);
         pane.getChildren().add(label1);
 
-        GridPane.setConstraints(firstNameField, 1, 0);
-        pane.getChildren().add(firstNameField);
+        GridPane.setConstraints(numberField, 1, 0);
+        pane.getChildren().add(numberField);
 
-        Label label2 = new Label("Last Name:");
+        Label label2 = new Label("Targets:");
         GridPane.setConstraints(label2, 0, 1);
         pane.getChildren().add(label2);
 
-        GridPane.setConstraints(lastNameField, 1, 1);
-        pane.getChildren().add(lastNameField);
+        GridPane.setConstraints(targetsField, 1, 1);
+        pane.getChildren().add(targetsField);
 
         return pane;
     }
 
     private Pane createStagesListTab() {
-        TableColumn firstNameCol = new TableColumn("First Name");
-        firstNameCol.setCellValueFactory(new PropertyValueFactory<Member, String>("firstName"));
+        TableColumn numberCol = new TableColumn("Number");
+        numberCol.setCellValueFactory(new PropertyValueFactory<Member, String>("number"));
 
-        TableColumn lastNameCol = new TableColumn("Last Name");
-        lastNameCol.setCellValueFactory(new PropertyValueFactory<Member, String>("lastName"));
+        TableColumn targetsCol = new TableColumn("Targets");
+        targetsCol.setCellValueFactory(new PropertyValueFactory<Member, String>("targets"));
 
         table.setEditable(true);
         table.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 if (event.getClickCount() > 1) {
-                    TableView.TableViewSelectionModel<Member> tableSelectionModel = table.getSelectionModel();
+                    TableView.TableViewSelectionModel<Stage> tableSelectionModel = table.getSelectionModel();
                     int index = tableSelectionModel.getSelectedIndex();
                     if (index >= 0) {
-                        Member person = Data.get(index);
+                        Stage stage = data.get(index);
 
-                        firstNameField.setText(person.getFirstName());
-                        lastNameField.setText(person.getLastName());
+                        numberField.setText(String.valueOf(stage.getNumber()));
+                        targetsField.setText(String.valueOf(stage.getTargets()));
 
                         SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
                         selectionModel.select(0);
@@ -115,10 +123,8 @@ public class StagesWindow extends BorderPane {
             }
         });
 
-        table.setItems(Data);
-        table.getColumns().
-
-                addAll(firstNameCol, lastNameCol);
+        table.setItems(data);
+        table.getColumns().addAll(numberCol, targetsCol);
 
         GridPane pane = new GridPane();
 
@@ -138,12 +144,14 @@ public class StagesWindow extends BorderPane {
         Button aNew = new Button("New");
         aNew.setMaxWidth(Double.MAX_VALUE);
         aNew.setOnAction(e -> {
-            Member person = new Member(firstNameField.getText(), lastNameField.getText());
+            String number = numberField.getText();
+            String targets = targetsField.getText();
+            Stage stage = new Stage(Integer.valueOf(number), Integer.valueOf(targets));
 
-            Data.add(person);
+            data.add(stage);
 
-            firstNameField.clear();
-            lastNameField.clear();
+            numberField.clear();
+            targetsField.clear();
         });
 
         Button delete = new Button("Delete");
@@ -151,7 +159,7 @@ public class StagesWindow extends BorderPane {
         delete.setOnAction(e -> {
             int focusedIndex = table.getSelectionModel().getFocusedIndex();
             if (focusedIndex >= 0)
-                Data.remove(focusedIndex);
+                data.remove(focusedIndex);
         });
 
         pane.getChildren().addAll(aNew, delete);

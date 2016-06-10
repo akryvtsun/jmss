@@ -49,7 +49,12 @@ public class MatchesWindow extends BorderPane {
         stages.setOnAction(e -> {
             Stage stage = new Stage();
             stage.setTitle("Stage Administration");
-            Scene scene = new Scene(new StagesWindow());
+
+            TableView.TableViewSelectionModel<Match> tableSelectionModel = table.getSelectionModel();
+            int index = tableSelectionModel.getSelectedIndex();
+            Match match = Data.get(index);
+
+            Scene scene = new Scene(new StagesWindow(match.getStages()));
             stage.setScene(scene);
             // TODO make centering
             //centerStage(stage, stage.getWidth(), stage.getHeight());
@@ -126,11 +131,11 @@ public class MatchesWindow extends BorderPane {
     }
 
     private Pane createMatchListTab() {
-        TableColumn nameCol = new TableColumn("Match Name");
-        nameCol.setCellValueFactory(new PropertyValueFactory<Match, String>("name"));
-
         TableColumn dateCol = new TableColumn("Date");
         dateCol.setCellValueFactory(new PropertyValueFactory<Match, LocalDate>("date"));
+
+        TableColumn nameCol = new TableColumn("Match Name");
+        nameCol.setCellValueFactory(new PropertyValueFactory<Match, String>("name"));
 
         table.setEditable(true);
         table.setOnMouseClicked(new EventHandler<MouseEvent>() {
