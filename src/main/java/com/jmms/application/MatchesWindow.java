@@ -114,11 +114,11 @@ public class MatchesWindow extends BorderPane {
 
     private Pane createMatchListTab() {
         TableColumn firstNameCol = new TableColumn("Date");
-        firstNameCol.setMinWidth(100);
+        firstNameCol.setMinWidth(Control.USE_PREF_SIZE);
         firstNameCol.setCellValueFactory(new PropertyValueFactory<Match, LocalDate>("date"));
 
         TableColumn lastNameCol = new TableColumn("Match Name");
-        lastNameCol.setMinWidth(100);
+        lastNameCol.setMinWidth(Control.USE_PREF_SIZE);
         lastNameCol.setCellValueFactory(new PropertyValueFactory<Match, String>("name"));
 
         table.setEditable(true);
