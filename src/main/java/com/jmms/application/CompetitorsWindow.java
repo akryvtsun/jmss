@@ -15,6 +15,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CompetitorsWindow extends HBox {
@@ -26,7 +27,8 @@ public class CompetitorsWindow extends HBox {
     private final TableView<Member> competitorsTable = new TableView<>();
 
     public CompetitorsWindow(List<Member> members, List<Member> competitors) {
-        this.members = FXCollections.observableList(members);
+        List<Member> newMembers = new ArrayList<>(members);
+        this.members = FXCollections.observableList(newMembers);
         this.competitors = FXCollections.observableList(competitors);
 
         getChildren().addAll(createMembersPane(), createButtonsPane(), createCompetitorsPane());
