@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.List;
 
+// TODO avoid closing more primary windows while children is shown (e.g. closing main windows while Members is still visible)
 public class Launcher extends Application {
 
     private List<Member> members = new ArrayList();
