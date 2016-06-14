@@ -13,13 +13,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO avoid closing more primary windows while children is shown (e.g. closing main windows while Members is still visible)
 public class Launcher extends Application {
 
     private List<Member> members = new ArrayList();
@@ -93,6 +93,7 @@ public class Launcher extends Application {
             stage.setScene(scene);
             // TODO make centering
             //centerStage(stage, stage.getWidth(), stage.getHeight());
+            stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
         });
         return button;
@@ -112,6 +113,7 @@ public class Launcher extends Application {
             stage.setScene(scene);
             // TODO make centering
             //centerStage(stage, stage.getWidth(), stage.getHeight());
+            stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
         });
         return button;

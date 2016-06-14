@@ -15,6 +15,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.time.LocalDate;
@@ -74,6 +75,7 @@ public class MatchesWindow extends BorderPane {
                 stage.setScene(scene);
                 // TODO make centering
                 //centerStage(stage, stage.getWidth(), stage.getHeight());
+                stage.initModality(Modality.APPLICATION_MODAL);
                 stage.show();
             }
         });
@@ -101,6 +103,7 @@ public class MatchesWindow extends BorderPane {
                 stage.setScene(scene);
                 // TODO make centering
                 //centerStage(stage, stage.getWidth(), stage.getHeight());
+                stage.initModality(Modality.APPLICATION_MODAL);
                 stage.show();
             }
         });
