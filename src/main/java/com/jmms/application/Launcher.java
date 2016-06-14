@@ -20,6 +20,8 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.List;
 
+// TODO disable windows resizing
+// TODO add 'Ok' and 'Cancel' buttons to have ability rollback window changes
 public class Launcher extends Application {
 
     private List<Member> members = new ArrayList();

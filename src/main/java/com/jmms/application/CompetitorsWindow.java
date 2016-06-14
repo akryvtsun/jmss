@@ -28,6 +28,7 @@ public class CompetitorsWindow extends HBox {
 
     public CompetitorsWindow(List<Member> members, List<Member> competitors) {
         List<Member> newMembers = new ArrayList<>(members);
+        newMembers.removeAll(competitors);
         this.members = FXCollections.observableList(newMembers);
         this.competitors = FXCollections.observableList(competitors);
 
