@@ -65,13 +65,7 @@ public class Launcher extends Application {
 
         Button membersBtn = createMembersButton();
         Button matchesBtn = createMatchesButton();
-
-        Button scoringBtn = new Button("Scoring");
-        ImageView value = new ImageView("/scoring.png");
-        value.setFitHeight(50);
-        value.setFitWidth(50);
-        scoringBtn.setGraphic(value);
-        scoringBtn.setContentDisplay(ContentDisplay.TOP);
+        Button scoringBtn = createScoringButton();
 
         Button reportingBtn = new Button("Reporting");
         ImageView value1 = new ImageView("/reporting.png");
@@ -119,6 +113,26 @@ public class Launcher extends Application {
             stage.show();
         });
         return button;
+    }
+
+    private Button createScoringButton() {
+        Button scoringBtn = new Button("Scoring");
+        ImageView value = new ImageView("/scoring.png");
+        value.setFitHeight(50);
+        value.setFitWidth(50);
+        scoringBtn.setGraphic(value);
+        scoringBtn.setContentDisplay(ContentDisplay.TOP);
+        scoringBtn.setOnAction(e -> {
+            Stage stage = new Stage();
+            stage.setTitle("Rapid Scoring");
+            Scene scene = new Scene(new ScoringWindow(matches));
+            stage.setScene(scene);
+            // TODO make centering
+            //centerStage(stage, stage.getWidth(), stage.getHeight());
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.show();
+        });
+        return scoringBtn;
     }
 
     private void centerStage(Stage stage, double width, double height) {
