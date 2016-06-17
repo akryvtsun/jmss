@@ -15,10 +15,16 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.util.StringConverter;
 
-import java.util.Collections;
+import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 
+// TODO add match date label
 public class ScoringWindow extends GridPane {
+
+    private ComboBox<Match> matchComboBox;
+    private ComboBox<Stage> stageComboBox;
+    private ComboBox<Member> competitorComboBox;
 
     private Spinner<Integer> aHits;
     private Spinner<Integer> cHits;
@@ -31,51 +37,28 @@ public class ScoringWindow extends GridPane {
         setHgap(5);
         setVgap(5);
 
+        matchComboBox = createMatchComboBox(matches);
+        stageComboBox = createStageComboBox();
+        competitorComboBox = createCompetitorComboBox();
+
         aHits = createSpinner();
         cHits = createSpinner();
         dHits = createSpinner();
         misses = createSpinner();
         penalties = createSpinner();
 
-        add(createCoordinatesPane(matches), 0, 0);
-        Separator child = new Separator();
-        add(child, 0, 1);
+        //matchComboBox.setValue(matches.get(0));
+
+        add(createCoordinatesPane(), 0, 0);
+        add(new Separator(), 0, 1);
         add(createHitsPane(), 0, 2);
         add(new Separator(), 0, 3);
-//        add(createPenaltiesPane(), 0, 4);
-
         add(createButtonsPane(), 0, 4);
     }
 
-    public static void main(String[] args) {
-        new JFXPanel();
-        ScoringWindow window = new ScoringWindow(Collections.EMPTY_LIST);
-
-        Platform.runLater(new Runnable() {
-            @Override public void run() {
-                javafx.stage.Stage stage = new javafx.stage.Stage();
-                stage.setTitle("Rapid Scoring");
-                Scene scene = new Scene(window);
-                stage.setScene(scene);
-                // TODO make centering
-                //centerStage(stage, stage.getWidth(), stage.getHeight());
-                stage.initModality(Modality.APPLICATION_MODAL);
-                stage.show();
-            }
-        });
-    }
-
-    private Pane createCoordinatesPane(List<Match> matches) {
-        GridPane pane = new GridPane();
-        //pane.setStyle("-fx-background-color: #cccccc; -fx-border-color: #464646; ");
-        //pane.setPrefWidth(Double.MAX_VALUE);
-        pane.setHgap(5);
-        pane.setVgap(5);
-
-        pane.add(new Label("Match:"), 0,0);
-        ComboBox<Match> matchComboBox = new ComboBox<>(FXCollections.observableList(matches));
-        //matchComboBox.setPrefWidth(Double.MAX_VALUE);
-        matchComboBox.setConverter(new StringConverter<Match>() {
+    private ComboBox<Match> createMatchComboBox(List<Match> matches) {
+        ComboBox<Match> comboBox = new ComboBox<>(FXCollections.observableList(matches));
+        comboBox.setConverter(new StringConverter<Match>() {
             @Override
             public String toString(Match object) {
                 return object.getName();
@@ -86,13 +69,73 @@ public class ScoringWindow extends GridPane {
                 throw new UnsupportedOperationException();
             }
         });
+        comboBox.setOnAction(event -> {
+            Match match = comboBox.getValue();
+
+            List<Stage> stages = match.getStages();
+            stageComboBox.setItems(FXCollections.observableList(stages));
+            stageComboBox.setValue(stages.get(0));
+
+            List<Member> competitors = match.getCompetitors();
+            competitorComboBox.setItems(FXCollections.observableList(competitors));
+            competitorComboBox.setValue(competitors.get(0));
+        });
+        return comboBox;
+    }
+
+    private ComboBox<Stage> createStageComboBox() {
+        ComboBox<Stage> comboBox = new ComboBox<>();
+        comboBox.setConverter(new StringConverter<Stage>() {
+            @Override
+            public String toString(Stage object) {
+                return String.valueOf(object.getNumber());
+            }
+
+            @Override
+            public Stage fromString(String string) {
+                throw new UnsupportedOperationException();
+            }
+        });
+        comboBox.setOnAction(event -> {
+            System.out.println("update spinners");
+        });
+        return comboBox;
+    }
+
+    private ComboBox<Member> createCompetitorComboBox() {
+        ComboBox<Member> comboBox = new ComboBox<>();
+        comboBox.setConverter(new StringConverter<Member>() {
+            @Override
+            public String toString(Member object) {
+                return String.format("%s, %s", object.getLastName(), object.getFirstName());
+            }
+
+            @Override
+            public Member fromString(String string) {
+                throw new UnsupportedOperationException();
+            }
+        });
+        comboBox.setOnAction(event -> {
+            System.out.println("update spinners");
+        });
+        return comboBox;
+    }
+
+    private Pane createCoordinatesPane() {
+        GridPane pane = new GridPane();
+        //pane.setStyle("-fx-background-color: #cccccc; -fx-border-color: #464646; ");
+        //pane.setPrefWidth(Double.MAX_VALUE);
+        pane.setHgap(5);
+        pane.setVgap(5);
+
+        pane.add(new Label("Match:"), 0,0);
         pane.add(matchComboBox, 1,0);
 
         pane.add(new Label("Stage:"), 0,1);
-        pane.add(new ComboBox<Stage>(), 1,1);
+        pane.add(stageComboBox, 1,1);
 
         pane.add(new Label("Competitor:"), 0,2);
-        pane.add(new ComboBox<Member>(), 1,2);
+        pane.add(competitorComboBox, 1,2);
 
         return pane;
     }
@@ -135,5 +178,41 @@ public class ScoringWindow extends GridPane {
         BorderPane pane = new BorderPane();
         pane.setRight(new Button("Add"));
         return pane;
+    }
+
+    public static void main(String[] args) {
+        new JFXPanel();
+
+        Member member1 = new Member("fn1", "ln1");
+        Member member2 = new Member("fn2", "ln2");
+        Member member3 = new Member("fn3", "ln3");
+
+        Match match1 = new Match("match 1", LocalDate.now());
+        match1.getStages().add(new Stage(1, 2));
+        match1.getStages().add(new Stage(2, 2));
+        match1.getCompetitors().add(member1);
+        match1.getCompetitors().add(member2);
+
+        Match match2 = new Match("match 2", LocalDate.now());
+        match2.getStages().add(new Stage(1, 3));
+        match2.getStages().add(new Stage(2, 3));
+        match2.getCompetitors().add(member2);
+        match2.getCompetitors().add(member3);
+
+        List<Match> matches = Arrays.asList(match1, match2);
+        ScoringWindow window = new ScoringWindow(matches);
+
+        Platform.runLater(new Runnable() {
+            @Override public void run() {
+                javafx.stage.Stage stage = new javafx.stage.Stage();
+                stage.setTitle("Rapid Scoring");
+                Scene scene = new Scene(window);
+                stage.setScene(scene);
+                // TODO make centering
+                //centerStage(stage, stage.getWidth(), stage.getHeight());
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.show();
+            }
+        });
     }
 }
