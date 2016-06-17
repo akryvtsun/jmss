@@ -7,11 +7,13 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.embed.swing.JFXPanel;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
 import javafx.stage.Modality;
 import javafx.util.StringConverter;
 
@@ -29,8 +31,11 @@ public class ScoringWindow extends GridPane {
     private Spinner<Integer> aHits;
     private Spinner<Integer> cHits;
     private Spinner<Integer> dHits;
+
     private Spinner<Integer> misses;
-    private Spinner<Integer> penalties;
+    private Spinner<Integer> procedurals;
+
+    private TextField time;
 
     public ScoringWindow(List<Match> matches) {
         setPadding(new Insets(10, 10, 10, 10));
@@ -44,16 +49,31 @@ public class ScoringWindow extends GridPane {
         aHits = createSpinner();
         cHits = createSpinner();
         dHits = createSpinner();
+
         misses = createSpinner();
-        penalties = createSpinner();
+        procedurals = createSpinner();
+
+        time = new TextField();
 
         //matchComboBox.setValue(matches.get(0));
 
-        add(createCoordinatesPane(), 0, 0);
-        add(new Separator(), 0, 1);
-        add(createHitsPane(), 0, 2);
-        add(new Separator(), 0, 3);
-        add(createButtonsPane(), 0, 4);
+
+        Node coordinatesPane = createCoordinatesPane();
+        add(coordinatesPane, 0, 0, 3, 1);
+
+//        add(new Separator(), 0, 1);
+
+        add(createScoringPane(), 0, 1);
+        Node penaltiesPane = createPenaltiesPane();
+        add(penaltiesPane, 1, 1);
+        add(createTimePane(), 2, 1);
+
+//        add(new Separator(), 0, 3);
+        add(createButtonsPane(), 0, 2, 3, 1);
+
+        GridPane.setHgrow(penaltiesPane, Priority.ALWAYS);
+        //GridPane.setValignment(penaltiesPane, VPos.TOP);
+        GridPane.setVgrow(penaltiesPane, Priority.ALWAYS);
     }
 
     private ComboBox<Match> createMatchComboBox(List<Match> matches) {
@@ -121,7 +141,8 @@ public class ScoringWindow extends GridPane {
         return comboBox;
     }
 
-    private Pane createCoordinatesPane() {
+    private TitledPane createCoordinatesPane() {
+
         GridPane pane = new GridPane();
         //pane.setStyle("-fx-background-color: #cccccc; -fx-border-color: #464646; ");
         //pane.setPrefWidth(Double.MAX_VALUE);
@@ -137,10 +158,13 @@ public class ScoringWindow extends GridPane {
         pane.add(new Label("Competitor:"), 0,2);
         pane.add(competitorComboBox, 1,2);
 
-        return pane;
+        TitledPane p = new TitledPane("Coordinates", pane);
+        p.setCollapsible(false);
+
+        return p;
     }
 
-    private Pane createHitsPane() {
+    private TitledPane createScoringPane() {
         GridPane pane = new GridPane();
         pane.setHgap(5);
         pane.setVgap(5);
@@ -155,13 +179,45 @@ public class ScoringWindow extends GridPane {
         pane.add(new Label("D Hits:"), 0,2);
         pane.add(dHits, 1,2);
 
-        pane.add(new Label("Misses:"), 2,0);
-        pane.add(misses, 3,0);
+        TitledPane p = new TitledPane("Scoring", pane);
+        p.setCollapsible(false);
+        p.setMaxHeight(Double.MAX_VALUE);
 
-        pane.add(new Label("Penalties:"), 2,1);
-        pane.add(penalties, 3,1);
+        return p;
+    }
 
-        return pane;
+    private Node createPenaltiesPane() {
+        GridPane pane = new GridPane();
+        pane.setHgap(5);
+        pane.setVgap(5);
+        //pane.setStyle("-fx-background-color: orange; -fx-border-color: #464646; ");
+
+        pane.add(new Label("Misses:"), 0,0);
+        pane.add(misses, 1,0);
+
+        pane.add(new Label("Procedurals:"), 0,1);
+        pane.add(procedurals, 1,1);
+
+        TitledPane p = new TitledPane("Penalties", pane);
+        p.setCollapsible(false);
+        p.setMaxHeight(Double.MAX_VALUE);
+
+        return p;
+    }
+
+    private TitledPane createTimePane() {
+        GridPane pane = new GridPane();
+        pane.setHgap(5);
+        pane.setVgap(5);
+
+        pane.add(new Label("Total time"), 0,0);
+        pane.add(time, 1,0);
+
+        TitledPane p = new TitledPane("Time", pane);
+        p.setCollapsible(false);
+        p.setMaxHeight(Double.MAX_VALUE);
+
+        return p;
     }
 
     private Spinner createSpinner() {
