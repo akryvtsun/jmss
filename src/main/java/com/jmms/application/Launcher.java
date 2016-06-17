@@ -22,6 +22,7 @@ import java.util.List;
 
 // TODO disable windows resizing
 // TODO add 'Ok' and 'Cancel' buttons to have ability rollback window changes
+// TODO add logging
 public class Launcher extends Application {
 
     private List<Member> members = new ArrayList();
