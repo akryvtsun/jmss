@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToolBar;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -35,6 +36,7 @@ public class Launcher extends Application {
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("JMMS v0.1");
+        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/icon.png")));
         primaryStage.setResizable(false);
 
         BorderPane root = new BorderPane();
