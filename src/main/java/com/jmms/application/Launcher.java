@@ -67,13 +67,7 @@ public class Launcher extends Application {
         Button membersBtn = createMembersButton();
         Button matchesBtn = createMatchesButton();
         Button scoringBtn = createScoringButton();
-
-        Button reportingBtn = new Button("Reporting");
-        ImageView value1 = new ImageView("/reporting.png");
-        value1.setFitHeight(50);
-        value1.setFitWidth(50);
-        reportingBtn.setGraphic(value1);
-        reportingBtn.setContentDisplay(ContentDisplay.TOP);
+        Button reportingBtn = createReportingButton();
 
         toolBar.getItems().addAll(membersBtn, matchesBtn, scoringBtn, reportingBtn);
         return toolBar;
@@ -134,6 +128,17 @@ public class Launcher extends Application {
             stage.show();
         });
         return scoringBtn;
+    }
+
+    private Button createReportingButton() {
+        Button reportingBtn = new Button("Reporting");
+        ImageView value1 = new ImageView("/reporting.png");
+        value1.setFitHeight(50);
+        value1.setFitWidth(50);
+        reportingBtn.setGraphic(value1);
+        reportingBtn.setContentDisplay(ContentDisplay.TOP);
+        reportingBtn.setDisable(true);
+        return reportingBtn;
     }
 
     private void centerStage(Stage stage, double width, double height) {
