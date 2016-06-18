@@ -224,7 +224,7 @@ public class MatchesWindow extends BorderPane {
             data.add(match);
 
             matchNameField.clear();
-            dateField.setValue(LocalDate.now());
+            dateField.setValue(null);
         });
 
         Button delete = new Button("Delete");
