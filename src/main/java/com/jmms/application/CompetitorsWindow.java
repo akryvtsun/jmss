@@ -18,6 +18,7 @@ import javafx.scene.layout.VBox;
 import java.util.ArrayList;
 import java.util.List;
 
+// TODO allows table(s) multi row selection
 public class CompetitorsWindow extends HBox {
 
     private final ObservableList<Member> members;
