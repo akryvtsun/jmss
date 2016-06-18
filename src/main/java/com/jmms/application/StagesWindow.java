@@ -16,7 +16,8 @@ import javafx.scene.layout.*;
 
 import java.util.List;
 
-// TODO add number fields protection (spinner?)
+// TODO add number fields (stage No) protection (spinner?)
+// TODO allows correct stages attrs changes
 public class StagesWindow extends BorderPane {
 
     private final ObservableList<Stage> data;

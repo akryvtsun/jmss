@@ -24,6 +24,7 @@ import java.util.List;
 // TODO disable Delete button if table is empty
 // TODO disable make whole window smaller (or even remove resize ability at all)
 // TODO disable toolbar buttons if no match was selected
+// TODO allows correct match data changes
 public class MatchesWindow extends BorderPane {
 
     private final List<Member> members;

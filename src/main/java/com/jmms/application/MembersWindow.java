@@ -17,6 +17,7 @@ import java.util.List;
 
 // TODO disable Delete button if table is empty
 // TODO disable make whole window smaller (or even remove resize ability at all)
+// TODO allows correct member field changes
 public class MembersWindow extends BorderPane {
 
     private final ObservableList<Member> data;

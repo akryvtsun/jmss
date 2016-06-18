@@ -241,6 +241,7 @@ public class ScoringWindow extends GridPane {
         misses.getValueFactory().setValue(passing.getMisses());
         procedurals.getValueFactory().setValue(passing.getPenalties());
 
+        // TODO make conversion in "0.00" format
         time.setText(String.valueOf(passing.getTime()));
     }
 
