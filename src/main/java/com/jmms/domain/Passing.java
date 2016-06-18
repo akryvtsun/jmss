@@ -14,6 +14,30 @@ public final class Passing {
         this.time = time;
     }
 
+    public int getAlphas() {
+        return alphas;
+    }
+
+    public int getCharlies() {
+        return charlies;
+    }
+
+    public int getDeltas() {
+        return deltas;
+    }
+
+    public int getMisses() {
+        return misses;
+    }
+
+    public int getPenalties() {
+        return penalties;
+    }
+
+    public double getTime() {
+        return time;
+    }
+
     public double result() {
         return charlies * 2 + deltas * 4 + misses * 10 + penalties * 10 + time;
     }
