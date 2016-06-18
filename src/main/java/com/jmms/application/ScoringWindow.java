@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 // TODO add match date label
+// TODO add time number field entering guard
 public class ScoringWindow extends GridPane {
 
     private final List<Match> matches;
@@ -256,7 +257,16 @@ public class ScoringWindow extends GridPane {
 
     private Pane createButtonsPane() {
         BorderPane pane = new BorderPane();
-        pane.setRight(new Button("Confirm"));
+        Button button = new Button("Confirm");
+        button.setOnAction(event -> {
+            Passing passing = new Passing(aHits.getValue(), cHits.getValue(), dHits.getValue(),
+                    misses.getValue(), procedurals.getValue(),
+                    Double.parseDouble(time.getText()));
+            Match match = matchComboBox.getValue();
+            Map<Member, Passing> map = match.getResults().get(stageComboBox.getValue());
+            map.put(competitorComboBox.getValue(), passing);
+        });
+        pane.setRight(button);
         return pane;
     }
 
