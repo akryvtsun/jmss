@@ -3,6 +3,7 @@ package com.jmms.application;
 import com.jmms.domain.Match;
 import com.jmms.domain.Member;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -23,7 +24,9 @@ import java.util.List;
 
 // TODO disable windows resizing
 // TODO add 'Ok' and 'Cancel' buttons to have ability rollback window changes
+// TODO allows 'Cancel' button to close windows
 // TODO add logging
+// TODO add keyboard shortcuts
 public class Launcher extends Application {
 
     private List<Member> members = new ArrayList();
@@ -36,7 +39,8 @@ public class Launcher extends Application {
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("JMMS v0.1");
-        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/icon.png")));
+        Image icon = new Image(getClass().getResourceAsStream("/icon.png"));
+        primaryStage.getIcons().add(icon);
         primaryStage.setResizable(false);
 
         BorderPane root = new BorderPane();
@@ -44,23 +48,21 @@ public class Launcher extends Application {
         VBox topContainer = new VBox();
         ToolBar toolBar = createToolBar();
         topContainer.getChildren().add(toolBar);
-
         root.setTop(topContainer);
+
         Label label = new Label("jMatch Scoring System\n(c) 2016");
-        //label.setMinHeight(200);
+        label.setMinHeight(200);
         label.setTextAlignment(TextAlignment.CENTER);
         root.setCenter(label);
 
-        double width = 340;
-        double height = 240;
-
-        Scene scene = new Scene(root, width, height);
+        Scene scene = new Scene(root);
         primaryStage.setScene(scene);
-        // TODO make scene width equal to toolbar width
-        //primaryStage.sizeToScene();
-        //primaryStage.centerOnScreen();
-        centerStage(primaryStage, width, height);
         primaryStage.show();
+
+        Platform.runLater(() -> {
+            primaryStage.sizeToScene();
+            primaryStage.centerOnScreen();
+        });
     }
 
     private ToolBar createToolBar() {
@@ -76,7 +78,7 @@ public class Launcher extends Application {
     }
 
     private Button createMembersButton() {
-        Button button = new Button("Members");
+        Button button = new Button("_Members");
         button.setGraphic(new ImageView("/members.png"));
         button.setContentDisplay(ContentDisplay.TOP);
         button.setOnAction(e -> {
@@ -93,7 +95,7 @@ public class Launcher extends Application {
     }
 
     private Button createMatchesButton() {
-        Button button = new Button("Matches");
+        Button button = new Button("M_atches");
         ImageView value = new ImageView("/matches.png");
         value.setFitHeight(50);
         value.setFitWidth(50);
@@ -113,7 +115,7 @@ public class Launcher extends Application {
     }
 
     private Button createScoringButton() {
-        Button scoringBtn = new Button("Scoring");
+        Button scoringBtn = new Button("_Scoring");
         ImageView value = new ImageView("/scoring.png");
         value.setFitHeight(50);
         value.setFitWidth(50);
@@ -133,7 +135,7 @@ public class Launcher extends Application {
     }
 
     private Button createReportingButton() {
-        Button reportingBtn = new Button("Reporting");
+        Button reportingBtn = new Button("_Reporting");
         ImageView value1 = new ImageView("/reporting.png");
         value1.setFitHeight(50);
         value1.setFitWidth(50);
