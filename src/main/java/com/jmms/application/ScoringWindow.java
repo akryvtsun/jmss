@@ -13,7 +13,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
 import javafx.stage.Modality;
 import javafx.util.StringConverter;
 
@@ -39,8 +38,8 @@ public class ScoringWindow extends GridPane {
 
     public ScoringWindow(List<Match> matches) {
         setPadding(new Insets(10, 10, 10, 10));
-        setHgap(5);
-        setVgap(5);
+        setHgap(10);
+        setVgap(10);
 
         matchComboBox = createMatchComboBox(matches);
         stageComboBox = createStageComboBox();
@@ -58,22 +57,13 @@ public class ScoringWindow extends GridPane {
         //matchComboBox.setValue(matches.get(0));
 
 
-        Node coordinatesPane = createCoordinatesPane();
-        add(coordinatesPane, 0, 0, 3, 1);
+        add(createCoordinatesPane(), 0, 0);
+        add(createScoringPane(), 1, 0);
 
-//        add(new Separator(), 0, 1);
+        add(createPenaltiesPane(), 0, 1);
+        add(createTimePane(), 1, 1);
 
-        add(createScoringPane(), 0, 1);
-        Node penaltiesPane = createPenaltiesPane();
-        add(penaltiesPane, 1, 1);
-        add(createTimePane(), 2, 1);
-
-//        add(new Separator(), 0, 3);
-        add(createButtonsPane(), 0, 2, 3, 1);
-
-        GridPane.setHgrow(penaltiesPane, Priority.ALWAYS);
-        //GridPane.setValignment(penaltiesPane, VPos.TOP);
-        GridPane.setVgrow(penaltiesPane, Priority.ALWAYS);
+        add(createButtonsPane(), 0, 2, 2, 1);
     }
 
     private ComboBox<Match> createMatchComboBox(List<Match> matches) {
@@ -232,7 +222,7 @@ public class ScoringWindow extends GridPane {
 
     private Pane createButtonsPane() {
         BorderPane pane = new BorderPane();
-        pane.setRight(new Button("Add"));
+        pane.setRight(new Button("Confirm"));
         return pane;
     }
 
