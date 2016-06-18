@@ -262,8 +262,15 @@ public class ScoringWindow extends GridPane {
             Passing passing = new Passing(aHits.getValue(), cHits.getValue(), dHits.getValue(),
                     misses.getValue(), procedurals.getValue(),
                     Double.parseDouble(time.getText()));
+
             Match match = matchComboBox.getValue();
             Map<Member, Passing> map = match.getResults().get(stageComboBox.getValue());
+
+            if (map == null) {
+                map = new HashMap<>();
+                match.getResults().put(stageComboBox.getValue(), map);
+            }
+
             map.put(competitorComboBox.getValue(), passing);
         });
         pane.setRight(button);
