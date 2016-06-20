@@ -19,19 +19,33 @@
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
+        <maven.compiler.plugin.version>3.2</maven.compiler.plugin.version>
+        <maven.jar.plugin.version>3.0.1</maven.jar.plugin.version>
         <maven.jacoco.plugin.version>0.7.5.201505241946</maven.jacoco.plugin.version>
         <maven.coveralls.plugin.version>4.1.0</maven.coveralls.plugin.version>
     </properties>
 
     <build>
         <plugins>
-
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.2</version>
+                <version>${maven.compiler.plugin.version}</version>
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>${maven.jar.plugin.version}</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.jmms.application.Launcher</mainClass>
+                        </manifest>
+                    </archive>
                 </configuration>
             </plugin>
 
@@ -54,12 +68,10 @@
                 <artifactId>coveralls-maven-plugin</artifactId>
                 <version>${maven.coveralls.plugin.version}</version>
             </plugin>
-
         </plugins>
     </build>
 
     <dependencies>
-
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -73,6 +85,6 @@
             <version>1.10.19</version>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
+
 </project>
