@@ -27,6 +27,8 @@ import java.util.List;
 // TODO allows 'Cancel' button to close windows
 // TODO add logging
 // TODO add keyboard shortcuts
+// TODO add icon for Ubuntu: http://ubuntuforums.org/showthread.php?t=1760257
+// TODO use javafxpackager.exe for runnable package creation
 public class Launcher extends Application {
 
     private List<Member> members = new ArrayList();
