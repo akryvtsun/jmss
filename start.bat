@@ -1,0 +1,1 @@
+java -jar jmms-1.0-SNAPSHOT.jar 
