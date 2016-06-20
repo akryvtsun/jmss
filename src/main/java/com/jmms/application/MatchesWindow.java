@@ -20,12 +20,14 @@ import javafx.stage.Stage;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.logging.Logger;
 
 // TODO disable Delete button if table is empty
 // TODO disable make whole window smaller (or even remove resize ability at all)
 // TODO disable toolbar buttons if no match was selected
 // TODO allows correct match data changes
 public class MatchesWindow extends BorderPane {
+    private static final Logger LOG = Logger.getLogger(MatchesWindow.class.getName());
 
     private final List<Member> members;
     private final ObservableList<Match> data;
@@ -64,6 +66,8 @@ public class MatchesWindow extends BorderPane {
         button.setGraphic(value);
         button.setContentDisplay(ContentDisplay.TOP);
         button.setOnAction(e -> {
+            LOG.info("Stage Administration opening...");
+
             Stage stage = new Stage();
             stage.setTitle("Stage Administration");
 
@@ -91,6 +95,8 @@ public class MatchesWindow extends BorderPane {
         button.setGraphic(value);
         button.setContentDisplay(ContentDisplay.TOP);
         button.setOnAction(e -> {
+            LOG.info("Competitors Administration opening...");
+
             Stage stage = new Stage();
             stage.setTitle("Competitors Administration");
 
@@ -122,14 +128,20 @@ public class MatchesWindow extends BorderPane {
                 new ChangeListener<Tab>() {
                     @Override
                     public void changed(ObservableValue<? extends Tab> observable, Tab oldValue, Tab newValue) {
+                        LOG.info("Changing Matches tab...");
+
                         TableView.TableViewSelectionModel<Match> tableSelectionModel = table.getSelectionModel();
                         int index = tableSelectionModel.getSelectedIndex();
                         if (index >= 0) {
                             if (matchListTab.equals(newValue)) {
+                                LOG.info("Updating match in table...");
+
                                 Match match = new Match(matchNameField.getText(), dateField.getValue());
 
                                 data.set(index, match);
                             } else if (matchTab.equals(newValue)) {
+                                LOG.info("Updating match's fields...");
+
                                 Match match = data.get(index);
 
                                 matchNameField.setText(match.getName());
@@ -183,6 +195,8 @@ public class MatchesWindow extends BorderPane {
         table.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                LOG.info("Updating match's fields via mouse...");
+
                 if (event.getClickCount() > 1) {
                     TableView.TableViewSelectionModel<Match> tableSelectionModel = table.getSelectionModel();
                     int index = tableSelectionModel.getSelectedIndex();
@@ -220,6 +234,8 @@ public class MatchesWindow extends BorderPane {
         Button aNew = new Button("New");
         aNew.setMaxWidth(Double.MAX_VALUE);
         aNew.setOnAction(e -> {
+            LOG.info("Adding new match...");
+
             Match match = new Match(matchNameField.getText(), dateField.getValue());
 
             data.add(match);
@@ -231,6 +247,8 @@ public class MatchesWindow extends BorderPane {
         Button delete = new Button("Delete");
         delete.setMaxWidth(Double.MAX_VALUE);
         delete.setOnAction(e -> {
+            LOG.info("Deleting match...");
+
             int focusedIndex = table.getSelectionModel().getFocusedIndex();
             if (focusedIndex >= 0)
                 data.remove(focusedIndex);

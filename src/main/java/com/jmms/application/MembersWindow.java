@@ -14,11 +14,13 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 // TODO disable Delete button if table is empty
 // TODO disable make whole window smaller (or even remove resize ability at all)
 // TODO allows correct member field changes
 public class MembersWindow extends BorderPane {
+    private static final Logger LOG = Logger.getLogger(MembersWindow.class.getName());
 
     private final ObservableList<Member> data;
 
@@ -47,14 +49,20 @@ public class MembersWindow extends BorderPane {
                 new ChangeListener<Tab>() {
                     @Override
                     public void changed(ObservableValue<? extends Tab> observable, Tab oldValue, Tab newValue) {
+                        LOG.info("Changing Members tab...");
+
                         TableView.TableViewSelectionModel<Member> tableSelectionModel = table.getSelectionModel();
                         int index = tableSelectionModel.getSelectedIndex();
                         if (index >= 0) {
                             if (memberListTab.equals(newValue)) {
+                                LOG.info("Updating member in table...");
+
                                 Member member = new Member(firstNameField.getText(), lastNameField.getText());
 
                                 data.set(index, member);
                             } else if (memberTab.equals(newValue)) {
+                                LOG.info("Updating member's fields...");
+
                                 Member member = data.get(index);
 
                                 firstNameField.setText(member.getFirstName());
@@ -106,6 +114,8 @@ public class MembersWindow extends BorderPane {
         table.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                LOG.info("Updating member's fields via mouse...");
+
                 if (event.getClickCount() > 1) {
                     TableView.TableViewSelectionModel<Member> tableSelectionModel = table.getSelectionModel();
                     int index = tableSelectionModel.getSelectedIndex();
@@ -143,6 +153,8 @@ public class MembersWindow extends BorderPane {
         Button aNew = new Button("New");
         aNew.setMaxWidth(Double.MAX_VALUE);
         aNew.setOnAction(e -> {
+            LOG.info("Adding new member...");
+
             Member match = new Member(firstNameField.getText(), lastNameField.getText());
 
             data.add(match);
@@ -154,6 +166,8 @@ public class MembersWindow extends BorderPane {
         Button delete = new Button("Delete");
         delete.setMaxWidth(Double.MAX_VALUE);
         delete.setOnAction(e -> {
+            LOG.info("Deleting member...");
+
             int focusedIndex = table.getSelectionModel().getFocusedIndex();
             if (focusedIndex >= 0)
                 data.remove(focusedIndex);

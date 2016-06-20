@@ -22,10 +22,12 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 // TODO add match date label
 // TODO add time number field entering guard
 public class ScoringWindow extends GridPane {
+    private static final Logger LOG = Logger.getLogger(ScoringWindow.class.getName());
 
     private final List<Match> matches;
 
@@ -163,6 +165,8 @@ public class ScoringWindow extends GridPane {
             }
         });
         comboBox.valueProperty().addListener(e -> {
+            LOG.info("Changing match combobox...");
+
             Match match = comboBox.getValue();
 
             List<Stage> stages = match.getStages();
@@ -190,6 +194,8 @@ public class ScoringWindow extends GridPane {
             }
         });
         comboBox.valueProperty().addListener(e -> {
+            LOG.info("Changing stage combobox...");
+
             updatePassingComponents();
         });
         return comboBox;
@@ -209,6 +215,8 @@ public class ScoringWindow extends GridPane {
             }
         });
         comboBox.valueProperty().addListener(e -> {
+            LOG.info("Changing competitor combobox...");
+
             updatePassingComponents();
         });
         return comboBox;
@@ -327,8 +335,7 @@ public class ScoringWindow extends GridPane {
     private Spinner createSpinner() {
         Spinner<Integer> spinner = new Spinner<>();
         spinner.setEditable(true);
-        SpinnerValueFactory svf =
-                new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 99);
+        SpinnerValueFactory svf = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 99);
         spinner.setValueFactory(svf);
         spinner.getStyleClass().add(Spinner.STYLE_CLASS_ARROWS_ON_RIGHT_HORIZONTAL);
         return spinner;
@@ -338,6 +345,8 @@ public class ScoringWindow extends GridPane {
         BorderPane pane = new BorderPane();
         Button button = new Button("Confirm");
         button.setOnAction(event -> {
+            LOG.info("Confirming score...");
+
             Passing passing = new Passing(aHits.getValue(), cHits.getValue(), dHits.getValue(),
                     misses.getValue(), procedurals.getValue(),
                     Double.parseDouble(time.getText()));

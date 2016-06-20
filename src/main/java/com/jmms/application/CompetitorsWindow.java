@@ -17,9 +17,11 @@ import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 // TODO allows table(s) multi row selection
 public class CompetitorsWindow extends HBox {
+    private static final Logger LOG = Logger.getLogger(CompetitorsWindow.class.getName());
 
     private final ObservableList<Member> members;
     private final ObservableList<Member> competitors;
@@ -65,6 +67,8 @@ public class CompetitorsWindow extends HBox {
         Button aNew = new Button("Add >>");
         aNew.setMaxWidth(Double.MAX_VALUE);
         aNew.setOnAction(e -> {
+            LOG.info("Adding new competitor...");
+
             TableView.TableViewSelectionModel<Member> tableSelectionModel = membersTable.getSelectionModel();
             int index = tableSelectionModel.getSelectedIndex();
             if (index >= 0) {
@@ -76,6 +80,8 @@ public class CompetitorsWindow extends HBox {
         Button delete = new Button("<< Delete");
         delete.setMaxWidth(Double.MAX_VALUE);
         delete.setOnAction(e -> {
+            LOG.info("Deleting competitor...");
+
             TableView.TableViewSelectionModel<Member> tableSelectionModel = competitorsTable.getSelectionModel();
             int index = tableSelectionModel.getSelectedIndex();
             if (index >= 0) {

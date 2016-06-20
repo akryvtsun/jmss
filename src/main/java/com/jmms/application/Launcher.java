@@ -21,6 +21,7 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 // TODO disable windows resizing
 // TODO add 'Ok' and 'Cancel' buttons to have ability rollback window changes
@@ -29,17 +30,23 @@ import java.util.List;
 // TODO add keyboard shortcuts
 // TODO add icon for Ubuntu: http://ubuntuforums.org/showthread.php?t=1760257
 // TODO use javafxpackager.exe for runnable package creation
+// TODO add icon to all windows
 public class Launcher extends Application {
+    private static final Logger LOG = Logger.getLogger(Launcher.class.getName());
 
     private List<Member> members = new ArrayList();
     private List<Match> matches = new ArrayList();
 
     public static void main(String[] args) {
+        LOG.info("Starting application...");
+
         launch(args);
     }
 
     @Override
     public void start(Stage primaryStage) {
+        LOG.info("Creating primary stage...");
+
         primaryStage.setTitle("JMMS v0.1");
         Image icon = new Image(getClass().getResourceAsStream("/icon.png"));
         primaryStage.getIcons().add(icon);
@@ -84,6 +91,8 @@ public class Launcher extends Application {
         button.setGraphic(new ImageView("/members.png"));
         button.setContentDisplay(ContentDisplay.TOP);
         button.setOnAction(e -> {
+            LOG.info("Membership Administration opening...");
+
             Stage stage = new Stage();
             stage.setTitle("Membership Administration");
             Scene scene = new Scene(new MembersWindow(members));
@@ -104,6 +113,8 @@ public class Launcher extends Application {
         button.setGraphic(value);
         button.setContentDisplay(ContentDisplay.TOP);
         button.setOnAction(e -> {
+            LOG.info("Match Administration opening...");
+
             Stage stage = new Stage();
             stage.setTitle("Match Administration");
             Scene scene = new Scene(new MatchesWindow(members, matches));
@@ -124,6 +135,8 @@ public class Launcher extends Application {
         scoringBtn.setGraphic(value);
         scoringBtn.setContentDisplay(ContentDisplay.TOP);
         scoringBtn.setOnAction(e -> {
+            LOG.info("Rapid Scoring opening...");
+
             Stage stage = new Stage();
             stage.setTitle("Rapid Scoring");
             Scene scene = new Scene(new ScoringWindow(matches));
