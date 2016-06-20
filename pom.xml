@@ -2,18 +2,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com</groupId>
+    <groupId>com.jmms</groupId>
     <artifactId>jmms</artifactId>
+    <version>0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <version>1.0-SNAPSHOT</version>
 
     <name>jmms</name>
     <url>http://maven.apache.org</url>
-
-    <ciManagement>
-        <system>Travis</system>
-        <url>https://travis-ci.org/englishman/jmss</url>
-    </ciManagement>
 
     <properties>
         <java.version>1.8</java.version>
@@ -24,6 +19,15 @@
         <maven.jacoco.plugin.version>0.7.5.201505241946</maven.jacoco.plugin.version>
         <maven.coveralls.plugin.version>4.1.0</maven.coveralls.plugin.version>
     </properties>
+
+    <ciManagement>
+        <system>Travis</system>
+        <url>https://travis-ci.org/englishman/jmss</url>
+    </ciManagement>
+
+    <scm>
+        <developerConnection>scm:git:git@github.com:englishman/jmms.git</developerConnection>
+    </scm>
 
     <build>
         <plugins>
