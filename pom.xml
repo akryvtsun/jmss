@@ -26,7 +26,7 @@
     </ciManagement>
 
     <scm>
-        <developerConnection>scm:https://github.com/englishman/jmss.git</developerConnection>
+        <developerConnection>scm:git:https://github.com/englishman/jmss.git</developerConnection>
     </scm>
 
     <build>
