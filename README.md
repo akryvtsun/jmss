@@ -8,6 +8,7 @@ Shooting Match Scoring System
 #### How to create release ####
 
 1. Use this command in cloned via 'https' repository
+
    ```
    mvn -Dusername=englishman -Dpassword=******** release:prepare
    ```
