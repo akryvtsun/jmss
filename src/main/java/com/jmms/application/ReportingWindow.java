@@ -3,16 +3,24 @@ package com.jmms.application;
 import com.jmms.domain.Match;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
+import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 public class ReportingWindow extends GridPane {
     private static final Logger LOG = Logger.getLogger(ReportingWindow.class.getName());
@@ -36,6 +44,11 @@ public class ReportingWindow extends GridPane {
         add(createMediaPane(), 0, 2);
 
         add(createButtonsPane(), 0, 3);
+
+        if (!matches.isEmpty()) {
+            Match match = matches.get(0);
+            matchComboBox.setValue(match);
+        }
     }
 
     private void prepareComponents() {
@@ -86,10 +99,6 @@ public class ReportingWindow extends GridPane {
     private TitledPane createReportTypePane() {
 
         HBox pane = new HBox(5.0);
-//        //pane.setStyle("-fx-background-color: #cccccc; -fx-border-color: #464646; ");
-//        //pane.setPrefWidth(Double.MAX_VALUE);
-//        pane.setHgap(5);
-//        pane.setVgap(5);
 
         ToggleGroup group = new ToggleGroup();
 
@@ -111,10 +120,6 @@ public class ReportingWindow extends GridPane {
     private TitledPane createMediaPane() {
 
         HBox pane = new HBox(5.0);
-//        //pane.setStyle("-fx-background-color: #cccccc; -fx-border-color: #464646; ");
-//        //pane.setPrefWidth(Double.MAX_VALUE);
-//        pane.setHgap(5);
-//        pane.setVgap(5);
 
         ToggleGroup group = new ToggleGroup();
 
@@ -138,12 +143,28 @@ public class ReportingWindow extends GridPane {
         HBox pane = new HBox(5.0);
 
         Button okButton = new Button("Ok");
+        okButton.setDefaultButton(true);
         okButton.setOnAction(event -> {
-            LOG.info("Ok pressed...");
+            LOG.info("Ok pressed, loading results...");
+
+            WebView browser = new WebView();
+            WebEngine webEngine = browser.getEngine();
+            InputStream inputStream = getClass().getResourceAsStream("/overall.html");
+            String result = new BufferedReader(new InputStreamReader(inputStream))
+                    .lines().collect(Collectors.joining("\n"));
+            webEngine.loadContent(result);
+
+            Stage stage = new Stage();
+            stage.setTitle("Results");
+
+            Scene scene = new Scene(browser);
+            stage.setScene(scene);
+            stage.show();
         });
 
         Button cancelButton = new Button("Cancel");
-        okButton.setOnAction(event -> {
+        cancelButton.setCancelButton(true);
+        cancelButton.setOnAction(event -> {
             LOG.info("Cancel pressed...");
         });
 
