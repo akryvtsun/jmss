@@ -128,13 +128,13 @@ public class Launcher extends Application {
     }
 
     private Button createScoringButton() {
-        Button scoringBtn = new Button("_Scoring");
+        Button button = new Button("_Scoring");
         ImageView value = new ImageView("/scoring.png");
         value.setFitHeight(50);
         value.setFitWidth(50);
-        scoringBtn.setGraphic(value);
-        scoringBtn.setContentDisplay(ContentDisplay.TOP);
-        scoringBtn.setOnAction(e -> {
+        button.setGraphic(value);
+        button.setContentDisplay(ContentDisplay.TOP);
+        button.setOnAction(e -> {
             LOG.info("Rapid Scoring opening...");
 
             Stage stage = new Stage();
@@ -146,18 +146,29 @@ public class Launcher extends Application {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
         });
-        return scoringBtn;
+        return button;
     }
 
     private Button createReportingButton() {
-        Button reportingBtn = new Button("_Reporting");
-        ImageView value1 = new ImageView("/reporting.png");
-        value1.setFitHeight(50);
-        value1.setFitWidth(50);
-        reportingBtn.setGraphic(value1);
-        reportingBtn.setContentDisplay(ContentDisplay.TOP);
-        reportingBtn.setDisable(true);
-        return reportingBtn;
+        Button button = new Button("_Reporting");
+        ImageView value = new ImageView("/reporting.png");
+        value.setFitHeight(50);
+        value.setFitWidth(50);
+        button.setGraphic(value);
+        button.setContentDisplay(ContentDisplay.TOP);
+        button.setOnAction(e -> {
+            LOG.info("Reporting opening...");
+
+            Stage stage = new Stage();
+            stage.setTitle("Match Reporting");
+            Scene scene = new Scene(new ReportingWindow(matches));
+            stage.setScene(scene);
+            // TODO make centering
+            //centerStage(stage, stage.getWidth(), stage.getHeight());
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.show();
+        });
+        return button;
     }
 
     private void centerStage(Stage stage, double width, double height) {
