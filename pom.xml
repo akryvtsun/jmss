@@ -47,7 +47,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.jmms.application.Launcher</mainClass>
+                            <mainClass>com.jmss.application.Launcher</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
