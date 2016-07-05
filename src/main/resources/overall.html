@@ -9,22 +9,24 @@
 <body>
 
 <h1>Overall Match Results</h1>
-<h2>Match name</h2>
-<h3>Match date</h3>
+<h2>{{matchName}}</h2>
+<h3>{{matchDate}}</h3>
 
-<table border="1" width="100%">
+<center>
+<table width="90%">
     <tr>
-        <th>&numero;</th>
-        <th>Time</th>
-        <th>Competitor</th>
+        <th bgcolor="#d3d3d3">&numero;</th>
+        <th bgcolor="#d3d3d3">Time</th>
+        <th bgcolor="#d3d3d3">Competitor</th>
     </tr>
+    {{#items}}
     <tr>
-        <td>Cell 1</td><td>Cell 2</td><td>Cell 3</td>
+        <td>{{number}}</td><td>{{time}}</td><td>{{name}}</td>
     <tr>
-    <tr>
-        <td>Cell 2</td><td>Cell 3</td><td>Cell 3</td>
-    <tr>
+    {{/items}}
 </table>
+</center>
+
 </body>
 
 </html>

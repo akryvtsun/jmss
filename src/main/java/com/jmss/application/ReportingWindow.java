@@ -1,6 +1,10 @@
 package com.jmss.application;
 
+import com.github.mustachejava.DefaultMustacheFactory;
+import com.github.mustachejava.Mustache;
+import com.github.mustachejava.MustacheFactory;
 import com.jmss.domain.Match;
+import com.jmss.domain.OverallResult;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -14,13 +18,11 @@ import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.IOException;
+import java.io.StringWriter;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 public class ReportingWindow extends GridPane {
     private static final Logger LOG = Logger.getLogger(ReportingWindow.class.getName());
@@ -149,10 +151,22 @@ public class ReportingWindow extends GridPane {
 
             WebView browser = new WebView();
             WebEngine webEngine = browser.getEngine();
-            InputStream inputStream = getClass().getResourceAsStream("/overall.html");
-            String result = new BufferedReader(new InputStreamReader(inputStream))
-                    .lines().collect(Collectors.joining("\n"));
-            webEngine.loadContent(result);
+
+//            InputStream inputStream = getClass().getResourceAsStream("/overall.html");
+//            String result = new BufferedReader(new InputStreamReader(inputStream))
+//                    .lines().collect(Collectors.joining("\n"));
+
+            MustacheFactory mf = new DefaultMustacheFactory();
+            Mustache mustache = mf.compile("overall.html");
+            StringWriter sw = new StringWriter();
+            OverallResult overall = new OverallResult();
+            try {
+                mustache.execute(sw, overall).flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            webEngine.loadContent(sw.toString());
 
             Stage stage = new Stage();
             stage.setTitle("Results");
