@@ -3,6 +3,8 @@ package com.jmss.application;
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.pdf.PdfWriter;
 import com.jmss.domain.Match;
 import com.jmss.domain.OverallResult;
 import javafx.collections.FXCollections;
@@ -18,12 +20,12 @@ import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
-import java.io.IOException;
-import java.io.StringWriter;
+import java.io.*;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.logging.Logger;
 
+// TODO review iText Maven dependencies: may it be smaller?
 public class ReportingWindow extends GridPane {
     private static final Logger LOG = Logger.getLogger(ReportingWindow.class.getName());
 
@@ -149,9 +151,6 @@ public class ReportingWindow extends GridPane {
         okButton.setOnAction(event -> {
             LOG.info("Ok pressed, loading results...");
 
-            WebView browser = new WebView();
-            WebEngine webEngine = browser.getEngine();
-
 //            InputStream inputStream = getClass().getResourceAsStream("/overall.html");
 //            String result = new BufferedReader(new InputStreamReader(inputStream))
 //                    .lines().collect(Collectors.joining("\n"));
@@ -165,8 +164,25 @@ public class ReportingWindow extends GridPane {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            String content = sw.toString();
 
-            webEngine.loadContent(sw.toString());
+            try {
+                OutputStream file = new FileOutputStream(new File("Test.pdf"));
+                Document document = new Document();
+                PdfWriter writer = PdfWriter.getInstance(document, file);
+                document.open();
+                InputStream is = new ByteArrayInputStream(content.getBytes());
+                com.itextpdf.tool.xml.XMLWorkerHelper.getInstance().parseXHtml(writer, document, is);
+                document.close();
+                writer.close();
+                file.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            WebView browser = new WebView();
+            WebEngine webEngine = browser.getEngine();
+            webEngine.loadContent(content);
 
             Stage stage = new Stage();
             stage.setTitle("Results");
