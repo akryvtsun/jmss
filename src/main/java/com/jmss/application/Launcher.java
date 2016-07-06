@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+// TODO pack iText for PDF dependency into result jar file in pom.xml
 // TODO disable windows resizing
 // TODO add 'Ok' and 'Cancel' buttons to have ability rollback window changes
 // TODO allows 'Cancel' button to close windows
