@@ -6,7 +6,7 @@ import com.github.mustachejava.MustacheFactory;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.jmss.domain.Match;
-import com.jmss.domain.OverallResult;
+import com.jmss.domain.Member;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -22,7 +22,9 @@ import javafx.util.StringConverter;
 
 import java.io.*;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 // TODO review iText Maven dependencies: may it be smaller?
@@ -151,21 +153,27 @@ public class ReportingWindow extends GridPane {
         okButton.setOnAction(event -> {
             LOG.info("Ok pressed, loading results...");
 
-//            InputStream inputStream = getClass().getResourceAsStream("/overall.html");
-//            String result = new BufferedReader(new InputStreamReader(inputStream))
-//                    .lines().collect(Collectors.joining("\n"));
+            // get overall results
+            Match match = matches.get(0);
+            Map<Member, Double> overall = match.overall();
+
+            // create results HTML string
+            Map<String, Object> scopes = new HashMap<String, Object>();
+            scopes.put("match", match);
+            scopes.put("overall", overall.entrySet());
 
             MustacheFactory mf = new DefaultMustacheFactory();
             Mustache mustache = mf.compile("overall.html");
             StringWriter sw = new StringWriter();
-            OverallResult overall = new OverallResult();
+
             try {
-                mustache.execute(sw, overall).flush();
+                mustache.execute(sw, scopes).flush();
             } catch (IOException e) {
                 e.printStackTrace();
             }
             String content = sw.toString();
 
+            // create results PDF file
             try {
                 OutputStream file = new FileOutputStream(new File("Test.pdf"));
                 Document document = new Document();
@@ -180,6 +188,7 @@ public class ReportingWindow extends GridPane {
                 e.printStackTrace();
             }
 
+            // show HTML string
             WebView browser = new WebView();
             WebEngine webEngine = browser.getEngine();
             webEngine.loadContent(content);

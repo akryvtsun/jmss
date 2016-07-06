@@ -9,8 +9,8 @@
 <body>
 
 <h1>Overall Match Results</h1>
-<h2>{{matchName}}</h2>
-<h3>{{matchDate}}</h3>
+<h2>{{match.name}}</h2>
+<h3>{{match.date}}</h3>
 
 <center>
 <table width="90%">
@@ -19,11 +19,11 @@
         <th bgcolor="#d3d3d3">Time</th>
         <th bgcolor="#d3d3d3">Competitor</th>
     </tr>
-    {{#items}}
+    {{#overall}}
     <tr>
-        <td>{{number}}</td><td>{{time}}</td><td>{{name}}</td>
+        <td>1</td><td>{{value}}</td><td>{{key.lastName}}, {{key.firstName}}</td>
     </tr>
-    {{/items}}
+    {{/overall}}
 </table>
 </center>
 
