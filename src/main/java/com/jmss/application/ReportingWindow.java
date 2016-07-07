@@ -1,12 +1,9 @@
 package com.jmss.application;
 
-import com.github.mustachejava.DefaultMustacheFactory;
-import com.github.mustachejava.Mustache;
-import com.github.mustachejava.MustacheFactory;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.jmss.domain.Match;
-import com.jmss.domain.Member;
+import com.jmss.infra.OverallHtmlResult;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -22,9 +19,7 @@ import javafx.util.StringConverter;
 
 import java.io.*;
 import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Logger;
 
 // TODO review iText Maven dependencies: may it be smaller?
@@ -155,23 +150,7 @@ public class ReportingWindow extends GridPane {
 
             // get overall results
             Match match = matches.get(0);
-            Map<Member, Double> overall = match.overall();
-
-            // create results HTML string
-            Map<String, Object> scopes = new HashMap<String, Object>();
-            scopes.put("match", match);
-            scopes.put("overall", overall.entrySet());
-
-            MustacheFactory mf = new DefaultMustacheFactory();
-            Mustache mustache = mf.compile("overall.html");
-            StringWriter sw = new StringWriter();
-
-            try {
-                mustache.execute(sw, scopes).flush();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            String content = sw.toString();
+            String content = new OverallHtmlResult(match).toHtml();
 
             // create results PDF file
             try {
