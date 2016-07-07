@@ -49,7 +49,7 @@ public class Launcher extends Application {
         LOG.info("Creating primary stage...");
 
         primaryStage.setTitle("JMMS v0.1");
-        Image icon = new Image(getClass().getResourceAsStream("/icon.png"));
+        Image icon = new Image(getClass().getResourceAsStream("/icons/icon.png"));
         primaryStage.getIcons().add(icon);
         primaryStage.setResizable(false);
 
@@ -89,7 +89,7 @@ public class Launcher extends Application {
 
     private Button createMembersButton() {
         Button button = new Button("_Members");
-        button.setGraphic(new ImageView("/members.png"));
+        button.setGraphic(new ImageView("/icons/members.png"));
         button.setContentDisplay(ContentDisplay.TOP);
         button.setOnAction(e -> {
             LOG.info("Membership Administration opening...");
@@ -108,7 +108,7 @@ public class Launcher extends Application {
 
     private Button createMatchesButton() {
         Button button = new Button("M_atches");
-        ImageView value = new ImageView("/matches.png");
+        ImageView value = new ImageView("/icons/matches.png");
         value.setFitHeight(50);
         value.setFitWidth(50);
         button.setGraphic(value);
@@ -130,7 +130,7 @@ public class Launcher extends Application {
 
     private Button createScoringButton() {
         Button button = new Button("_Scoring");
-        ImageView value = new ImageView("/scoring.png");
+        ImageView value = new ImageView("/icons/scoring.png");
         value.setFitHeight(50);
         value.setFitWidth(50);
         button.setGraphic(value);
@@ -152,7 +152,7 @@ public class Launcher extends Application {
 
     private Button createReportingButton() {
         Button button = new Button("_Reporting");
-        ImageView value = new ImageView("/reporting.png");
+        ImageView value = new ImageView("/icons/reporting.png");
         value.setFitHeight(50);
         value.setFitWidth(50);
         button.setGraphic(value);

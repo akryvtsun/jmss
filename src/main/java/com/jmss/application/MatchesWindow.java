@@ -60,7 +60,7 @@ public class MatchesWindow extends BorderPane {
 
     private Button createStagesButton() {
         Button button = new Button("Stages");
-        ImageView value = new ImageView("/stages.png");
+        ImageView value = new ImageView("/icons/stages.png");
         value.setFitHeight(50);
         value.setFitWidth(50);
         button.setGraphic(value);
@@ -89,7 +89,7 @@ public class MatchesWindow extends BorderPane {
 
     private Button createCompetitorsButton() {
         Button button = new Button("Competitors");
-        ImageView value = new ImageView("/competitors.png");
+        ImageView value = new ImageView("/icons/competitors.png");
         value.setFitHeight(50);
         value.setFitWidth(50);
         button.setGraphic(value);

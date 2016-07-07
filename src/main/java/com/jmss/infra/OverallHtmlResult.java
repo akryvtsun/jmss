@@ -48,7 +48,7 @@ public final class OverallHtmlResult {
         scopes.put("items", items);
 
         MustacheFactory mf = new DefaultMustacheFactory();
-        Mustache mustache = mf.compile("overall.html");
+        Mustache mustache = mf.compile("reports/overall.html");
 
         StringWriter sw = new StringWriter();
 
