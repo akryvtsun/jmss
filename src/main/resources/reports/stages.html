@@ -1,0 +1,28 @@
+<html>
+<body>
+
+<h1>Overall Stage Results</h1>
+<h2>{{match.date}}: {{match.name}}</h2>
+<h3>Printed {{today}}</h3>
+
+<table width="90%">
+    <thead bgcolor="#d3d3d3">
+        <tr>
+            <th>No</th>
+            <th>Time, sec</th>
+            <th>Competitor</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#items}}
+        <tr>
+            <td>{{number}}</td>
+            <td>{{time}}</td>
+            <td>{{competitor.lastName}}, {{competitor.firstName}}</td>
+        </tr>
+        {{/items}}
+    </tbody>
+</table>
+
+</body>
+</html>

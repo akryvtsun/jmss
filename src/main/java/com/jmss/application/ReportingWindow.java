@@ -3,6 +3,7 @@ package com.jmss.application;
 import com.jmss.domain.Match;
 import com.jmss.infra.OverallHtmlResult;
 import com.jmss.infra.PdfReport;
+import com.jmss.infra.StagesHtmlResult;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -31,6 +32,8 @@ public class ReportingWindow extends GridPane {
 
     private ComboBox<Match> matchComboBox;
     private Label dateLabel;
+
+    private RadioButton overallButton;
     private RadioButton previewButton;
 
     public ReportingWindow(List<Match> matches) {
@@ -105,16 +108,16 @@ public class ReportingWindow extends GridPane {
 
         ToggleGroup group = new ToggleGroup();
 
-        RadioButton overall = new RadioButton("Overall");
-        overall.setToggleGroup(group);
-        overall.setSelected(true);
+        overallButton = new RadioButton("Overall");
+        overallButton.setToggleGroup(group);
+        overallButton.setSelected(true);
 
         RadioButton stages = new RadioButton("Stages");
         stages.setToggleGroup(group);
 
-        pane.getChildren().addAll(overall, stages);
+        pane.getChildren().addAll(overallButton, stages);
 
-        TitledPane p = new TitledPane("Type", pane);
+        TitledPane p = new TitledPane("Report Type", pane);
         p.setCollapsible(false);
 
         return p;
@@ -135,7 +138,7 @@ public class ReportingWindow extends GridPane {
 
         pane.getChildren().addAll(previewButton, file);
 
-        TitledPane p = new TitledPane("Media", pane);
+        TitledPane p = new TitledPane("Output Media", pane);
         p.setCollapsible(false);
 
         return p;
@@ -152,8 +155,17 @@ public class ReportingWindow extends GridPane {
 
             Match match = matchComboBox.getValue();
 
-            // get overall results
-            String content = new OverallHtmlResult(match).toHtml();
+            // get results
+            String content;
+            String initialFileName;
+            if (overallButton.isSelected()) {
+                content = new OverallHtmlResult(match).toHtml();
+                initialFileName = "overall";
+            }
+            else {
+                content = new StagesHtmlResult(match).toHtml();
+                initialFileName = "stages";
+            }
 
             if (previewButton.isSelected()) {
                 // show HTML string
@@ -177,7 +189,7 @@ public class ReportingWindow extends GridPane {
                         new FileChooser.ExtensionFilter("All Files", "*.*"));
 
                 fileChooser.setInitialDirectory(new File("."));
-                fileChooser.setInitialFileName("overall");
+                fileChooser.setInitialFileName(initialFileName);
 
                 Window ownerWindow = getScene().getWindow();
                 File file = fileChooser.showSaveDialog(ownerWindow);
