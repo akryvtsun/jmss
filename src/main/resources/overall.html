@@ -1,32 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8"/>
-    <title>Title</title>
-</head>
-
+<html>
 <body>
 
 <h1>Overall Match Results</h1>
-<h2>{{match.name}}</h2>
-<h3>{{match.date}}</h3>
+<h2>{{match.date}}: {{match.name}}</h2>
+<h3>Printed {{today}}</h3>
 
-<center>
 <table width="90%">
-    <tr>
-        <th bgcolor="#d3d3d3">&numero;</th>
-        <th bgcolor="#d3d3d3">Time</th>
-        <th bgcolor="#d3d3d3">Competitor</th>
-    </tr>
-    {{#overall}}
-    <tr>
-        <td>1</td><td>{{value}}</td><td>{{key.lastName}}, {{key.firstName}}</td>
-    </tr>
-    {{/overall}}
+    <thead bgcolor="#d3d3d3">
+        <tr>
+            <th>No</th>
+            <th>Time, sec</th>
+            <th>Competitor</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#items}}
+        <tr>
+            <td>{{number}}</td>
+            <td>{{time}}</td>
+            <td>{{competitor.lastName}}, {{competitor.firstName}}</td>
+        </tr>
+        {{/items}}
+    </tbody>
 </table>
-</center>
 
 </body>
-
 </html>

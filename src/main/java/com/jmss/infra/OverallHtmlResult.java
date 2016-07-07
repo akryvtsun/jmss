@@ -8,10 +8,21 @@ import com.jmss.domain.Member;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 public final class OverallHtmlResult {
+
+    private static final Comparator<Map.Entry<Member, Double>> BACKWARD_COMPARATOR =
+            (i1, i2) ->
+                    i1.getValue() > i2.getValue()
+                        ? 1
+                        : i1.getValue() < i2.getValue() ? -1 : 0;
 
     private final Match match;
 
@@ -23,10 +34,18 @@ public final class OverallHtmlResult {
     public String toHtml() {
         Map<Member, Double> overall = match.overall();
 
+        final AtomicInteger number = new AtomicInteger(0);
+        List<OverallRecord> items = overall.entrySet()
+                .stream()
+                    .sorted(BACKWARD_COMPARATOR)
+                    .map(e -> new OverallRecord(number.incrementAndGet(), e.getValue(), e.getKey()))
+                    .collect(Collectors.toList());
+
         // create results HTML string
-        Map<String, Object> scopes = new HashMap<String, Object>();
+        Map<String, Object> scopes = new HashMap<>();
         scopes.put("match", match);
-        scopes.put("overall", overall.entrySet());
+        scopes.put("today", LocalDateTime.now());
+        scopes.put("items", items);
 
         MustacheFactory mf = new DefaultMustacheFactory();
         Mustache mustache = mf.compile("overall.html");
