@@ -14,6 +14,7 @@ public final class PdfReport {
         this.output = output;
     }
 
+    // TODO fix Cyrillic letters visible
     // TODO add Exception(???) to method signature
     // TODO refactor with try-for-resources
     // TODO rethink whether content should be save or ctor param?
