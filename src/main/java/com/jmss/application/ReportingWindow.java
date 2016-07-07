@@ -1,9 +1,8 @@
 package com.jmss.application;
 
-import com.itextpdf.text.Document;
-import com.itextpdf.text.pdf.PdfWriter;
 import com.jmss.domain.Match;
 import com.jmss.infra.OverallHtmlResult;
+import com.jmss.infra.PdfReport;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -17,7 +16,7 @@ import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
-import java.io.*;
+import java.io.File;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.logging.Logger;
@@ -153,19 +152,8 @@ public class ReportingWindow extends GridPane {
             String content = new OverallHtmlResult(match).toHtml();
 
             // create results PDF file
-            try {
-                OutputStream file = new FileOutputStream(new File("Test.pdf"));
-                Document document = new Document();
-                PdfWriter writer = PdfWriter.getInstance(document, file);
-                document.open();
-                InputStream is = new ByteArrayInputStream(content.getBytes());
-                com.itextpdf.tool.xml.XMLWorkerHelper.getInstance().parseXHtml(writer, document, is);
-                document.close();
-                writer.close();
-                file.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            PdfReport report = new PdfReport(new File("Test.pdf"));
+            report.save(content);
 
             // show HTML string
             WebView browser = new WebView();
