@@ -16,6 +16,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
+// TODO all logging
 public final class OverallHtmlResult {
 
     private static final Comparator<Map.Entry<Member, Double>> BACKWARD_COMPARATOR =
