@@ -1,9 +1,4 @@
-package com.jmss.application;
-
-import com.jmss.domain.Match;
-import com.jmss.domain.Member;
-import com.jmss.domain.Passing;
-import com.jmss.domain.Stage;
+package com.jmss.domain;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -17,16 +12,16 @@ import java.util.Map;
 public class DataHelper {
 
     public static List<Match> createMatches() {
-        Member member1 = new Member("fn1", "ln1");
-        Member member2 = new Member("fn2", "ln2");
-        Member member3 = new Member("fn3", "ln3");
+        Member member1 = new Member("Boris", "Petrov");
+        Member member2 = new Member("Andrey", "Ivanov");
+        Member member3 = new Member("Petr", "Sidorov");
 
         ///////////////////
 
         Stage stage11 = new Stage(1, 2);
         Stage stage12 = new Stage(2, 2);
 
-        Match match1 = new Match("match 1", LocalDate.now());
+        Match match1 = new Match("Skif Dynamics", LocalDate.now());
         match1.getStages().add(stage11);
         match1.getStages().add(stage12);
         match1.getCompetitors().add(member1);
@@ -47,7 +42,7 @@ public class DataHelper {
         Stage stage21 = new Stage(1, 3);
         Stage stage22 = new Stage(2, 3);
 
-        Match match2 = new Match("match 2", LocalDate.now());
+        Match match2 = new Match("Benelli Cup", LocalDate.now());
         match2.getStages().add(stage21);
         match2.getStages().add(stage22);
         match2.getCompetitors().add(member2);

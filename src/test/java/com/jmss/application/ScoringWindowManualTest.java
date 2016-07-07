@@ -1,5 +1,6 @@
 package com.jmss.application;
 
+import com.jmss.domain.DataHelper;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
