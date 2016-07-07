@@ -13,7 +13,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.util.StringConverter;
 
 import java.io.File;
@@ -29,6 +31,7 @@ public class ReportingWindow extends GridPane {
 
     private ComboBox<Match> matchComboBox;
     private Label dateLabel;
+    private RadioButton previewButton;
 
     public ReportingWindow(List<Match> matches) {
         this.matches = matches;
@@ -123,14 +126,14 @@ public class ReportingWindow extends GridPane {
 
         ToggleGroup group = new ToggleGroup();
 
-        RadioButton preview = new RadioButton("Preview");
-        preview.setToggleGroup(group);
-        preview.setSelected(true);
+        previewButton = new RadioButton("Preview");
+        previewButton.setToggleGroup(group);
+        previewButton.setSelected(true);
 
         RadioButton file = new RadioButton("File");
         file.setToggleGroup(group);
 
-        pane.getChildren().addAll(preview, file);
+        pane.getChildren().addAll(previewButton, file);
 
         TitledPane p = new TitledPane("Media", pane);
         p.setCollapsible(false);
@@ -147,25 +150,43 @@ public class ReportingWindow extends GridPane {
         okButton.setOnAction(event -> {
             LOG.info("Ok pressed, loading results...");
 
+            Match match = matchComboBox.getValue();
+
             // get overall results
-            Match match = matches.get(0);
             String content = new OverallHtmlResult(match).toHtml();
 
-            // create results PDF file
-            PdfReport report = new PdfReport(new File("Test.pdf"));
-            report.save(content);
+            if (previewButton.isSelected()) {
+                // show HTML string
+                WebView browser = new WebView();
+                WebEngine webEngine = browser.getEngine();
+                webEngine.loadContent(content);
 
-            // show HTML string
-            WebView browser = new WebView();
-            WebEngine webEngine = browser.getEngine();
-            webEngine.loadContent(content);
+                Stage stage = new Stage();
+                stage.setTitle("Results");
 
-            Stage stage = new Stage();
-            stage.setTitle("Results");
+                Scene scene = new Scene(browser);
+                stage.setScene(scene);
+                stage.show();
+            } else {
+                // create results PDF file
+                FileChooser fileChooser = new FileChooser();
 
-            Scene scene = new Scene(browser);
-            stage.setScene(scene);
-            stage.show();
+                fileChooser.setTitle("Save Report File");
+                fileChooser.getExtensionFilters().addAll(
+                        new FileChooser.ExtensionFilter("PDF Files", "*.pdf"),
+                        new FileChooser.ExtensionFilter("All Files", "*.*"));
+
+                fileChooser.setInitialDirectory(new File("."));
+                fileChooser.setInitialFileName("overall");
+
+                Window ownerWindow = getScene().getWindow();
+                File file = fileChooser.showSaveDialog(ownerWindow);
+
+                if (file != null) {
+                    PdfReport report = new PdfReport(file);
+                    report.save(content);
+                }
+            }
         });
 
         Button cancelButton = new Button("Cancel");
