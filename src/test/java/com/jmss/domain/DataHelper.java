@@ -15,6 +15,7 @@ public class DataHelper {
         Member member1 = new Member("Boris", "Petrov");
         Member member2 = new Member("Andrey", "Ivanov");
         Member member3 = new Member("Petr", "Sidorov");
+        Member member4 = new Member("Денис", "Безвершенко");
 
         ///////////////////
 
@@ -26,15 +27,18 @@ public class DataHelper {
         match1.getStages().add(stage12);
         match1.getCompetitors().add(member1);
         match1.getCompetitors().add(member2);
+        match1.getCompetitors().add(member4);
 
         Map<Member, Passing> map11 = new HashMap<>();
         map11.put(member1, new Passing(3, 0, 1, 1, 0, 111.0));
         map11.put(member2, new Passing(2, 1, 3, 1, 0, 112.0));
+        map11.put(member4, new Passing(4, 0, 0, 0, 0, 100.0));
         match1.getResults().put(stage11, map11);
 
         Map<Member, Passing> map12 = new HashMap<>();
         map12.put(member1, new Passing(1, 2, 0, 0, 2, 121.0));
         map12.put(member2, new Passing(0, 4, 1, 2, 0, 122.0));
+        map12.put(member4, new Passing(6, 0, 1, 0, 2, 100.0));
         match1.getResults().put(stage12, map12);
 
         //////////////////
