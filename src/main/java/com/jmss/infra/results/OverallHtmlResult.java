@@ -1,4 +1,4 @@
-package com.jmss.infra;
+package com.jmss.infra.results;
 
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
@@ -17,7 +17,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 // TODO all logging
-public final class OverallHtmlResult {
+public final class OverallHtmlResult extends AbstractHtmlResult {
 
     private static final Comparator<Map.Entry<Member, Double>> BACKWARD_COMPARATOR =
             (i1, i2) ->
@@ -25,15 +25,14 @@ public final class OverallHtmlResult {
                         ? 1
                         : i1.getValue() < i2.getValue() ? -1 : 0;
 
-    private final Match match;
-
     public OverallHtmlResult(Match match) {
-        this.match = match;
+        super(match);
     }
 
     // TODO add IOException to method signature
+    @Override
     public String toHtml() {
-        Map<Member, Double> overall = match.overall();
+        Map<Member, Double> overall = getMatch().overall();
 
         final AtomicInteger number = new AtomicInteger(0);
         List<OverallRecord> items = overall.entrySet()
@@ -44,7 +43,7 @@ public final class OverallHtmlResult {
 
         // create results HTML string
         Map<String, Object> scopes = new HashMap<>();
-        scopes.put("match", match);
+        scopes.put("match", getMatch());
         scopes.put("today", LocalDateTime.now());
         scopes.put("items", items);
 
@@ -60,5 +59,10 @@ public final class OverallHtmlResult {
         }
 
         return sw.toString();
+    }
+
+    @Override
+    public String getInitialFileName() {
+        return "overall";
     }
 }

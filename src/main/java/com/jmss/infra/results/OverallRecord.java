@@ -1,4 +1,4 @@
-package com.jmss.infra;
+package com.jmss.infra.results;
 
 import com.jmss.domain.Member;
 

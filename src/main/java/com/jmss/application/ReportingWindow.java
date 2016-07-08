@@ -1,9 +1,10 @@
 package com.jmss.application;
 
 import com.jmss.domain.Match;
-import com.jmss.infra.OverallHtmlResult;
+import com.jmss.infra.results.OverallHtmlResult;
 import com.jmss.infra.PdfReport;
-import com.jmss.infra.StagesHtmlResult;
+import com.jmss.infra.results.HtmlResult;
+import com.jmss.infra.results.StagesHtmlResult;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -156,22 +157,15 @@ public class ReportingWindow extends GridPane {
             Match match = matchComboBox.getValue();
 
             // get results
-            String content;
-            String initialFileName;
-            if (overallButton.isSelected()) {
-                content = new OverallHtmlResult(match).toHtml();
-                initialFileName = "overall";
-            }
-            else {
-                content = new StagesHtmlResult(match).toHtml();
-                initialFileName = "stages";
-            }
+            HtmlResult results = overallButton.isSelected()
+                    ? new OverallHtmlResult(match)
+                    : new StagesHtmlResult(match);
 
             if (previewButton.isSelected()) {
                 // show HTML string
                 WebView browser = new WebView();
                 WebEngine webEngine = browser.getEngine();
-                webEngine.loadContent(content);
+                webEngine.loadContent(results.toHtml());
 
                 Stage stage = new Stage();
                 stage.setTitle("Results");
@@ -189,14 +183,14 @@ public class ReportingWindow extends GridPane {
                         new FileChooser.ExtensionFilter("All Files", "*.*"));
 
                 fileChooser.setInitialDirectory(new File("."));
-                fileChooser.setInitialFileName(initialFileName);
+                fileChooser.setInitialFileName(results.getInitialFileName());
 
                 Window ownerWindow = getScene().getWindow();
                 File file = fileChooser.showSaveDialog(ownerWindow);
 
                 if (file != null) {
                     PdfReport report = new PdfReport(file);
-                    report.save(content);
+                    report.save(results.toHtml());
                 }
             }
         });
