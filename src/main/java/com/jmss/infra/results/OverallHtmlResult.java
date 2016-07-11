@@ -48,6 +48,7 @@ public final class OverallHtmlResult extends AbstractHtmlResult {
         scopes.put("items", items);
 
         MustacheFactory mf = new DefaultMustacheFactory();
+        // TODO move to some common constants area???
         Mustache mustache = mf.compile("reports/overall.html");
 
         StringWriter sw = new StringWriter();

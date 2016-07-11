@@ -17,7 +17,6 @@ public final class PdfReport {
         this.output = output;
     }
 
-    // TODO fix Cyrillic letters visible
     // TODO add Exception(???) to method signature
     // TODO rethink whether content should be save or ctor param?
     public void save(String content) {
@@ -29,10 +28,15 @@ public final class PdfReport {
             InputStream is = new ByteArrayInputStream(content.getBytes());
 
             document.open();
-            XMLWorkerHelper.getInstance().parseXHtml(writer, document, is);
+            XMLWorkerHelper.getInstance().parseXHtml(writer, document, is, getStylesStream());
             document.close();
         } catch (Exception e) {
             LOG.log(Level.SEVERE, "Error while PDF file generation", e);
         }
+    }
+
+    private InputStream getStylesStream() {
+        // TODO move to some common constants area???
+        return PdfReport.class.getResourceAsStream("/reports/styles.css");
     }
 }
