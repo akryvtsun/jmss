@@ -8,6 +8,7 @@ import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+// TODO styles.css doesn't have correct font for Linux
 public final class PdfReport {
     private static final Logger LOG = Logger.getLogger(PdfReport.class.getName());
 
