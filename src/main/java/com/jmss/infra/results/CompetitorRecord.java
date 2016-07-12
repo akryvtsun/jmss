@@ -2,12 +2,12 @@ package com.jmss.infra.results;
 
 import com.jmss.domain.Member;
 
-final class OverallRecord {
+final class CompetitorRecord {
     private final int number;
     private final double time;
     private final Member competitor;
 
-    public OverallRecord(int number, double time, Member competitor) {
+    public CompetitorRecord(int number, double time, Member competitor) {
         this.number = number;
         this.time = time;
         this.competitor = competitor;

@@ -1,50 +1,28 @@
 package com.jmss.infra.results;
 
-import com.github.mustachejava.DefaultMustacheFactory;
-import com.github.mustachejava.Mustache;
-import com.github.mustachejava.MustacheFactory;
 import com.jmss.domain.Match;
 import com.jmss.domain.Member;
 import com.jmss.domain.Stage;
 
-import java.io.IOException;
-import java.io.StringWriter;
 import java.time.LocalDateTime;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
 public final class StagesHtmlResult extends AbstractHtmlResult {
 
-    private static final Comparator<Map.Entry<Member, Double>> BACKWARD_COMPARATOR =
-            (i1, i2) ->
-                    i1.getValue() > i2.getValue()
-                            ? 1
-                            : i1.getValue() < i2.getValue() ? -1 : 0;
-
     public StagesHtmlResult(Match match) {
-        super(match);
+        super(match, "reports/stages.html");
     }
 
     // TODO add IOException to method signature
     @Override
     public String toHtml() {
 
-        Map<Stage, List<OverallRecord>> stages = new HashMap<>();
+        Map<Stage, List<CompetitorRecord>> stages = new HashMap<>();
         for (Stage stage: getMatch().getStages()) {
-            Map<Member, Double> stageResult = getMatch().result(stage);
-
-            final AtomicInteger number = new AtomicInteger(0);
-            List<OverallRecord> items = stageResult.entrySet()
-                    .stream()
-                    .sorted(BACKWARD_COMPARATOR)
-                    .map(e -> new OverallRecord(number.incrementAndGet(), e.getValue(), e.getKey()))
-                    .collect(Collectors.toList());
-
-            stages.put(stage, items);
+            Map<Member, Double> results = getMatch().result(stage);
+            stages.put(stage, createRecords(results));
         }
 
         // create results HTML string
@@ -53,18 +31,7 @@ public final class StagesHtmlResult extends AbstractHtmlResult {
         scopes.put("today", LocalDateTime.now());
         scopes.put("stages", stages.entrySet());
 
-        MustacheFactory mf = new DefaultMustacheFactory();
-        Mustache mustache = mf.compile("reports/stages.html");
-
-        StringWriter sw = new StringWriter();
-
-        try {
-            mustache.execute(sw, scopes).flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return sw.toString();
+        return createHtmlResult(scopes);
     }
 
     @Override
