@@ -1,5 +1,6 @@
 package com.jmss.application;
 
+import com.jmss.domain.DataHelper;
 import com.jmss.domain.Match;
 import com.jmss.domain.Member;
 import javafx.application.Application;
@@ -21,6 +22,7 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 // TODO pack iText for PDF dependency into result jar file in pom.xml
@@ -32,6 +34,8 @@ import java.util.logging.Logger;
 // TODO add icon for Ubuntu: http://ubuntuforums.org/showthread.php?t=1760257
 // TODO use javafxpackager.exe for runnable package creation
 // TODO add icon to all windows
+// TODO remove unneeded icons
+// TODO order consistent icons???
 public class Launcher extends Application {
     private static final Logger LOG = Logger.getLogger(Launcher.class.getName());
 
@@ -42,6 +46,18 @@ public class Launcher extends Application {
         LOG.info("Starting application...");
 
         launch(args);
+    }
+
+    @Override
+    public void init() throws Exception {
+        if (getArgs().get("demo") != null) {
+            members = DataHelper.createMembers();
+            matches = DataHelper.createMatches(members);
+        }
+    }
+
+    private Map<String, String> getArgs() {
+        return getParameters().getNamed();
     }
 
     @Override
