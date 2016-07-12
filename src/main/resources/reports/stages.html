@@ -1,10 +1,12 @@
 <html>
 <body>
 
+{{#stages}}
 <h1>Overall Stage Results</h1>
 <h2>{{match.date}}: {{match.name}}</h2>
 <h3>Printed {{today}}</h3>
 
+<h3>Stage {{key.number}}</h3>
 <table width="90%">
     <thead bgcolor="#d3d3d3">
         <tr>
@@ -14,15 +16,17 @@
         </tr>
     </thead>
     <tbody>
-        {{#items}}
+        {{#value}}
         <tr>
             <td>{{number}}</td>
             <td>{{time}}</td>
             <td>{{competitor.lastName}}, {{competitor.firstName}}</td>
         </tr>
-        {{/items}}
+        {{/value}}
     </tbody>
 </table>
+<div class="pagebreak"> </div>
+{{/stages}}
 
 </body>
 </html>

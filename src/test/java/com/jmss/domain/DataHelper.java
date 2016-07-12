@@ -38,7 +38,7 @@ public class DataHelper {
         Map<Member, Passing> map12 = new HashMap<>();
         map12.put(member1, new Passing(1, 2, 0, 0, 2, 121.0));
         map12.put(member2, new Passing(0, 4, 1, 2, 0, 122.0));
-        map12.put(member4, new Passing(6, 0, 1, 0, 2, 100.0));
+        map12.put(member4, new Passing(6, 0, 1, 0, 2, 155.0));
         match1.getResults().put(stage12, map12);
 
         //////////////////
