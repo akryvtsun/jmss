@@ -1,6 +1,8 @@
 <html>
 <body>
 
+{{#toPdf}}
+
 {{#stages}}
 <h1>Overall Stage Results</h1>
 <h2>{{match.date}}: {{match.name}}</h2>
@@ -27,6 +29,37 @@
 </table>
 <div class="pagebreak"> </div>
 {{/stages}}
+
+{{/toPdf}}
+{{^toPdf}}
+
+<h1>Overall Stage Results</h1>
+<h2>{{match.date}}: {{match.name}}</h2>
+<h3>Printed {{today}}</h3>
+
+{{#stages}}
+<h3>Stage {{key.number}}</h3>
+<table width="90%">
+    <thead bgcolor="#d3d3d3">
+    <tr>
+        <th>No</th>
+        <th>Time, sec</th>
+        <th>Competitor</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#value}}
+    <tr>
+        <td>{{number}}</td>
+        <td>{{time}}</td>
+        <td>{{competitor.lastName}}, {{competitor.firstName}}</td>
+    </tr>
+    {{/value}}
+    </tbody>
+</table>
+{{/stages}}
+
+{{/toPdf}}
 
 </body>
 </html>

@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+// See mustache formatting details https://github.com/janl/mustache.js
 public final class StagesHtmlResult extends AbstractHtmlResult {
 
     public StagesHtmlResult(Match match) {
@@ -17,7 +18,7 @@ public final class StagesHtmlResult extends AbstractHtmlResult {
 
     // TODO add IOException to method signature
     @Override
-    public String toHtml() {
+    public String toHtml(boolean toPdf) {
 
         Map<Stage, List<CompetitorRecord>> stages = new HashMap<>();
         for (Stage stage: getMatch().getStages()) {
@@ -30,6 +31,7 @@ public final class StagesHtmlResult extends AbstractHtmlResult {
         scopes.put("match", getMatch());
         scopes.put("today", LocalDateTime.now());
         scopes.put("stages", stages.entrySet());
+        scopes.put("toPdf", toPdf);
 
         return createHtmlResult(scopes);
     }

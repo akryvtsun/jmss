@@ -18,7 +18,7 @@ public final class OverallHtmlResult extends AbstractHtmlResult {
 
     // TODO add IOException to method signature
     @Override
-    public String toHtml() {
+    public String toHtml(boolean toPdf) {
         Map<Member, Double> results = getMatch().overall();
         List<CompetitorRecord> records = createRecords(results);
 

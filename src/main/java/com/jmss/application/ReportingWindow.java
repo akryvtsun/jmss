@@ -165,7 +165,7 @@ public class ReportingWindow extends GridPane {
                 // show HTML string
                 WebView browser = new WebView();
                 WebEngine webEngine = browser.getEngine();
-                webEngine.loadContent(results.toHtml());
+                webEngine.loadContent(results.toHtml(false));
 
                 Stage stage = new Stage();
                 stage.setTitle("Results");
@@ -190,7 +190,7 @@ public class ReportingWindow extends GridPane {
 
                 if (file != null) {
                     PdfReport report = new PdfReport(file);
-                    report.save(results.toHtml());
+                    report.save(results.toHtml(true));
                 }
             }
         });
