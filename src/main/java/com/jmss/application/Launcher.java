@@ -22,7 +22,6 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Logger;
 
 // TODO pack iText for PDF dependency into result jar file in pom.xml
@@ -50,14 +49,14 @@ public class Launcher extends Application {
 
     @Override
     public void init() throws Exception {
-        if (getArgs().get("demo") != null) {
+        if (isDemoMode()) {
             members = DemoDataProvider.createMembers();
             matches = DemoDataProvider.createMatches(members);
         }
     }
 
-    private Map<String, String> getArgs() {
-        return getParameters().getNamed();
+    private boolean isDemoMode() {
+        return !getParameters().getUnnamed().isEmpty();
     }
 
     @Override
