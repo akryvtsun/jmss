@@ -1,6 +1,6 @@
 package com.jmss.application;
 
-import com.jmss.domain.DataHelper;
+import com.jmss.domain.DemoDataProvider;
 import com.jmss.domain.Match;
 import com.jmss.domain.Member;
 import javafx.application.Application;
@@ -51,8 +51,8 @@ public class Launcher extends Application {
     @Override
     public void init() throws Exception {
         if (getArgs().get("demo") != null) {
-            members = DataHelper.createMembers();
-            matches = DataHelper.createMatches(members);
+            members = DemoDataProvider.createMembers();
+            matches = DemoDataProvider.createMatches(members);
         }
     }
 

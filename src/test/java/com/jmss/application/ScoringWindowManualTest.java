@@ -1,6 +1,6 @@
 package com.jmss.application;
 
-import com.jmss.domain.DataHelper;
+import com.jmss.domain.DemoDataProvider;
 import com.jmss.domain.Match;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
@@ -17,7 +17,7 @@ public class ScoringWindowManualTest {
     public static void main(String[] args) {
         new JFXPanel();
 
-        List<Match> matches = DataHelper.createMatches(DataHelper.createMembers());
+        List<Match> matches = DemoDataProvider.createMatches(DemoDataProvider.createMembers());
         ScoringWindow window = new ScoringWindow(matches);
 
         Platform.runLater(new Runnable() {

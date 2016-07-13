@@ -6,14 +6,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class DataHelper {
+public class DemoDataProvider {
 
     public static List<Member> createMembers() {
         return Arrays.asList(
-                new Member("Boris", "Petrov"),
-                new Member("Andrey", "Ivanov"),
-                new Member("Petr", "Sidorov"),
-                new Member("Денис", "Безвершенко")
+                new Member("Jerry", "Miculek"),
+                new Member("John", "Doe"),
+                new Member("Василий", "Иванов"),
+                new Member("Петр", "Сидоров")
         );
     }
 
