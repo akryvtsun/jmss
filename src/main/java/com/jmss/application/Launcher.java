@@ -35,6 +35,7 @@ import java.util.logging.Logger;
 // TODO add icon to all windows
 // TODO remove unneeded icons
 // TODO order consistent icons???
+// TODO revise windows layouts and make them appropriate size growing
 public class Launcher extends Application {
     private static final Logger LOG = Logger.getLogger(Launcher.class.getName());
 
