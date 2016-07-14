@@ -38,8 +38,8 @@ import java.util.logging.Logger;
 public class Launcher extends Application {
     private static final Logger LOG = Logger.getLogger(Launcher.class.getName());
 
-    private List<Member> members = new ArrayList();
-    private List<Match> matches = new ArrayList();
+    private final List<Member> members = new ArrayList();
+    private final List<Match> matches = new ArrayList();
 
     public static void main(String[] args) {
         LOG.info("Starting application...");
@@ -50,8 +50,8 @@ public class Launcher extends Application {
     @Override
     public void init() throws Exception {
         if (isDemoMode()) {
-            members = DemoDataProvider.createMembers();
-            matches = DemoDataProvider.createMatches(members);
+            members.addAll(DemoDataProvider.createMembers());
+            matches.addAll(DemoDataProvider.createMatches(members));
         }
     }
 
