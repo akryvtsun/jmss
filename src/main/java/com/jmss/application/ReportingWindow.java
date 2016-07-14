@@ -166,6 +166,7 @@ public class ReportingWindow extends GridPane {
                 WebView browser = new WebView();
                 WebEngine webEngine = browser.getEngine();
                 webEngine.loadContent(results.toHtml(false));
+                webEngine.setUserStyleSheetLocation(getClass().getResource("/reports/styles.css").toString());
 
                 Stage stage = new Stage();
                 stage.setTitle("Results");

@@ -2,7 +2,10 @@
     /* Enforces to use font with Cyrillic letters */
     font-family: Arial;
 }
-.pagebreak { page-break-before: always; } /* page-break-after works, as well */
+.pagebreak {
+    /* page-break-after works, as well */
+    page-break-before: always;
+}
 
 /* content of default.css from iText */
 pre, tt, code, kbd, samp {
@@ -15,7 +18,7 @@ dt {
 }
 /* styles below are taken from Mozilla Defaults */
 body {
-    margin: 10%;
+    margin: 5%;
     font-size: 12pt;
 }
 p, dl, multicol {
@@ -86,6 +89,7 @@ table {
     margin-left: 0;
     margin-right: 0;
     text-indent: 0;
+    width: 100%;
 }
 caption {
     text-align: center;
@@ -98,6 +102,7 @@ tbody {
 }
 thead {
     vertical-align: middle;
+    background-color: #d3d3d3;
 }
 tfoot {
     vertical-align: middle;
