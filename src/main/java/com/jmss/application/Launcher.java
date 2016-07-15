@@ -4,8 +4,6 @@ import com.jmss.domain.DemoDataProvider;
 import com.jmss.domain.Match;
 import com.jmss.domain.Member;
 import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
@@ -17,7 +15,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Modality;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -83,12 +80,12 @@ public class Launcher extends Application {
 
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
-        primaryStage.show();
 
-        Platform.runLater(() -> {
-            primaryStage.sizeToScene();
-            primaryStage.centerOnScreen();
-        });
+        primaryStage.setResizable(false);
+        primaryStage.sizeToScene();
+        primaryStage.centerOnScreen();
+
+        primaryStage.show();
     }
 
     private ToolBar createToolBar() {
@@ -180,17 +177,21 @@ public class Launcher extends Application {
             stage.setTitle("Match Reporting");
             Scene scene = new Scene(new ReportingWindow(matches));
             stage.setScene(scene);
+
             // TODO make centering
             //centerStage(stage, stage.getWidth(), stage.getHeight());
             stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setResizable(false);
+            stage.sizeToScene();
+
             stage.show();
         });
         return button;
     }
 
-    private void centerStage(Stage stage, double width, double height) {
-        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-        stage.setX((screenBounds.getWidth() - width) / 2);
-        stage.setY((screenBounds.getHeight() - height) / 2);
-    }
+//    private void centerStage(Stage stage, double width, double height) {
+//        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+//        stage.setX((screenBounds.getWidth() - width) / 2);
+//        stage.setY((screenBounds.getHeight() - height) / 2);
+//    }
 }

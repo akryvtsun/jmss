@@ -5,13 +5,9 @@ import com.jmss.domain.Match;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
-import javafx.stage.Modality;
 
 import java.util.List;
 
-/**
- * Created by ax01220 on 6/29/2016.
- */
 public class ReportingWindowManualTest {
 
     public static void main(String[] args) {
@@ -29,7 +25,9 @@ public class ReportingWindowManualTest {
                 stage.setScene(scene);
                 // TODO make centering
                 //centerStage(stage, stage.getWidth(), stage.getHeight());
-                stage.initModality(Modality.APPLICATION_MODAL);
+                //stage.initModality(Modality.APPLICATION_MODAL);
+                stage.setResizable(false);
+                stage.sizeToScene();
                 stage.show();
             }
         });

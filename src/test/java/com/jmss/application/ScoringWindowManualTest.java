@@ -9,9 +9,6 @@ import javafx.stage.Modality;
 
 import java.util.List;
 
-/**
- * Created by ax01220 on 6/29/2016.
- */
 public class ScoringWindowManualTest {
 
     public static void main(String[] args) {
