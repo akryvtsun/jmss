@@ -24,7 +24,7 @@ public class DemoDataProvider {
         Stage stage11 = new Stage(1, 2);
         Stage stage12 = new Stage(2, 2);
 
-        Match match1 = new Match("Skif Dynamics", LocalDate.now());
+        Match match1 = new Match("Shooting F&S", LocalDate.now());
         match1.getStages().add(stage11);
         match1.getStages().add(stage12);
         match1.getCompetitors().add(members.get(0));
@@ -48,7 +48,7 @@ public class DemoDataProvider {
         Stage stage21 = new Stage(1, 3);
         Stage stage22 = new Stage(2, 3);
 
-        Match match2 = new Match("Benelli Cup", LocalDate.now());
+        Match match2 = new Match("Rifle Marathon", LocalDate.now());
         match2.getStages().add(stage21);
         match2.getStages().add(stage22);
         match2.getCompetitors().add(members.get(1));
