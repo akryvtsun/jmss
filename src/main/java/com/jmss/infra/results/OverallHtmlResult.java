@@ -3,7 +3,6 @@ package com.jmss.infra.results;
 import com.jmss.domain.Match;
 import com.jmss.domain.Member;
 
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +24,7 @@ public final class OverallHtmlResult extends AbstractHtmlResult {
         // create results HTML string
         Map<String, Object> scopes = new HashMap<>();
         scopes.put("match", getMatch());
-        scopes.put("today", LocalDateTime.now());
+        scopes.put("today", getTimestamp());
         scopes.put("records", records);
 
         return createHtmlResult(scopes);
