@@ -61,6 +61,7 @@ public class Launcher extends Application {
     public void start(Stage primaryStage) {
         LOG.info("Creating primary stage...");
 
+        // TODO use program version from META-INF/MANIFEST.MF file
         primaryStage.setTitle("JMMS v0.1");
         Image icon = new Image(getClass().getResourceAsStream("/icons/icon.png"));
         primaryStage.getIcons().add(icon);

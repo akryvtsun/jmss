@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 // TODO review iText Maven dependencies: may it be smaller?
+// TODO use a list instead of a combo box for match presentation?
 public class ReportingWindow extends GridPane {
     private static final Logger LOG = Logger.getLogger(ReportingWindow.class.getName());
 
