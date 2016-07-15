@@ -200,6 +200,7 @@ public class ReportingWindow extends GridPane {
         cancelButton.setCancelButton(true);
         cancelButton.setOnAction(event -> {
             LOG.info("Cancel pressed...");
+            getScene().getWindow().hide();
         });
 
         pane.getChildren().addAll(okButton, cancelButton);
