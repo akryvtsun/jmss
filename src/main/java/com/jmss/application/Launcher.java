@@ -1,5 +1,9 @@
 package com.jmss.application;
 
+import com.jmss.application.windows.MatchesWindow;
+import com.jmss.application.windows.MembersWindow;
+import com.jmss.application.windows.ReportingWindow;
+import com.jmss.application.windows.ScoringWindow;
 import com.jmss.domain.DemoDataProvider;
 import com.jmss.domain.Match;
 import com.jmss.domain.Member;

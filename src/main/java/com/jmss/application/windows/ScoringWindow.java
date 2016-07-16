@@ -1,4 +1,4 @@
-package com.jmss.application;
+package com.jmss.application.windows;
 
 import com.jmss.domain.Match;
 import com.jmss.domain.Member;

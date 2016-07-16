@@ -1,5 +1,6 @@
-package com.jmss.application;
+package com.jmss.application.windows;
 
+import com.jmss.application.windows.MembersWindow;
 import javafx.embed.swing.JFXPanel;
 import org.junit.Before;
 import org.junit.Test;
@@ -8,7 +9,7 @@ import java.util.Collections;
 
 import static org.junit.Assert.assertNotNull;
 
-public class MatchesWindowTest {
+public class MembersWindowTest {
 
     @Before
     public void setUp() throws Exception {
@@ -17,7 +18,7 @@ public class MatchesWindowTest {
 
     @Test
     public void window_creation() throws Exception {
-        MatchesWindow window = new MatchesWindow(Collections.emptyList(), Collections.emptyList());
+        MembersWindow window = new MembersWindow(Collections.emptyList());
         assertNotNull(window);
     }
 }

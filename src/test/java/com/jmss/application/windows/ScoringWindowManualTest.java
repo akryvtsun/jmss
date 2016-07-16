@@ -1,5 +1,6 @@
-package com.jmss.application;
+package com.jmss.application.windows;
 
+import com.jmss.application.windows.ScoringWindow;
 import com.jmss.domain.DemoDataProvider;
 import com.jmss.domain.Match;
 import javafx.application.Platform;

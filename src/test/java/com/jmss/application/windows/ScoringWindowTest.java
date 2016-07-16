@@ -1,5 +1,6 @@
-package com.jmss.application;
+package com.jmss.application.windows;
 
+import com.jmss.application.windows.ScoringWindow;
 import javafx.embed.swing.JFXPanel;
 import org.junit.Before;
 import org.junit.Test;
