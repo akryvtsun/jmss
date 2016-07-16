@@ -8,17 +8,17 @@
 <table>
     <thead>
         <tr>
-            <th>No</th>
-            <th>Time, sec</th>
-            <th>Competitor</th>
+            <th align="center">No</th>
+            <th align="center">Time, sec</th>
+            <th align="center">Competitor</th>
         </tr>
     </thead>
     <tbody>
         {{#records}}
         <tr>
-            <td>{{number}}</td>
-            <td>{{time}}</td>
-            <td>{{competitor.lastName}}, {{competitor.firstName}}</td>
+            <td align="center">{{number}}</td>
+            <td align="center">{{time}}</td>
+            <td style="padding-left: 5%;">{{competitor.lastName}}, {{competitor.firstName}}</td>
         </tr>
         {{/records}}
     </tbody>

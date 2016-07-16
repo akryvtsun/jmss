@@ -2,9 +2,12 @@
     /* Enforces to use font with Cyrillic letters */
     font-family: Arial;
 }
-.pagebreak {
+.page-break {
     /* page-break-after works, as well */
     page-break-before: always;
+}
+.competitor {
+    padding-left: 5%;
 }
 
 /* content of default.css from iText */
@@ -155,3 +158,4 @@ hr {
     color: gray;
     height: 2px;
 }
+
