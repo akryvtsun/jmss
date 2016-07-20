@@ -1,1 +1,1 @@
-java -jar jmms-0.1.jar
+java -jar jmms-0.5.jar -d
