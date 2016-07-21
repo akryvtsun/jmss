@@ -21,24 +21,48 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 // TODO add icon for Ubuntu: http://ubuntuforums.org/showthread.php?t=1760257
 // TODO use javafxpackager.exe for runnable package creation
 // TODO order consistent icons???
-
-public class Launcher extends Application {
+public final class Launcher extends Application {
     private static final Logger LOG = Logger.getLogger(Launcher.class.getName());
 
     private final List<Member> members = new ArrayList();
     private final List<Match> matches = new ArrayList();
 
     public static void main(String[] args) {
+        try {
+            initializeLogging();
+        } catch (IOException e) {
+            // avoid any error messages during init logging
+        }
+
         LOG.info("Starting application...");
 
         launch(args);
+    }
+
+    // avoids logging output by default
+    private static void initializeLogging() throws IOException {
+        String logFile = System.getProperty("java.util.logging.config.file");
+        if(logFile == null)
+            loadSilentLoggingProperties();
+    }
+
+    private static void loadSilentLoggingProperties() throws IOException {
+        InputStream propertiesStream = getResource("logging.properties");
+        LogManager.getLogManager().readConfiguration(propertiesStream);
+    }
+
+    private static InputStream getResource(String resourceName) {
+        return Launcher.class.getClassLoader().getResourceAsStream(resourceName);
     }
 
     @Override
@@ -57,8 +81,7 @@ public class Launcher extends Application {
     public void start(Stage primaryStage) {
         LOG.info("Creating primary stage...");
 
-        // TODO use program version from META-INF/MANIFEST.MF file
-        primaryStage.setTitle("JMMS v0.9");
+        primaryStage.setTitle("JMMS v0.7");
         Image icon = new Image(getClass().getResourceAsStream("/icons/icon.png"));
         primaryStage.getIcons().add(icon);
         primaryStage.setResizable(false);
