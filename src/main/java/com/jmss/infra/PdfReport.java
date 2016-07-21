@@ -38,6 +38,6 @@ public final class PdfReport {
 
     private InputStream getStylesStream() {
         // TODO move to some common constants area???
-        return PdfReport.class.getResourceAsStream("/reports/styles.css");
+        return Utils.getResource("/reports/styles.css");
     }
 }

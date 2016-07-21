@@ -7,6 +7,7 @@ import com.jmss.application.windows.ScoringWindow;
 import com.jmss.domain.DemoDataProvider;
 import com.jmss.domain.Match;
 import com.jmss.domain.Member;
+import com.jmss.infra.Utils;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -57,12 +58,8 @@ public final class Launcher extends Application {
     }
 
     private static void loadSilentLoggingProperties() throws IOException {
-        InputStream propertiesStream = getResource("logging.properties");
+        InputStream propertiesStream = Utils.getResource("logging.properties");
         LogManager.getLogManager().readConfiguration(propertiesStream);
-    }
-
-    private static InputStream getResource(String resourceName) {
-        return Launcher.class.getClassLoader().getResourceAsStream(resourceName);
     }
 
     @Override
@@ -82,7 +79,7 @@ public final class Launcher extends Application {
         LOG.info("Creating primary stage...");
 
         primaryStage.setTitle("JMMS v0.7");
-        Image icon = new Image(getClass().getResourceAsStream("/icons/icon.png"));
+        Image icon = new Image(Utils.getResource("/icons/icon.png"));
         primaryStage.getIcons().add(icon);
         primaryStage.setResizable(false);
 
