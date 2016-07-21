@@ -25,18 +25,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-// TODO pack iText for PDF dependency into result jar file in pom.xml
-// TODO disable windows resizing
-// TODO add 'Ok' and 'Cancel' buttons to have ability rollback window changes
-// TODO allows 'Cancel' button to close windows
-// TODO add logging
-// TODO add keyboard shortcuts
 // TODO add icon for Ubuntu: http://ubuntuforums.org/showthread.php?t=1760257
 // TODO use javafxpackager.exe for runnable package creation
-// TODO add icon to all windows
-// TODO remove unneeded icons
 // TODO order consistent icons???
-// TODO revise windows layouts and make them appropriate size growing
+
 public class Launcher extends Application {
     private static final Logger LOG = Logger.getLogger(Launcher.class.getName());
 

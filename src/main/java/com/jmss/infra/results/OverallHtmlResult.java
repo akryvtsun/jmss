@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-// TODO all logging
+// TODO add logging
 public final class OverallHtmlResult extends AbstractHtmlResult {
 
     public OverallHtmlResult(Match match) {
