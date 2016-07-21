@@ -58,7 +58,7 @@ public final class Launcher extends Application {
     }
 
     private static void loadSilentLoggingProperties() throws IOException {
-        InputStream propertiesStream = Utils.getResource("/logging.properties");
+        InputStream propertiesStream = Utils.getResource("/nullLogging.properties");
         LogManager.getLogManager().readConfiguration(propertiesStream);
     }
 
