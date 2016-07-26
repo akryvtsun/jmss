@@ -1,9 +1,9 @@
 package com.jmss.application.windows;
 
 import com.jmss.domain.Match;
-import com.jmss.infra.results.OverallHtmlResult;
 import com.jmss.infra.PdfReport;
 import com.jmss.infra.results.HtmlResult;
+import com.jmss.infra.results.OverallHtmlResult;
 import com.jmss.infra.results.StagesHtmlResult;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
@@ -19,16 +19,17 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.StringConverter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.logging.Logger;
 
 // TODO review iText Maven dependencies: may it be smaller?
 // TODO use a list instead of a combo box for match presentation?
 public class ReportingWindow extends GridPane {
-    private static final Logger LOG = Logger.getLogger(ReportingWindow.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(ReportingWindow.class);
 
     private final List<Match> matches;
 
@@ -78,7 +79,7 @@ public class ReportingWindow extends GridPane {
             }
         });
         comboBox.valueProperty().addListener(e -> {
-            LOG.info("Changing match combobox...");
+            LOGGER.info("Changing match combobox...");
 
             Match match = comboBox.getValue();
 
@@ -153,7 +154,7 @@ public class ReportingWindow extends GridPane {
         Button okButton = new Button("Ok");
         okButton.setDefaultButton(true);
         okButton.setOnAction(event -> {
-            LOG.info("Ok pressed, loading results...");
+            LOGGER.info("Ok pressed, loading results...");
 
             Match match = matchComboBox.getValue();
 
@@ -201,7 +202,7 @@ public class ReportingWindow extends GridPane {
         Button cancelButton = new Button("Cancel");
         cancelButton.setCancelButton(true);
         cancelButton.setOnAction(event -> {
-            LOG.info("Cancel pressed...");
+            LOGGER.info("Cancel pressed...");
             getScene().getWindow().hide();
         });
 

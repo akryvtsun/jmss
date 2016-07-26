@@ -17,17 +17,18 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.logging.Logger;
 
 // TODO disable Delete button if table is empty
 // TODO disable make whole window smaller (or even remove resize ability at all)
 // TODO disable toolbar buttons if no match was selected
 // TODO allows correct match data changes
 public class MatchesWindow extends BorderPane {
-    private static final Logger LOG = Logger.getLogger(MatchesWindow.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(MatchesWindow.class);
 
     private final List<Member> members;
     private final ObservableList<Match> data;
@@ -66,7 +67,7 @@ public class MatchesWindow extends BorderPane {
         button.setGraphic(value);
         button.setContentDisplay(ContentDisplay.TOP);
         button.setOnAction(e -> {
-            LOG.info("Stage Administration opening...");
+            LOGGER.info("Stage Administration opening...");
 
             Stage stage = new Stage();
             stage.setTitle("Stage Administration");
@@ -95,7 +96,7 @@ public class MatchesWindow extends BorderPane {
         button.setGraphic(value);
         button.setContentDisplay(ContentDisplay.TOP);
         button.setOnAction(e -> {
-            LOG.info("Competitors Administration opening...");
+            LOGGER.info("Competitors Administration opening...");
 
             Stage stage = new Stage();
             stage.setTitle("Competitors Administration");
@@ -128,19 +129,19 @@ public class MatchesWindow extends BorderPane {
                 new ChangeListener<Tab>() {
                     @Override
                     public void changed(ObservableValue<? extends Tab> observable, Tab oldValue, Tab newValue) {
-                        LOG.info("Changing Matches tab...");
+                        LOGGER.info("Changing Matches tab...");
 
                         TableView.TableViewSelectionModel<Match> tableSelectionModel = table.getSelectionModel();
                         int index = tableSelectionModel.getSelectedIndex();
                         if (index >= 0) {
                             if (matchListTab.equals(newValue)) {
-                                LOG.info("Updating match in table...");
+                                LOGGER.info("Updating match in table...");
 
                                 Match match = new Match(matchNameField.getText(), dateField.getValue());
 
                                 data.set(index, match);
                             } else if (matchTab.equals(newValue)) {
-                                LOG.info("Updating match's fields...");
+                                LOGGER.info("Updating match's fields...");
 
                                 Match match = data.get(index);
 
@@ -195,7 +196,7 @@ public class MatchesWindow extends BorderPane {
         table.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                LOG.info("Updating match's fields via mouse...");
+                LOGGER.info("Updating match's fields via mouse...");
 
                 if (event.getClickCount() > 1) {
                     TableView.TableViewSelectionModel<Match> tableSelectionModel = table.getSelectionModel();
@@ -234,7 +235,7 @@ public class MatchesWindow extends BorderPane {
         Button aNew = new Button("New");
         aNew.setMaxWidth(Double.MAX_VALUE);
         aNew.setOnAction(e -> {
-            LOG.info("Adding new match...");
+            LOGGER.info("Adding new match...");
 
             Match match = new Match(matchNameField.getText(), dateField.getValue());
 
@@ -247,7 +248,7 @@ public class MatchesWindow extends BorderPane {
         Button delete = new Button("Delete");
         delete.setMaxWidth(Double.MAX_VALUE);
         delete.setOnAction(e -> {
-            LOG.info("Deleting match...");
+            LOGGER.info("Deleting match...");
 
             int focusedIndex = table.getSelectionModel().getFocusedIndex();
             if (focusedIndex >= 0)

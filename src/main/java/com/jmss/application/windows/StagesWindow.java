@@ -13,14 +13,15 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 // TODO add number fields (stage No) protection (spinner?)
 // TODO allows correct stages attrs changes
 public class StagesWindow extends BorderPane {
-    private static final Logger LOG = Logger.getLogger(StagesWindow.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(StagesWindow.class);
 
     private final ObservableList<Stage> data;
 
@@ -49,13 +50,13 @@ public class StagesWindow extends BorderPane {
                 new ChangeListener<Tab>() {
                     @Override
                     public void changed(ObservableValue<? extends Tab> observable, Tab oldValue, Tab newValue) {
-                        LOG.info("Changing Stage tab...");
+                        LOGGER.info("Changing Stage tab...");
 
                         TableView.TableViewSelectionModel<Stage> tableSelectionModel = table.getSelectionModel();
                         int index = tableSelectionModel.getSelectedIndex();
                         if (index >= 0) {
                             if (memberListTab.equals(newValue)) {
-                                LOG.info("Updating stage in table...");
+                                LOGGER.info("Updating stage in table...");
 
                                 String number = numberField.getText();
                                 String targets = targetsField.getText();
@@ -63,7 +64,7 @@ public class StagesWindow extends BorderPane {
 
                                 data.set(index, stage);
                             } else if (memberTab.equals(newValue)) {
-                                LOG.info("Updating stage's fields...");
+                                LOGGER.info("Updating stage's fields...");
 
                                 Stage stage = data.get(index);
 
@@ -116,7 +117,7 @@ public class StagesWindow extends BorderPane {
         table.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                LOG.info("Updating stage's fields via mouse...");
+                LOGGER.info("Updating stage's fields via mouse...");
 
                 if (event.getClickCount() > 1) {
                     TableView.TableViewSelectionModel<Stage> tableSelectionModel = table.getSelectionModel();
@@ -155,7 +156,7 @@ public class StagesWindow extends BorderPane {
         Button aNew = new Button("New");
         aNew.setMaxWidth(Double.MAX_VALUE);
         aNew.setOnAction(e -> {
-            LOG.info("Adding new stage...");
+            LOGGER.info("Adding new stage...");
 
             String number = numberField.getText();
             String targets = targetsField.getText();
@@ -170,7 +171,7 @@ public class StagesWindow extends BorderPane {
         Button delete = new Button("Delete");
         delete.setMaxWidth(Double.MAX_VALUE);
         delete.setOnAction(e -> {
-            LOG.info("Deleting stage...");
+            LOGGER.info("Deleting stage...");
 
             int focusedIndex = table.getSelectionModel().getFocusedIndex();
             if (focusedIndex >= 0)

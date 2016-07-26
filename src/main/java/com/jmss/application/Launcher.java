@@ -21,46 +21,44 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.LogManager;
-import java.util.logging.Logger;
 
 // TODO add icon for Ubuntu: http://ubuntuforums.org/showthread.php?t=1760257
 // TODO use javafxpackager.exe for runnable package creation
 // TODO order consistent icons???
 public final class Launcher extends Application {
-    private static final Logger LOG = Logger.getLogger(Launcher.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(Launcher.class);
 
     private final List<Member> members = new ArrayList();
     private final List<Match> matches = new ArrayList();
 
     public static void main(String[] args) {
-        try {
-            initializeLogging();
-        } catch (IOException e) {
-            // avoid any error messages during init logging
-        }
+//        try {
+//            initializeLogging();
+//        } catch (IOException e) {
+//            // avoid any error messages during init logging
+//        }
 
-        LOG.info("Starting application...");
+        LOGGER.info("Starting application...");
 
         launch(args);
     }
 
-    // avoids logging output by default
-    private static void initializeLogging() throws IOException {
-        String logFile = System.getProperty("java.util.logging.config.file");
-        if(logFile == null)
-            loadSilentLoggingProperties();
-    }
-
-    private static void loadSilentLoggingProperties() throws IOException {
-        InputStream propertiesStream = Utils.getResource("/nullLogging.properties");
-        LogManager.getLogManager().readConfiguration(propertiesStream);
-    }
+//    // avoids logging output by default
+//    private static void initializeLogging() throws IOException {
+//        String logFile = System.getProperty("java.util.logging.config.file");
+//        if(logFile == null)
+//            loadSilentLoggingProperties();
+//    }
+//
+//    private static void loadSilentLoggingProperties() throws IOException {
+//        InputStream propertiesStream = Utils.getResource("/nullLogging.properties");
+//        LogManager.getLogManager().readConfiguration(propertiesStream);
+//    }
 
     @Override
     public void init() throws Exception {
@@ -76,7 +74,7 @@ public final class Launcher extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        LOG.info("Creating primary stage...");
+        LOGGER.info("Creating primary stage...");
 
         primaryStage.setTitle("JMMS v0.7");
         Image icon = new Image(Utils.getResource("/icons/icon.png"));
@@ -122,7 +120,7 @@ public final class Launcher extends Application {
         button.setGraphic(new ImageView("/icons/members.png"));
         button.setContentDisplay(ContentDisplay.TOP);
         button.setOnAction(e -> {
-            LOG.info("Membership Administration opening...");
+            LOGGER.info("Membership Administration opening...");
 
             Stage stage = new Stage();
             stage.setTitle("Membership Administration");
@@ -144,7 +142,7 @@ public final class Launcher extends Application {
         button.setGraphic(value);
         button.setContentDisplay(ContentDisplay.TOP);
         button.setOnAction(e -> {
-            LOG.info("Match Administration opening...");
+            LOGGER.info("Match Administration opening...");
 
             Stage stage = new Stage();
             stage.setTitle("Match Administration");
@@ -166,7 +164,7 @@ public final class Launcher extends Application {
         button.setGraphic(value);
         button.setContentDisplay(ContentDisplay.TOP);
         button.setOnAction(e -> {
-            LOG.info("Rapid Scoring opening...");
+            LOGGER.info("Rapid Scoring opening...");
 
             Stage stage = new Stage();
             stage.setTitle("Rapid Scoring");
@@ -188,7 +186,7 @@ public final class Launcher extends Application {
         button.setGraphic(value);
         button.setContentDisplay(ContentDisplay.TOP);
         button.setOnAction(e -> {
-            LOG.info("Reporting opening...");
+            LOGGER.info("Reporting opening...");
 
             Stage stage = new Stage();
             stage.setTitle("Match Reporting");

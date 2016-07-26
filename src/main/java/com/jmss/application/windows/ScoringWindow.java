@@ -12,16 +12,17 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.util.StringConverter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 // TODO add match date label
 // TODO add time number field entering guard
 public class ScoringWindow extends GridPane {
-    private static final Logger LOG = Logger.getLogger(ScoringWindow.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(ScoringWindow.class);
 
     private final List<Match> matches;
 
@@ -90,7 +91,7 @@ public class ScoringWindow extends GridPane {
             }
         });
         comboBox.valueProperty().addListener(e -> {
-            LOG.info("Changing match combobox...");
+            LOGGER.info("Changing match combobox...");
 
             Match match = comboBox.getValue();
 
@@ -119,7 +120,7 @@ public class ScoringWindow extends GridPane {
             }
         });
         comboBox.valueProperty().addListener(e -> {
-            LOG.info("Changing stage combobox...");
+            LOGGER.info("Changing stage combobox...");
 
             updatePassingComponents();
         });
@@ -140,7 +141,7 @@ public class ScoringWindow extends GridPane {
             }
         });
         comboBox.valueProperty().addListener(e -> {
-            LOG.info("Changing competitor combobox...");
+            LOGGER.info("Changing competitor combobox...");
 
             updatePassingComponents();
         });
@@ -270,7 +271,7 @@ public class ScoringWindow extends GridPane {
         BorderPane pane = new BorderPane();
         Button button = new Button("Confirm");
         button.setOnAction(event -> {
-            LOG.info("Confirming score...");
+            LOGGER.info("Confirming score...");
 
             Passing passing = new Passing(aHits.getValue(), cHits.getValue(), dHits.getValue(),
                     misses.getValue(), procedurals.getValue(),

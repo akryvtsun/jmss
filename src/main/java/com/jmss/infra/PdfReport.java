@@ -3,14 +3,14 @@ package com.jmss.infra;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.tool.xml.XMLWorkerHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 // TODO styles.css doesn't have correct font for Linux
 public final class PdfReport {
-    private static final Logger LOG = Logger.getLogger(PdfReport.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(PdfReport.class);
 
     private final File output;
 
@@ -21,7 +21,7 @@ public final class PdfReport {
     // TODO add Exception(???) to method signature
     // TODO rethink whether content should be save or ctor param?
     public void save(String content) {
-        LOG.info(String.format("Storing PDF into '%s'...", output.getAbsolutePath()));
+        LOGGER.info("Storing PDF into '{}'...", output.getAbsolutePath());
 
         try (OutputStream os = new FileOutputStream(output)) {
             Document document = new Document();
@@ -32,7 +32,7 @@ public final class PdfReport {
             XMLWorkerHelper.getInstance().parseXHtml(writer, document, is, getStylesStream());
             document.close();
         } catch (Exception e) {
-            LOG.log(Level.SEVERE, "Error while PDF file generation", e);
+            LOGGER.error("Error while PDF file generation", e);
         }
     }
 
