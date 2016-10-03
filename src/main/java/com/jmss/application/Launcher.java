@@ -37,28 +37,10 @@ public final class Launcher extends Application {
     private final List<Match> matches = new ArrayList();
 
     public static void main(String[] args) {
-//        try {
-//            initializeLogging();
-//        } catch (IOException e) {
-//            // avoid any error messages during init logging
-//        }
-
         LOGGER.info("Starting application...");
 
         launch(args);
     }
-
-//    // avoids logging output by default
-//    private static void initializeLogging() throws IOException {
-//        String logFile = System.getProperty("java.util.logging.config.file");
-//        if(logFile == null)
-//            loadSilentLoggingProperties();
-//    }
-//
-//    private static void loadSilentLoggingProperties() throws IOException {
-//        InputStream propertiesStream = Utils.getResource("/nullLogging.properties");
-//        LogManager.getLogManager().readConfiguration(propertiesStream);
-//    }
 
     @Override
     public void init() throws Exception {

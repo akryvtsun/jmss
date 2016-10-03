@@ -129,7 +129,7 @@ public class MatchesWindow extends BorderPane {
                 new ChangeListener<Tab>() {
                     @Override
                     public void changed(ObservableValue<? extends Tab> observable, Tab oldValue, Tab newValue) {
-                        LOGGER.info("Changing Matches tab...");
+                        LOGGER.trace("Changing Matches tab...");
 
                         TableView.TableViewSelectionModel<Match> tableSelectionModel = table.getSelectionModel();
                         int index = tableSelectionModel.getSelectedIndex();
@@ -141,7 +141,7 @@ public class MatchesWindow extends BorderPane {
 
                                 data.set(index, match);
                             } else if (matchTab.equals(newValue)) {
-                                LOGGER.info("Updating match's fields...");
+                                LOGGER.trace("Updating match's fields...");
 
                                 Match match = data.get(index);
 
@@ -235,7 +235,7 @@ public class MatchesWindow extends BorderPane {
         Button aNew = new Button("New");
         aNew.setMaxWidth(Double.MAX_VALUE);
         aNew.setOnAction(e -> {
-            LOGGER.info("Adding new match...");
+            LOGGER.info("Adding new match '{}'...", matchNameField.getText());
 
             Match match = new Match(matchNameField.getText(), dateField.getValue());
 
