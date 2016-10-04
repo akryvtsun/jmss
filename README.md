@@ -25,3 +25,18 @@ Shooting Match Scoring System
 6. Create release in GitHub with new label `vX.Y`
 7. Create `jmms-X.Y.zip` package and attach it to GitHub release
 8. Create new version number with `-SNAPSHOT` postfix in pom.xml
+
+#### Logback config ####
+
+##### How to see what logback config file is used  #####
+
+   ```
+    -Dlogback.statusListenerClass=ch.qos.logback.core.status.OnConsoleStatusListener
+   ```
+   [StackOverflow source](http://stackoverflow.com/a/35072342/2313177) 
+
+##### How to see what logback config file is used #####
+   ```
+    -Dlogback.configurationFile=<full_path_to_logback[-test].xml_file>
+   ```
+   [Manual source](http://logback.qos.ch/manual/configuration.html)
