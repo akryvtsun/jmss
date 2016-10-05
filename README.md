@@ -40,3 +40,13 @@ Shooting Match Scoring System
     -Dlogback.configurationFile=<full_path_to_logback[-test].xml_file>
    ```
    [Manual source](http://logback.qos.ch/manual/configuration.html)
+   
+##### Log levels #####  
+- OFF - The OFF is used to turn off logging.
+- ERROR - The ERROR level designates error events which may or not be fatal to the application.
+- WARN - The WARN level designates potentially harmful situations.
+- INFO - The INFO level designates informational messages highlighting overall progress of the application.
+- DEBUG - The DEBUG level designates informational events of lower importance.
+- TRACE - The TRACE level designates informational events of very low importance.
+- ALL - The ALL is used to turn on all logging.
+    
