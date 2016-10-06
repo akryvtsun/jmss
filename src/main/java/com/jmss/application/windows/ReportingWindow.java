@@ -79,7 +79,7 @@ public class ReportingWindow extends GridPane {
             }
         });
         comboBox.valueProperty().addListener(e -> {
-            LOGGER.info("Changing match combobox...");
+            LOGGER.debug("Changing match combobox...");
 
             Match match = comboBox.getValue();
 
@@ -154,7 +154,7 @@ public class ReportingWindow extends GridPane {
         Button okButton = new Button("Ok");
         okButton.setDefaultButton(true);
         okButton.setOnAction(event -> {
-            LOGGER.info("Ok pressed, loading results...");
+            LOGGER.debug("Ok pressed, loading results...");
 
             Match match = matchComboBox.getValue();
 
@@ -202,7 +202,7 @@ public class ReportingWindow extends GridPane {
         Button cancelButton = new Button("Cancel");
         cancelButton.setCancelButton(true);
         cancelButton.setOnAction(event -> {
-            LOGGER.info("Cancel pressed...");
+            LOGGER.debug("Cancel pressed...");
             getScene().getWindow().hide();
         });
 

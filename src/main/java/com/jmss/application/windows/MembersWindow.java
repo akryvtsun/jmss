@@ -1,16 +1,12 @@
 package com.jmss.application.windows;
 
 import com.jmss.domain.Member;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,28 +43,25 @@ public class MembersWindow extends BorderPane {
         memberListTab.setContent(createMemberListTab());
 
         tabPane.getSelectionModel().selectedItemProperty().addListener(
-                new ChangeListener<Tab>() {
-                    @Override
-                    public void changed(ObservableValue<? extends Tab> observable, Tab oldValue, Tab newValue) {
-                        LOGGER.info("Changing Members tab...");
+                (observable, oldValue, newValue) -> {
+                    LOGGER.debug("Changing tab to '{}'...", newValue.getText());
 
-                        TableView.TableViewSelectionModel<Member> tableSelectionModel = table.getSelectionModel();
-                        int index = tableSelectionModel.getSelectedIndex();
-                        if (index >= 0) {
-                            if (memberListTab.equals(newValue)) {
-                                LOGGER.info("Updating member in table...");
+                    TableView.TableViewSelectionModel<Member> tableSelectionModel = table.getSelectionModel();
+                    int index = tableSelectionModel.getSelectedIndex();
+                    if (index >= 0) {
+                        if (memberListTab.equals(newValue)) {
+                            LOGGER.trace("Updating member in table...");
 
-                                Member member = new Member(firstNameField.getText(), lastNameField.getText());
+                            Member member = new Member(firstNameField.getText(), lastNameField.getText());
 
-                                data.set(index, member);
-                            } else if (memberTab.equals(newValue)) {
-                                LOGGER.info("Updating member's fields...");
+                            data.set(index, member);
+                        } else if (memberTab.equals(newValue)) {
+                            LOGGER.trace("Updating member's fields...");
 
-                                Member member = data.get(index);
+                            Member member = data.get(index);
 
-                                firstNameField.setText(member.getFirstName());
-                                lastNameField.setText(member.getLastName());
-                            }
+                            firstNameField.setText(member.getFirstName());
+                            lastNameField.setText(member.getLastName());
                         }
                     }
                 }
@@ -112,23 +105,20 @@ public class MembersWindow extends BorderPane {
         lastNameCol.setCellValueFactory(new PropertyValueFactory<Member, String>("lastName"));
 
         table.setEditable(true);
-        table.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                LOGGER.info("Updating member's fields via mouse...");
+        table.setOnMouseClicked(event -> {
+            LOGGER.trace("Updating member's fields via mouse...");
 
-                if (event.getClickCount() > 1) {
-                    TableView.TableViewSelectionModel<Member> tableSelectionModel = table.getSelectionModel();
-                    int index = tableSelectionModel.getSelectedIndex();
-                    if (index >= 0) {
-                        Member member = data.get(index);
+            if (event.getClickCount() > 1) {
+                TableView.TableViewSelectionModel<Member> tableSelectionModel = table.getSelectionModel();
+                int index = tableSelectionModel.getSelectedIndex();
+                if (index >= 0) {
+                    Member member = data.get(index);
 
-                        firstNameField.setText(member.getFirstName());
-                        lastNameField.setText(member.getLastName());
+                    firstNameField.setText(member.getFirstName());
+                    lastNameField.setText(member.getLastName());
 
-                        SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
-                        selectionModel.select(0);
-                    }
+                    SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
+                    selectionModel.select(0);
                 }
             }
         });
@@ -154,7 +144,7 @@ public class MembersWindow extends BorderPane {
         Button aNew = new Button("New");
         aNew.setMaxWidth(Double.MAX_VALUE);
         aNew.setOnAction(e -> {
-            LOGGER.info("Adding new member...");
+            LOGGER.debug("Adding new member...");
 
             Member match = new Member(firstNameField.getText(), lastNameField.getText());
 
@@ -167,7 +157,7 @@ public class MembersWindow extends BorderPane {
         Button delete = new Button("Delete");
         delete.setMaxWidth(Double.MAX_VALUE);
         delete.setOnAction(e -> {
-            LOGGER.info("Deleting member...");
+            LOGGER.debug("Deleting member...");
 
             int focusedIndex = table.getSelectionModel().getFocusedIndex();
             if (focusedIndex >= 0)

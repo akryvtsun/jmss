@@ -68,7 +68,7 @@ public class CompetitorsWindow extends HBox {
         Button aNew = new Button("Add >>");
         aNew.setMaxWidth(Double.MAX_VALUE);
         aNew.setOnAction(e -> {
-            LOGGER.info("Adding new competitor...");
+            LOGGER.debug("Adding new competitor...");
 
             TableView.TableViewSelectionModel<Member> tableSelectionModel = membersTable.getSelectionModel();
             int index = tableSelectionModel.getSelectedIndex();
@@ -81,7 +81,7 @@ public class CompetitorsWindow extends HBox {
         Button delete = new Button("<< Delete");
         delete.setMaxWidth(Double.MAX_VALUE);
         delete.setOnAction(e -> {
-            LOGGER.info("Deleting competitor...");
+            LOGGER.debug("Deleting competitor...");
 
             TableView.TableViewSelectionModel<Member> tableSelectionModel = competitorsTable.getSelectionModel();
             int index = tableSelectionModel.getSelectedIndex();

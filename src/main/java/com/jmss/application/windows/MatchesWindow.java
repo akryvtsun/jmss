@@ -1,19 +1,16 @@
 package com.jmss.application.windows;
 
+import com.jmss.application.LoggableStage;
 import com.jmss.domain.Match;
 import com.jmss.domain.Member;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -67,10 +64,7 @@ public class MatchesWindow extends BorderPane {
         button.setGraphic(value);
         button.setContentDisplay(ContentDisplay.TOP);
         button.setOnAction(e -> {
-            LOGGER.info("Stage Administration opening...");
-
-            Stage stage = new Stage();
-            stage.setTitle("Stage Administration");
+            Stage stage = new LoggableStage("Stage Administration");
 
             TableView.TableViewSelectionModel<Match> tableSelectionModel = table.getSelectionModel();
             int index = tableSelectionModel.getSelectedIndex();
@@ -96,10 +90,7 @@ public class MatchesWindow extends BorderPane {
         button.setGraphic(value);
         button.setContentDisplay(ContentDisplay.TOP);
         button.setOnAction(e -> {
-            LOGGER.info("Competitors Administration opening...");
-
-            Stage stage = new Stage();
-            stage.setTitle("Competitors Administration");
+            Stage stage = new LoggableStage("Competitors Administration");
 
             TableView.TableViewSelectionModel<Match> tableSelectionModel = table.getSelectionModel();
             int index = tableSelectionModel.getSelectedIndex();
@@ -126,29 +117,26 @@ public class MatchesWindow extends BorderPane {
         matchListTab.setContent(createMatchListTab());
 
         tabPane.getSelectionModel().selectedItemProperty().addListener(
-                new ChangeListener<Tab>() {
-                    @Override
-                    public void changed(ObservableValue<? extends Tab> observable, Tab oldValue, Tab newValue) {
-                        LOGGER.trace("Changing Matches tab...");
+                (observable, oldValue, newValue) -> {
+                    LOGGER.debug("Changing tab to '{}'...", newValue.getText());
 
-                        TableView.TableViewSelectionModel<Match> tableSelectionModel = table.getSelectionModel();
-                        int index = tableSelectionModel.getSelectedIndex();
-                        if (index >= 0) {
-                            if (matchListTab.equals(newValue)) {
-                                LOGGER.info("Updating match in table...");
+                    TableView.TableViewSelectionModel<Match> tableSelectionModel = table.getSelectionModel();
+                    int index = tableSelectionModel.getSelectedIndex();
+                    if (index >= 0) {
+                        if (matchListTab.equals(newValue)) {
+                            LOGGER.trace("Updating match in table...");
 
-                                Match match = new Match(matchNameField.getText(), dateField.getValue());
+                            Match match = new Match(matchNameField.getText(), dateField.getValue());
 
-                                data.set(index, match);
-                            } else if (matchTab.equals(newValue)) {
-                                LOGGER.trace("Updating match's fields...");
+                            data.set(index, match);
+                        } else if (matchTab.equals(newValue)) {
+                            LOGGER.trace("Updating match's fields...");
 
-                                Match match = data.get(index);
+                            Match match = data.get(index);
 
-                                matchNameField.setText(match.getName());
-                                // TODO make field clean here
-                                dateField.setValue(match.getDate());
-                            }
+                            matchNameField.setText(match.getName());
+                            // TODO make field clean here
+                            dateField.setValue(match.getDate());
                         }
                     }
                 }
@@ -193,23 +181,20 @@ public class MatchesWindow extends BorderPane {
         nameCol.setCellValueFactory(new PropertyValueFactory<Match, String>("name"));
 
         table.setEditable(true);
-        table.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                LOGGER.info("Updating match's fields via mouse...");
+        table.setOnMouseClicked(event -> {
+            LOGGER.trace("Updating match's fields via mouse...");
 
-                if (event.getClickCount() > 1) {
-                    TableView.TableViewSelectionModel<Match> tableSelectionModel = table.getSelectionModel();
-                    int index = tableSelectionModel.getSelectedIndex();
-                    if (index >= 0) {
-                        Match match = data.get(index);
+            if (event.getClickCount() > 1) {
+                TableView.TableViewSelectionModel<Match> tableSelectionModel = table.getSelectionModel();
+                int index = tableSelectionModel.getSelectedIndex();
+                if (index >= 0) {
+                    Match match = data.get(index);
 
-                        dateField.setValue(match.getDate());
-                        matchNameField.setText(match.getName());
+                    dateField.setValue(match.getDate());
+                    matchNameField.setText(match.getName());
 
-                        SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
-                        selectionModel.select(0);
-                    }
+                    SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
+                    selectionModel.select(0);
                 }
             }
         });
@@ -235,7 +220,7 @@ public class MatchesWindow extends BorderPane {
         Button aNew = new Button("New");
         aNew.setMaxWidth(Double.MAX_VALUE);
         aNew.setOnAction(e -> {
-            LOGGER.info("Adding new match '{}'...", matchNameField.getText());
+            LOGGER.debug("Adding new match '{}'...", matchNameField.getText());
 
             Match match = new Match(matchNameField.getText(), dateField.getValue());
 
@@ -248,7 +233,7 @@ public class MatchesWindow extends BorderPane {
         Button delete = new Button("Delete");
         delete.setMaxWidth(Double.MAX_VALUE);
         delete.setOnAction(e -> {
-            LOGGER.info("Deleting match...");
+            LOGGER.debug("Deleting match...");
 
             int focusedIndex = table.getSelectionModel().getFocusedIndex();
             if (focusedIndex >= 0)

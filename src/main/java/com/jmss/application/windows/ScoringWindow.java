@@ -91,7 +91,7 @@ public class ScoringWindow extends GridPane {
             }
         });
         comboBox.valueProperty().addListener(e -> {
-            LOGGER.info("Changing match combobox...");
+            LOGGER.trace("Changing match combobox...");
 
             Match match = comboBox.getValue();
 
@@ -120,7 +120,7 @@ public class ScoringWindow extends GridPane {
             }
         });
         comboBox.valueProperty().addListener(e -> {
-            LOGGER.info("Changing stage combobox...");
+            LOGGER.trace("Changing stage combobox...");
 
             updatePassingComponents();
         });
@@ -141,7 +141,7 @@ public class ScoringWindow extends GridPane {
             }
         });
         comboBox.valueProperty().addListener(e -> {
-            LOGGER.info("Changing competitor combobox...");
+            LOGGER.trace("Changing competitor combobox...");
 
             updatePassingComponents();
         });
@@ -271,7 +271,7 @@ public class ScoringWindow extends GridPane {
         BorderPane pane = new BorderPane();
         Button button = new Button("Confirm");
         button.setOnAction(event -> {
-            LOGGER.info("Confirming score...");
+            LOGGER.debug("Confirming score...");
 
             Passing passing = new Passing(aHits.getValue(), cHits.getValue(), dHits.getValue(),
                     misses.getValue(), procedurals.getValue(),

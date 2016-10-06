@@ -38,12 +38,14 @@ public final class Launcher extends Application {
 
     public static void main(String[] args) {
         LOGGER.info("Starting application...");
-
         launch(args);
+        LOGGER.info("Application has stopped!");
     }
 
     @Override
     public void init() throws Exception {
+        LOGGER.debug("Initializing...");
+
         if (isDemoMode()) {
             members.addAll(DemoDataProvider.createMembers());
             matches.addAll(DemoDataProvider.createMatches(members));
@@ -56,7 +58,7 @@ public final class Launcher extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        LOGGER.info("Creating primary stage...");
+        LOGGER.debug("Creating primary stage...");
 
         primaryStage.setTitle("JMMS v0.7");
         Image icon = new Image(Utils.getResource("/icons/icon.png"));
@@ -102,10 +104,7 @@ public final class Launcher extends Application {
         button.setGraphic(new ImageView("/icons/members.png"));
         button.setContentDisplay(ContentDisplay.TOP);
         button.setOnAction(e -> {
-            LOGGER.info("Membership Administration opening...");
-
-            Stage stage = new Stage();
-            stage.setTitle("Membership Administration");
+            Stage stage = new LoggableStage("Membership Administration");
             Scene scene = new Scene(new MembersWindow(members));
             stage.setScene(scene);
             // TODO make centering
@@ -124,10 +123,7 @@ public final class Launcher extends Application {
         button.setGraphic(value);
         button.setContentDisplay(ContentDisplay.TOP);
         button.setOnAction(e -> {
-            LOGGER.info("Match Administration opening...");
-
-            Stage stage = new Stage();
-            stage.setTitle("Match Administration");
+            Stage stage = new LoggableStage("Match Administration");
             Scene scene = new Scene(new MatchesWindow(members, matches));
             stage.setScene(scene);
             // TODO make centering
@@ -146,10 +142,7 @@ public final class Launcher extends Application {
         button.setGraphic(value);
         button.setContentDisplay(ContentDisplay.TOP);
         button.setOnAction(e -> {
-            LOGGER.info("Rapid Scoring opening...");
-
-            Stage stage = new Stage();
-            stage.setTitle("Rapid Scoring");
+            Stage stage = new LoggableStage("Rapid Scoring");
             Scene scene = new Scene(new ScoringWindow(matches));
             stage.setScene(scene);
             // TODO make centering
@@ -168,10 +161,7 @@ public final class Launcher extends Application {
         button.setGraphic(value);
         button.setContentDisplay(ContentDisplay.TOP);
         button.setOnAction(e -> {
-            LOGGER.info("Reporting opening...");
-
-            Stage stage = new Stage();
-            stage.setTitle("Match Reporting");
+            Stage stage = new LoggableStage("Match Reporting");
             Scene scene = new Scene(new ReportingWindow(matches));
             stage.setScene(scene);
 
