@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.Optional;
 
 // TODO disable Delete button if table is empty
 // TODO disable make whole window smaller (or even remove resize ability at all)
@@ -110,16 +111,14 @@ public class MembersWindow extends BorderPane {
 
             if (event.getClickCount() > 1) {
                 TableView.TableViewSelectionModel<Member> tableSelectionModel = table.getSelectionModel();
-                int index = tableSelectionModel.getSelectedIndex();
-                if (index >= 0) {
-                    Member member = data.get(index);
+                Optional.ofNullable(tableSelectionModel.getSelectedItem())
+                    .ifPresent(member -> {
+                        firstNameField.setText(member.getFirstName());
+                        lastNameField.setText(member.getLastName());
 
-                    firstNameField.setText(member.getFirstName());
-                    lastNameField.setText(member.getLastName());
-
-                    SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
-                    selectionModel.select(0);
-                }
+                        SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
+                        selectionModel.select(0);
+                    });
             }
         });
 
