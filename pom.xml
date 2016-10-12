@@ -81,7 +81,7 @@
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
                     <descriptors>
-                        <descriptor>src/main/assembly/assembly.xml</descriptor>
+                        <descriptor>dist/assembly.xml</descriptor>
                     </descriptors>
                 </configuration>
                 <executions>
