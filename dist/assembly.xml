@@ -8,7 +8,7 @@
         <format>zip</format>
     </formats>
 
-    <baseDirectory>/</baseDirectory>
+    <includeBaseDirectory>false</includeBaseDirectory>
 
     <fileSets>
         <fileSet>
@@ -26,4 +26,10 @@
             </includes>
         </fileSet>
     </fileSets>
+
+    <dependencySets>
+        <dependencySet>
+            <outputDirectory>/</outputDirectory>
+        </dependencySet>
+    </dependencySets>
 </assembly>
