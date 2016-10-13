@@ -23,7 +23,7 @@ Shooting Match Scoring System
 4. Test manually created release artifact from `targer` folder
 5. Commit and push changes and make sure Travis CI build is green
 6. Create release in GitHub with new label `vX.Y`
-7. Create `jmms-X.Y.zip` package and attach it to GitHub release
+7. Create `jmss-X.Y.zip` package and attach it to GitHub release
 8. Create new version number with `-SNAPSHOT` postfix in pom.xml
 
 #### Logback config ####
