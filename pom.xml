@@ -76,10 +76,11 @@
                         <manifest>
                             <mainClass>com.jmss.application.Launcher</mainClass>
                         </manifest>
+                        <manifestEntries>
+                            <Title>${project.artifactId}</Title>
+                            <Version>${project.version}</Version>
+                        </manifestEntries>
                     </archive>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
                     <descriptors>
                         <descriptor>dist/assembly.xml</descriptor>
                     </descriptors>
