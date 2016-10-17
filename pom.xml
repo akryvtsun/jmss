@@ -2,11 +2,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <name>jmss</name>
-    <url>http://maven.apache.org</url>
+    <name>jMatch Scoring System</name>
+    <url>https://github.com/englishman/jmss</url>
 
     <groupId>com.jmss</groupId>
-    <artifactId>${project.name}</artifactId>
+    <artifactId>jmss</artifactId>
     <version>0.7-SNAPSHOT</version>
     <packaging>jar</packaging>
 
@@ -48,7 +48,7 @@
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>${maven.jar.plugin.version}</version>
                 <configuration>
-                    <finalName>${project.name}</finalName>
+                    <finalName>${project.artifactId}</finalName>
                     <archive>
                         <manifest>
                             <mainClass>com.jmss.application.Launcher</mainClass>
@@ -58,6 +58,7 @@
                         </manifest>
                         <manifestEntries>
                             <Title>${project.name}</Title>
+                            <Acronym>${project.artifactId}</Acronym>
                             <Version>${project.version}</Version>
                         </manifestEntries>
                     </archive>
