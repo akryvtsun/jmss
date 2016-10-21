@@ -1,5 +1,8 @@
 package com.jmss.application;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.jmss.application.windows.MatchesWindow;
 import com.jmss.application.windows.MembersWindow;
 import com.jmss.application.windows.ReportingWindow;
@@ -23,9 +26,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.ArrayList;
-import java.util.List;
 
 // TODO add icon for Ubuntu: http://ubuntuforums.org/showthread.php?t=1760257
 // TODO use javafxpackager.exe for runnable package creation
@@ -60,7 +60,9 @@ public final class Launcher extends Application {
     public void start(Stage primaryStage) {
         LOGGER.debug("Creating primary stage...");
 
-        primaryStage.setTitle("JMMS v0.7");
+        LauncherViewModel model = new LauncherViewModel();
+
+        primaryStage.titleProperty().bind(model.titleProperty());
         Image icon = new Image(Utils.getResource("/icons/icon.png"));
         primaryStage.getIcons().add(icon);
         primaryStage.setResizable(false);
@@ -72,7 +74,8 @@ public final class Launcher extends Application {
         topContainer.getChildren().add(toolBar);
         root.setTop(topContainer);
 
-        Label label = new Label("jMatch Scoring System\n(c) 2016");
+        Label label = new Label();
+        label.textProperty().bind(model.nameProperty());
         label.setMinHeight(200);
         label.setTextAlignment(TextAlignment.CENTER);
         root.setCenter(label);
