@@ -65,8 +65,18 @@ public final class Launcher extends Application {
         primaryStage.titleProperty().bind(model.titleProperty());
         Image icon = new Image(Utils.getResource("/icons/icon.png"));
         primaryStage.getIcons().add(icon);
-        primaryStage.setResizable(false);
 
+        Scene scene = new Scene(createRootPane(model));
+        primaryStage.setScene(scene);
+
+        primaryStage.setResizable(false);
+        primaryStage.sizeToScene();
+        primaryStage.centerOnScreen();
+
+        primaryStage.show();
+    }
+
+    private BorderPane createRootPane(LauncherViewModel model) {
         BorderPane root = new BorderPane();
 
         VBox topContainer = new VBox();
@@ -80,14 +90,7 @@ public final class Launcher extends Application {
         label.setTextAlignment(TextAlignment.CENTER);
         root.setCenter(label);
 
-        Scene scene = new Scene(root);
-        primaryStage.setScene(scene);
-
-        primaryStage.setResizable(false);
-        primaryStage.sizeToScene();
-        primaryStage.centerOnScreen();
-
-        primaryStage.show();
+        return root;
     }
 
     private ToolBar createToolBar() {
