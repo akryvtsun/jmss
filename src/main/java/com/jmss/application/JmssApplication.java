@@ -1,15 +1,5 @@
 package com.jmss.application;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.jmss.application.windows.MatchesWindow;
-import com.jmss.application.windows.MembersWindow;
-import com.jmss.application.windows.ReportingWindow;
-import com.jmss.application.windows.ScoringWindow;
-import com.jmss.domain.DemoDataProvider;
-import com.jmss.domain.Match;
-import com.jmss.domain.Member;
 import com.jmss.infra.Utils;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -22,7 +12,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,16 +21,14 @@ import org.slf4j.LoggerFactory;
 public class JmssApplication extends Application {
 	private static final Logger LOGGER = LoggerFactory.getLogger(JmssApplication.class);
 
-	private final List<Member> members = new ArrayList();
-	private final List<Match> matches = new ArrayList();
+	ApplicationViewModel model = new ApplicationViewModel();
 
 	@Override
 	public void init() throws Exception {
 		LOGGER.debug("Initializing...");
 
 		if (isDemoMode()) {
-			members.addAll(DemoDataProvider.createMembers());
-			matches.addAll(DemoDataProvider.createMatches(members));
+			model.loadDemoData();
 		}
 	}
 
@@ -52,8 +39,6 @@ public class JmssApplication extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		LOGGER.debug("Creating primary stage...");
-
-		LauncherViewModel model = new LauncherViewModel();
 
 		primaryStage.titleProperty().bind(model.titleProperty());
 		Image icon = new Image(Utils.getResource("/icons/icon.png"));
@@ -69,7 +54,7 @@ public class JmssApplication extends Application {
 		primaryStage.show();
 	}
 
-	private BorderPane createRootPane(LauncherViewModel model) {
+	private BorderPane createRootPane(ApplicationViewModel model) {
 		BorderPane root = new BorderPane();
 
 		VBox topContainer = new VBox();
@@ -102,15 +87,7 @@ public class JmssApplication extends Application {
 		Button button = new Button("_Members");
 		button.setGraphic(new ImageView("/icons/members.png"));
 		button.setContentDisplay(ContentDisplay.TOP);
-		button.setOnAction(e -> {
-			Stage stage = new LoggableStage("Membership Administration");
-			Scene scene = new Scene(new MembersWindow(members));
-			stage.setScene(scene);
-			// TODO make centering
-			//centerStage(stage, stage.getWidth(), stage.getHeight());
-			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.show();
-		});
+		button.onActionProperty().bind(model.membershipAdminProperty());
 		return button;
 	}
 
@@ -121,15 +98,7 @@ public class JmssApplication extends Application {
 		value.setFitWidth(50);
 		button.setGraphic(value);
 		button.setContentDisplay(ContentDisplay.TOP);
-		button.setOnAction(e -> {
-			Stage stage = new LoggableStage("Match Administration");
-			Scene scene = new Scene(new MatchesWindow(members, matches));
-			stage.setScene(scene);
-			// TODO make centering
-			//centerStage(stage, stage.getWidth(), stage.getHeight());
-			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.show();
-		});
+		button.onActionProperty().bind(model.matchAdminProperty());
 		return button;
 	}
 
@@ -140,15 +109,7 @@ public class JmssApplication extends Application {
 		value.setFitWidth(50);
 		button.setGraphic(value);
 		button.setContentDisplay(ContentDisplay.TOP);
-		button.setOnAction(e -> {
-			Stage stage = new LoggableStage("Rapid Scoring");
-			Scene scene = new Scene(new ScoringWindow(matches));
-			stage.setScene(scene);
-			// TODO make centering
-			//centerStage(stage, stage.getWidth(), stage.getHeight());
-			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.show();
-		});
+		button.onActionProperty().bind(model.rapidScoringProperty());
 		return button;
 	}
 
@@ -159,25 +120,7 @@ public class JmssApplication extends Application {
 		value.setFitWidth(50);
 		button.setGraphic(value);
 		button.setContentDisplay(ContentDisplay.TOP);
-		button.setOnAction(e -> {
-			Stage stage = new LoggableStage("Match Reporting");
-			Scene scene = new Scene(new ReportingWindow(matches));
-			stage.setScene(scene);
-
-			// TODO make centering
-			//centerStage(stage, stage.getWidth(), stage.getHeight());
-			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setResizable(false);
-			stage.sizeToScene();
-
-			stage.show();
-		});
+		button.onActionProperty().bind(model.matchReportingProperty());
 		return button;
 	}
-
-//    private void centerStage(Stage stage, double width, double height) {
-//        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-//        stage.setX((screenBounds.getWidth() - width) / 2);
-//        stage.setY((screenBounds.getHeight() - height) / 2);
-//    }
 }
