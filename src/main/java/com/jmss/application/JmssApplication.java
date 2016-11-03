@@ -21,7 +21,11 @@ import org.slf4j.LoggerFactory;
 public class JmssApplication extends Application {
 	private static final Logger LOGGER = LoggerFactory.getLogger(JmssApplication.class);
 
-	ApplicationViewModel model = new ApplicationViewModel();
+	private final ApplicationViewModel model;
+
+	public JmssApplication() {
+		 model = new ApplicationViewModel();
+	}
 
 	@Override
 	public void init() throws Exception {
