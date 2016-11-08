@@ -1,8 +1,6 @@
 package com.jmss.application;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
@@ -12,9 +10,7 @@ import com.jmss.application.windows.MatchesWindow;
 import com.jmss.application.windows.MembersWindow;
 import com.jmss.application.windows.ReportingWindow;
 import com.jmss.application.windows.ScoringWindow;
-import com.jmss.domain.DemoDataProvider;
-import com.jmss.domain.Match;
-import com.jmss.domain.Member;
+import com.jmss.domain.Database;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleStringProperty;
@@ -42,8 +38,7 @@ public class ApplicationViewModel {
 	private ReadOnlyObjectWrapper<EventHandler<ActionEvent>> matchReporting =
 			new ReadOnlyObjectWrapper(new OpenMatchReporting());
 
-	private final List<Member> members = new ArrayList();
-	private final List<Match> matches = new ArrayList();
+	private Database database = new Database();
 
 	public ApplicationViewModel() {
 		this(loadJarManifest());
@@ -81,8 +76,7 @@ public class ApplicationViewModel {
 	}
 
 	public void loadDemoData() {
-		members.addAll(DemoDataProvider.createMembers());
-		matches.addAll(DemoDataProvider.createMatches(members));
+		database = Database.createDemoDatabase();
 	}
 
 	public ReadOnlyObjectProperty<EventHandler<ActionEvent>> membershipAdminProperty() {
@@ -93,7 +87,7 @@ public class ApplicationViewModel {
 		@Override
 		public void handle(ActionEvent event) {
 			Stage stage = new LoggableStage("Membership Administration");
-			Scene scene = new Scene(new MembersWindow(members));
+			Scene scene = new Scene(new MembersWindow(database.getMembers()));
 			stage.setScene(scene);
 			// TODO make centering
 			//centerStage(stage, stage.getWidth(), stage.getHeight());
@@ -110,7 +104,7 @@ public class ApplicationViewModel {
 		@Override
 		public void handle(ActionEvent event) {
 			Stage stage = new LoggableStage("Match Administration");
-			Scene scene = new Scene(new MatchesWindow(members, matches));
+			Scene scene = new Scene(new MatchesWindow(database));
 			stage.setScene(scene);
 			// TODO make centering
 			//centerStage(stage, stage.getWidth(), stage.getHeight());
@@ -127,7 +121,7 @@ public class ApplicationViewModel {
 		@Override
 		public void handle(ActionEvent event) {
 			Stage stage = new LoggableStage("Rapid Scoring");
-			Scene scene = new Scene(new ScoringWindow(matches));
+			Scene scene = new Scene(new ScoringWindow(database.getMatches()));
 			stage.setScene(scene);
 			// TODO make centering
 			//centerStage(stage, stage.getWidth(), stage.getHeight());
@@ -144,7 +138,7 @@ public class ApplicationViewModel {
 		@Override
 		public void handle(ActionEvent event) {
 			Stage stage = new LoggableStage("Match Reporting");
-			Scene scene = new Scene(new ReportingWindow(matches));
+			Scene scene = new Scene(new ReportingWindow(database.getMatches()));
 			stage.setScene(scene);
 
 			// TODO make centering
@@ -156,10 +150,4 @@ public class ApplicationViewModel {
 			stage.show();
 		}
 	}
-
-//    private void centerStage(Stage stage, double width, double height) {
-//        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-//        stage.setX((screenBounds.getWidth() - width) / 2);
-//        stage.setY((screenBounds.getHeight() - height) / 2);
-//    }
 }

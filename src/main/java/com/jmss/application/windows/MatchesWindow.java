@@ -1,6 +1,10 @@
 package com.jmss.application.windows;
 
+import java.time.LocalDate;
+import java.util.List;
+
 import com.jmss.application.LoggableStage;
+import com.jmss.domain.Database;
 import com.jmss.domain.Match;
 import com.jmss.domain.Member;
 import javafx.collections.FXCollections;
@@ -8,17 +12,29 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.Control;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.SingleSelectionModel;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ToolBar;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.time.LocalDate;
-import java.util.List;
 
 // TODO disable Delete button if table is empty
 // TODO disable make whole window smaller (or even remove resize ability at all)
@@ -37,9 +53,9 @@ public class MatchesWindow extends BorderPane {
 
     private final TableView<Match> table = new TableView<>();
 
-    public MatchesWindow(List<Member> members, List<Match> matches) {
-        this.members = members;
-        data = FXCollections.observableList(matches);
+    public MatchesWindow(Database database) {
+        this.members = database.getMembers();
+        data = FXCollections.observableList(database.getMatches());
 
         setTop(createToolBarPane());
         setCenter(createTabPane());

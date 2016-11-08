@@ -1,20 +1,19 @@
 package com.jmss.application.windows;
 
-import com.jmss.application.windows.ReportingWindow;
-import com.jmss.domain.DemoDataProvider;
+import java.util.List;
+
+import com.jmss.domain.Database;
 import com.jmss.domain.Match;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
-
-import java.util.List;
 
 public class ReportingWindowManualTest {
 
     public static void main(String[] args) {
         new JFXPanel();
 
-        List<Match> matches = DemoDataProvider.createMatches(DemoDataProvider.createMembers());
+        List<Match> matches = Database.createDemoDatabase().getMatches();
         ReportingWindow window = new ReportingWindow(matches);
 
         Platform.runLater(new Runnable() {

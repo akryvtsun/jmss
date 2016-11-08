@@ -1,21 +1,20 @@
 package com.jmss.application.windows;
 
-import com.jmss.application.windows.ScoringWindow;
-import com.jmss.domain.DemoDataProvider;
+import java.util.List;
+
+import com.jmss.domain.Database;
 import com.jmss.domain.Match;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 
-import java.util.List;
-
 public class ScoringWindowManualTest {
 
     public static void main(String[] args) {
         new JFXPanel();
 
-        List<Match> matches = DemoDataProvider.createMatches(DemoDataProvider.createMembers());
+        List<Match> matches = Database.createDemoDatabase().getMatches();
         ScoringWindow window = new ScoringWindow(matches);
 
         Platform.runLater(new Runnable() {
