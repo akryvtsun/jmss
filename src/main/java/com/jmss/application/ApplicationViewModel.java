@@ -3,6 +3,7 @@ package com.jmss.application;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
@@ -26,10 +27,6 @@ import javafx.stage.Stage;
 
 public class ApplicationViewModel {
 
-	private String acronym = "name";
-	private String version = "0.0";
-	private String fullName = "full_name";
-
 	private StringProperty title = new SimpleStringProperty();
 	private StringProperty name = new SimpleStringProperty();
 
@@ -49,17 +46,27 @@ public class ApplicationViewModel {
 	private final List<Match> matches = new ArrayList();
 
 	public ApplicationViewModel() {
+		this(loadJarManifest());
+	}
+
+	private static Manifest loadJarManifest() {
 		try {
-			JarFile jar = new JarFile("jmss.jar");
-			Manifest manifest = jar.getManifest();
-			Attributes attributes = manifest.getMainAttributes();
-			acronym = attributes.getValue("Acronym");
-			version = attributes.getValue("Version");
-			fullName = attributes.getValue("Title");
+			return new JarFile("jmss.jar").getManifest();
 		}
 		catch (IOException e) {
-			e.printStackTrace();
+			return new Manifest();
 		}
+	}
+
+	ApplicationViewModel(Manifest manifest) {
+		Attributes attributes = manifest.getMainAttributes();
+
+		String acronym = Optional.ofNullable(attributes.getValue("Acronym"))
+				.orElse("name");
+		String version = Optional.ofNullable(attributes.getValue("Version"))
+				.orElse("0.0");
+		String fullName = Optional.ofNullable(attributes.getValue("Title"))
+				.orElse("full_name");
 
 		title.setValue(String.format("%s v%s", acronym, version));
 		name.setValue(String.format("%s\n(c) 2016", fullName));
