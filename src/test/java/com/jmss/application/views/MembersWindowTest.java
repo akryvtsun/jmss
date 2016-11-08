@@ -1,13 +1,12 @@
-package com.jmss.application.windows;
+package com.jmss.application.views;
 
-import com.jmss.application.windows.MembersWindow;
-import javafx.embed.swing.JFXPanel;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.Collections;
 
-import static org.junit.Assert.assertNotNull;
+import javafx.embed.swing.JFXPanel;
+import org.junit.Before;
+import org.junit.Test;
 
 public class MembersWindowTest {
 

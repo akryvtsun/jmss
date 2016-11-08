@@ -1,4 +1,8 @@
-package com.jmss.application.windows;
+package com.jmss.application.views;
+
+import java.io.File;
+import java.time.LocalDate;
+import java.util.List;
 
 import com.jmss.domain.Match;
 import com.jmss.infra.PdfReport;
@@ -8,7 +12,12 @@ import com.jmss.infra.results.StagesHtmlResult;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.TitledPane;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -21,10 +30,6 @@ import javafx.stage.Window;
 import javafx.util.StringConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.File;
-import java.time.LocalDate;
-import java.util.List;
 
 // TODO review iText Maven dependencies: may it be smaller?
 // TODO use a list instead of a combo box for match presentation?

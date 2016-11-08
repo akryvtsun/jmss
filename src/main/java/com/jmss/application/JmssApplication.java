@@ -1,5 +1,6 @@
 package com.jmss.application;
 
+import com.jmss.application.models.ApplicationViewModel;
 import com.jmss.infra.Utils;
 import javafx.application.Application;
 import javafx.scene.Scene;

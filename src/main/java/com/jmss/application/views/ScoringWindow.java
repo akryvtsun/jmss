@@ -1,4 +1,8 @@
-package com.jmss.application.windows;
+package com.jmss.application.views;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import com.jmss.domain.Match;
 import com.jmss.domain.Member;
@@ -7,17 +11,19 @@ import com.jmss.domain.Stage;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.util.StringConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 // TODO add match date label
 // TODO add time number field entering guard

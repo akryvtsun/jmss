@@ -1,4 +1,7 @@
-package com.jmss.application.windows;
+package com.jmss.application.views;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import com.jmss.domain.Member;
 import javafx.collections.FXCollections;
@@ -16,9 +19,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.ArrayList;
-import java.util.List;
 
 // TODO allows table(s) multi row selection
 public class CompetitorsWindow extends HBox {

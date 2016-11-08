@@ -1,15 +1,13 @@
-package com.jmss.application.windows;
+package com.jmss.application.views;
 
-import com.jmss.application.windows.StagesWindow;
+import static org.junit.Assert.assertNotNull;
+
+import com.jmss.domain.Database;
 import javafx.embed.swing.JFXPanel;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Collections;
-
-import static org.junit.Assert.assertNotNull;
-
-public class StagesWindowTest {
+public class MatchesWindowTest {
 
     @Before
     public void setUp() throws Exception {
@@ -18,7 +16,7 @@ public class StagesWindowTest {
 
     @Test
     public void window_creation() throws Exception {
-        StagesWindow window = new StagesWindow(Collections.emptyList());
+        MatchesWindow window = new MatchesWindow(new Database());
         assertNotNull(window);
     }
 }

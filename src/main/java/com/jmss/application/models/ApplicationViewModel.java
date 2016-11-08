@@ -1,4 +1,4 @@
-package com.jmss.application;
+package com.jmss.application.models;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -6,10 +6,11 @@ import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 
-import com.jmss.application.windows.MatchesWindow;
-import com.jmss.application.windows.MembersWindow;
-import com.jmss.application.windows.ReportingWindow;
-import com.jmss.application.windows.ScoringWindow;
+import com.jmss.application.LoggableStage;
+import com.jmss.application.views.MatchesWindow;
+import com.jmss.application.views.MembersWindow;
+import com.jmss.application.views.ReportingWindow;
+import com.jmss.application.views.ScoringWindow;
 import com.jmss.domain.Database;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -22,6 +23,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class ApplicationViewModel {
+
+	private Database database = new Database();
 
 	private StringProperty title = new SimpleStringProperty();
 	private StringProperty name = new SimpleStringProperty();
@@ -37,8 +40,6 @@ public class ApplicationViewModel {
 
 	private ReadOnlyObjectWrapper<EventHandler<ActionEvent>> matchReporting =
 			new ReadOnlyObjectWrapper(new OpenMatchReporting());
-
-	private Database database = new Database();
 
 	public ApplicationViewModel() {
 		this(loadJarManifest());

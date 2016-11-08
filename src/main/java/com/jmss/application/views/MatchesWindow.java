@@ -1,4 +1,4 @@
-package com.jmss.application.windows;
+package com.jmss.application.views;
 
 import java.time.LocalDate;
 import java.util.List;

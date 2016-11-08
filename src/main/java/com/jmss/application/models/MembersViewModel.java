@@ -1,4 +1,6 @@
-package com.jmss.application;
+package com.jmss.application.models;
+
+import java.util.List;
 
 import com.jmss.domain.Member;
 import javafx.beans.property.ObjectProperty;
@@ -8,8 +10,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.Tab;
-
-import java.util.List;
 
 public class MembersViewModel {
     private /*final*/ ObjectProperty<SingleSelectionModel<Tab>> selectionModel;

@@ -1,13 +1,14 @@
-package com.jmss.application.windows;
+package com.jmss.application.views;
 
 import static org.junit.Assert.assertNotNull;
 
-import com.jmss.domain.Database;
+import java.util.Collections;
+
 import javafx.embed.swing.JFXPanel;
 import org.junit.Before;
 import org.junit.Test;
 
-public class MatchesWindowTest {
+public class ScoringWindowTest {
 
     @Before
     public void setUp() throws Exception {
@@ -16,7 +17,7 @@ public class MatchesWindowTest {
 
     @Test
     public void window_creation() throws Exception {
-        MatchesWindow window = new MatchesWindow(new Database());
+        ScoringWindow window = new ScoringWindow(Collections.emptyList());
         assertNotNull(window);
     }
 }
