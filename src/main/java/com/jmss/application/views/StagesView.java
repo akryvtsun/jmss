@@ -27,8 +27,8 @@ import org.slf4j.LoggerFactory;
 
 // TODO add number fields (stage No) protection (spinner?)
 // TODO allows correct stages attrs changes
-public class StagesWindow extends BorderPane {
-    private static final Logger LOGGER = LoggerFactory.getLogger(StagesWindow.class);
+public class StagesView extends BorderPane {
+    private static final Logger LOGGER = LoggerFactory.getLogger(StagesView.class);
 
     private final ObservableList<Stage> data;
 
@@ -39,7 +39,7 @@ public class StagesWindow extends BorderPane {
 
     private final TableView<Stage> table = new TableView<>();
 
-    public StagesWindow(List<Stage> stages) {
+    public StagesView(List<Stage> stages) {
         data = FXCollections.observableList(stages);
 
         setCenter(createTabPane());

@@ -87,7 +87,7 @@ public class MatchesWindow extends BorderPane {
             if (index >= 0) {
                 Match match = data.get(index);
 
-                Scene scene = new Scene(new StagesWindow(match.getStages()));
+                Scene scene = new Scene(new StagesView(match.getStages()));
                 stage.setScene(scene);
                 // TODO make centering
                 //centerStage(stage, stage.getWidth(), stage.getHeight());

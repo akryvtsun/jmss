@@ -8,7 +8,7 @@ import javafx.embed.swing.JFXPanel;
 import org.junit.Before;
 import org.junit.Test;
 
-public class StagesWindowTest {
+public class StagesViewTest {
 
     @Before
     public void setUp() throws Exception {
@@ -17,7 +17,7 @@ public class StagesWindowTest {
 
     @Test
     public void window_creation() throws Exception {
-        StagesWindow window = new StagesWindow(Collections.emptyList());
+        StagesView window = new StagesView(Collections.emptyList());
         assertNotNull(window);
     }
 }
