@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/englishman/jmss.svg)](https://travis-ci.org/englishman/jmss)
 [![Coverage Status](https://coveralls.io/repos/englishman/jmss/badge.svg?branch=master)](https://coveralls.io/r/englishman/jmss?branch=master)
-[![Hits-of-Code](https://hitsofcode.com/github.com/akryvtsun/jmss)](https://hitsofcode.com/view/github.com/akryvtsun/jmss)
+[![Hits-of-Code](https://hitsofcode.com/github/akryvtsun/jmss)](https://hitsofcode.com/view/github/akryvtsun/jmss)
 
 Shooting Match Scoring System
 
