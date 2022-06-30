@@ -14,7 +14,7 @@
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <itext.version>5.5.9</itext.version>
+        <itext.version>5.5.12</itext.version>
 
         <maven.compiler.plugin.version>3.2</maven.compiler.plugin.version>
         <maven.coveralls.plugin.version>4.1.0</maven.coveralls.plugin.version>
